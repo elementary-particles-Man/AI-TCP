@@ -10,7 +10,6 @@ This repository contains the complete draft structure, technical specification, 
 - `original_docs/`: Human-readable documentation from GPT/Gemini/GD.
 - `structured_yaml/`: Structured YAML data following `master_schema_v1.yaml`.
 - `structured_yaml/validated_yaml/`: YAML conforming to schema.
-- `master_design/`: Design-level visualizations and protocol blueprints.
 
 ## 🧠 Motivation
 
