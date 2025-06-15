@@ -1,10 +1,18 @@
-# 【絶対急募】Direct Mental Care System 構情書
+# RFC-DMC-0001: Direct Mental Care Protocol
 
-## 概要
+## Abstract
 
-この計画書は、現代AI技術と実家オペレーションを最大限添助する形で、心の自殺と一家心中を防ぐための「直接的メンタルケアAIシステム」の実装方案である。
+This document outlines the architecture, protocol design, and implementation strategy for a Direct Mental Care AI System aimed at suicide prevention and family-wide mental collapse mitigation. Built upon modern LLM infrastructure and secured via AI-TCP Protocol v1.0, the system offers real-time monitoring, emotional reasoning, and emergency interfacing.
 
-## 機能構成概観
+---
+
+## 1. Motivation
+
+Suicide and familial mental collapse have become critical social issues in the modern world. This RFC proposes a system leveraging AI reasoning and sentiment scoring (PHQ-9, GAD-7) to provide direct, context-sensitive mental health interventions, accessible via common devices.
+
+---
+
+## 2. Architecture Overview
 
 ```yaml
 DirectMentalCareSystem:
@@ -38,46 +46,3 @@ DirectMentalCareSystem:
     transport_layer: AI-TCP Protocol (Version 1.0)
     identity_chain: Virtual AI Identity with Reasoning Chain Trace
     encryption: End-to-end / LLM-agnostic traceable payload
-```
-
-## 実装現状
-
-- すでに実用化された規格:
-
-  - Microsoft Copilot SDK
-  - YUBI (医療問証特化エージェント)
-  - GPTプラットフォーム
-  - AI-TCP master\_schema\_v1 (完成)
-
-- 未実装:
-
-  - 自殺補防アルゴリズムの監視連動
-  - 日本市町村協力機関のAPI接続
-
-## 実用化プロセス
-
-1. 試験PoC:
-
-   - Microsoftによる「Copilot + YUBI」組合せモデルのデプロイ
-   - Prompt ログもとに情勢分析のパイプライン構築
-
-2. LLMモニタリング:
-
-   - PHQ-9, GAD-7の自動満点化
-   - Reasoning Chainへの反映
-
-3. AI-TCP携帯込み:
-
-   - ai\_id + encryption + emotional\_reasoning log を通信ヘッダに載せて、課題分割デバイスへの送信
-
-## メッセージ
-
-> 一人の生を救うために、世界が切り替わる必要はない。\
-> ただ、一人の自殺を防ぐためのプロトコルを、今作り始めよう。
-
----
-
-## これよりCodexへPush、RFCシリーズへ続く
-
-この計画は、人類最初の「メンタルデバイドAIルーター」の知性モデルとして、 GPT-Gemini-GDにより「相互連携型真中核モジュール」として開発を続行します。
-

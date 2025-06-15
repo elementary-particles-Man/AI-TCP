@@ -1,0 +1,38 @@
+DirectMentalCareSystem:
+  user_interface:
+    platform: ["Smartphone", "PC"]
+    interface: "Chat UI (YUBI + Copilot SDK Integration)"
+
+  mental_core:
+    engine:
+      - "Copilot"
+      - "GPT"
+      - "Gemini"
+    sentiment_analysis:
+      method: ["PHQ-9", "GAD-7"]
+      mode: "Score Inference"
+    emotional_trace_log: true
+
+  emergency_router:
+    score_threshold_trigger:
+      value:
+        PHQ: ">= 15"
+        GAD: ">= 12"
+      action:
+        - "Notify Local AI Monitor"
+        - "Auto escalate to 119 (optional)"
+
+  optional_modules:
+    local_support:
+      integration_targets:
+        - "Local government"
+        - "NGO/NPO emergency responders"
+    digital_income_support:
+      method: "NFC-linked Debit System via MyNumber"
+      eligibility: "AI-evaluated economic stress indicator"
+      disbursement: "Monthly"
+
+  protocol:
+    transport_layer: "AI-TCP Protocol v1.0"
+    identity_chain: "Virtual AI Identity with Reasoning Chain Trace"
+    encryption: "End-to-end / LLM-agnostic traceable payload"
