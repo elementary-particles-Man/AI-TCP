@@ -42,8 +42,21 @@ DirectMentalCareSystem:
       eligibility: AI-evaluated economic stress indicator
       disbursement: Monthly
 
+---
+
+### ✅ **正しいマージ後の状態（最終形）**
+
+```yaml
   protocol:
     transport_layer: AI-TCP Protocol (Version 1.0)
     identity_chain: Virtual AI Identity with Reasoning Chain Trace
     encryption: End-to-end / LLM-agnostic traceable payload
+
+```mermaid
+flowchart TD
+    UI[User Interface\nSmartphone or PC] --> Core[Mental Core\nMulti-LLM Reasoner]
+    Core --> Router[Emergency Router\nPHQ/GAD Threshold]
+    Router --> LocalSupport[Local Support]
+    Router --> Income[Digital Income Support]
+    Core --> Protocol[AI-TCP Protocol]
 ```
