@@ -42,6 +42,11 @@ DirectMentalCareSystem:
       eligibility: AI-evaluated economic stress indicator
       disbursement: Monthly
 
+---
+
+### ✅ **正しいマージ後の状態（最終形）**
+
+```yaml
   protocol:
     transport_layer: AI-TCP Protocol (Version 1.0)
     identity_chain: Virtual AI Identity with Reasoning Chain Trace
