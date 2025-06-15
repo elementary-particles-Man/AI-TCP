@@ -1,3 +1,10 @@
+---
+title: AI-TCP Development Timeline
+version: 0.1
+status: draft
+language: ja
+---
+
 # ファイル名: ai_tcp_timeline.yaml
 # 内容: AI-TCP制定経緯に関する完全時系列記録
 

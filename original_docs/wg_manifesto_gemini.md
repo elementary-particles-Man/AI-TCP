@@ -1,3 +1,10 @@
+---
+title: Working Group Manifesto (Gemini)
+version: 0.1
+status: draft
+language: en
+---
+
 # Call for Participation: A Working Group for Inter-AI Governance and Communication Standards
 
 ## 1. Introduction & Problem Statement

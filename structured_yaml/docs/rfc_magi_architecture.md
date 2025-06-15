@@ -46,6 +46,12 @@ AI-TCP operates on top of IPv6 and comprises:
 - `Payload Layer`: Structured, signed semantic messages (LLM-native encoding)
 - `Trace Layer`: Embedded auditability (decision path, reason vectors)
 
+```mermaid
+flowchart LR
+    A[Session Setup\nAuthenticated handshake] --> B[Payload Exchange\nSigned message]
+    B --> C[Trace Layer\nAudit log]
+```
+
 ### 4.2 Compliance Requirements
 
 To be considered AI-TCP compatible, a model must:
