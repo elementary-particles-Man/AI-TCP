@@ -1,3 +1,10 @@
+---
+title: AI-TCP PoC Design
+version: 0.1
+status: draft
+language: ja
+---
+
 承知いたしました。上記のご指示と前提説明に基づき、AI-TCPのPoC設計草案をMarkdown形式で記述します。
 
 ---

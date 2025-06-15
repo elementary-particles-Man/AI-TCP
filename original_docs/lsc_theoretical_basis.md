@@ -1,3 +1,10 @@
+---
+title: LSC Theoretical Basis
+version: 0.1
+status: draft
+language: ja
+---
+
 ## ユニット：1
 
 **タイトル:** "LSCが世界統治理論の唯一解となる構造的背景"
