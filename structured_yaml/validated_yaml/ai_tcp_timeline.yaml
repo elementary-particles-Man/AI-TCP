@@ -27,6 +27,12 @@ ai_tcp_specification:
       event: "Gemini・GDの実装検証完了"
       detail: "Geminiによる文書構成およびGDによるYAML変換タスクが完了。"
 
+<<<<<<< codex/wrap-timeline-list-with-version-1.0
     - date: "2025-06-15"
       event: "CodexによるGitHub連携成功"
       detail: "MagiSystem_RFCリポジトリが正常に作成され、Codexで初期ファイル配置が完了。"
+=======
+  - date: "2025-06-15"
+    event: "CodexによるGitHub連携成功"
+    detail: "MagiSystem_RFCリポジトリが正常に作成され、Codexで初期ファイル配置が完了。"
+>>>>>>> main
