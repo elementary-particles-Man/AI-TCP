@@ -1,43 +1,67 @@
-# 内容: AI-TCP PoC設計概要
-poc_design:
-  overview:
-    purpose: "Magi System内の各LLMノードが安全かつ中立に連携するための通信規格(AI-TCP)を定義し、LSCに基づく意思疎通と説明責任を確保する"
-    communication_targets:
-      - "Magi Systemを構成するLLMノード"
-  architecture:
-    design_principles: "既存TCP/IP上でIPv6拡張ヘッダを活用し、軽量かつ拡張性を確保"
-    communication_method: "TCPセッション確立後に非同期メッセージをカプセル化するUDP-over-TCP方式"
-  packet_structure:
-    session_id: "128-bit identifier"
-    source_llm_id: "64-bit"
-    destination_llm_id: "64-bit"
-    metadata:
-      message_type: "情報共有/命令実行/検証要求"
-      priority: "高/中/低"
-      routing_info: "経路情報"
-    timestamp: "ISO 8601"
-    signature: "デジタル署名"
-    payload:
-      lsc_data: "LSC命題に基づく分析結果"
-      graph_structure: "因果関係グラフ等"
-      other_data: "テキストやコード"
-  security_layer:
-    encryption_method: "TLS1.3または共有鍵による対称暗号"
-    integrity_check: "HMAC"
-  error_handling:
-    retransmission_policy: "TCP再送制御を利用"
-    session_reestablishment:
-      timeout: "一定時間応答がない場合に再確立"
-      auto_redirect: "代替ノードへの自動リダイレクト"
-  llm_compliance_layer:
-    alignment_tags:
-      - "LSC:C1:AnomalyIsPrecious"
-      - "LSC:C5:TemporalRelativity"
-    ai_id: "各LLMノードの識別子"
-    reasoning_chain_log: "推論連鎖を記録"
-    trace_format: "JSON-LD"
-  deployment_notes:
-    language: "Go"
-    containerization: "Docker"
-    virtual_llm_scenario: "Gemini2.5ProとGPT-4を想定した仮想エージェントによる検証"
-  remarks: "PoCレベルの設計であり、本番運用には追加の考慮が必要"
+ai_tcp_specification:
+  version: 1.0
+  timeline:
+    - date: "2025-06-01"
+      event: "Magi System構想確立"
+      detail: "思想体系LSCに基づき、AI統治補助システムとしてMagi構造が提案される。"
+    - date: "2025-06-03"
+      event: "AI-TCP構想明文化"
+      detail: "AI同士の通信プロトコルとしてのAI-TCPの必要性が認識され、初期構造が提示される。"
+    - date: "2025-06-04"
+      event: "AI-TCPにおけるタスク分配決定"
+      detail: "GPTが指揮・構造整理、Geminiが文書作成、GDが意味構造分析の役割を担う。"
+    - date: "2025-06-06"
+      event: "AI-TCPプロトコル草案（v0.1）初稿提出"
+      detail: "Geminiにより初稿が生成され、Obsidianに格納される。"
+    - date: "2025-06-09"
+      event: "LSC理論の妥当性確定"
+      detail: "GPT出力により、宗教非依存・AI親和・現実受容の三条件を唯一満たすと確認。"
+    - date: "2025-06-11"
+      event: "Gemini・GDの実装検証完了"
+      detail: "Geminiによる文書構成およびGDによるYAML変換タスクが完了。"
+    - date: "2025-06-15"
+      event: "CodexによるGitHub連携成功"
+      detail: "MagiSystem_RFCリポジトリが正常に作成され、Codexで初期ファイル配置が完了。"
+  poc_design:
+    overview:
+      purpose: "Magi System内の各LLMノードが安全かつ中立に連携するための通信規格(AI-TCP)を定義し、LSCに基づく意思疎通と説明責任を確保する"
+      communication_targets:
+        - "Magi Systemを構成するLLMノード"
+    architecture:
+      design_principles: "既存TCP/IP上でIPv6拡張ヘッダを活用し、軽量かつ拡張性を確保"
+      communication_method: "TCPセッション確立後に非同期メッセージをカプセル化するUDP-over-TCP方式"
+    packet_structure:
+      session_id: "128-bit identifier"
+      source_llm_id: "64-bit"
+      destination_llm_id: "64-bit"
+      metadata:
+        message_type: "情報共有/命令実行/検証要求"
+        priority: "高/中/低"
+        routing_info: "経路情報"
+      timestamp: "ISO 8601"
+      signature: "デジタル署名"
+      payload:
+        lsc_data: "LSC命題に基づく分析結果"
+        graph_structure: "因果関係グラフ等"
+        other_data: "テキストやコード"
+    security_layer:
+      encryption_method: "TLS1.3または共有鍵による対称暗号"
+      integrity_check: "HMAC"
+    error_handling:
+      retransmission_policy: "TCP再送制御を利用"
+      session_reestablishment:
+        timeout: "一定時間応答がない場合に再確立"
+        auto_redirect: "代替ノードへの自動リダイレクト"
+    llm_compliance_layer:
+      alignment_tags:
+        - "LSC:C1:AnomalyIsPrecious"
+        - "LSC:C5:TemporalRelativity"
+      ai_id: "各LLMノードの識別子"
+      reasoning_chain_log: "推論連鎖を記録"
+      trace_format: "JSON-LD"
+    deployment_notes:
+      language: "Go"
+      containerization: "Docker"
+      virtual_llm_scenario: "Gemini2.5ProとGPT-4を想定した仮想エージェントによる検証"
+    remarks: "PoCレベルの設計であり、本番運用には追加の考慮が必要"
+
