@@ -7,6 +7,7 @@
 スキーマ検証を完了したファイルを配置します。
 - ai_tcp_timeline.yaml – 制定経緯タイムライン（構文・内容確認済）
 - ai_tcp_poc_design.yaml – PoC設計概要（構文OK、構造要整形）
+- ai_tcp_dmc_trace.yaml – DMC PoCセッションのトレース定義
 
 ## plain_yaml/
 - [その他ファイル名] – 構文はOKだが構造化完了していないファイル

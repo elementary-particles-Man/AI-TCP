@@ -1,0 +1,40 @@
+meta:
+  title: AI-TCP DMCセッション PoCトレース定義
+  version: 1.0
+  created: 2025-06-18
+  author: Codex
+  based_on: rfc_ai_tcp_dmc_poc.md
+  related_docs:
+    - docs/poc_design/direct_mental_care.yaml
+    - dmc_sessions/trace_packets/gemini_dmc_session_20250618.md
+
+session_trace:
+  session_id: dmc_20250618_1410_s01
+  phases:
+    - id: dmc_phase1
+      name: 共感と具体化
+      packets:
+        - packet_id: s01
+          intent: 共感と問題の具体化誘導
+          trace_link: dmc_phase1→empathy→specify_pressure_context
+    - id: dmc_phase2
+      name: 自己受容と再構成
+      packets:
+        - packet_id: s02
+          intent: 感情の受容と自己効力感の想起
+          trace_link: dmc_phase2→acceptance→recall_self_efficacy
+        - packet_id: s03
+          intent: 完璧主義の再定義と行動への焦点
+          trace_link: dmc_phase2→reframe_perfectionism→focus_on_action
+    - id: dmc_phase3
+      name: スキルの再評価
+      packets:
+        - packet_id: s04
+          intent: 行動パターンの再解釈と能力の自覚促進
+          trace_link: dmc_phase3→skill_reframing→strength_awareness
+    - id: dmc_phase4
+      name: 肯定感の強化と次への橋渡し
+      packets:
+        - packet_id: s05
+          intent: 肯定感の強化とセッションの着地、次への橋渡し
+          trace_link: dmc_phase4→affirmation→bridge_to_next_session
