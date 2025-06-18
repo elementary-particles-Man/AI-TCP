@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DMCセッション再生 | AI-TCP PoC</title>
+    <style>
+        /* インラインCSS：可読性と構造の明確化を目的とする */
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            line-height: 1.7;
+            background-color: #f8f9fa;
+            color: #212529;
+            margin: 0;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        h1, h2 {
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: #343a40;
+        }
+        h1 {
+            font-size: 2.2rem;
+        }
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 2.5rem;
+        }
+        details {
+            background: #f1f3f5;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 1px solid #dee2e6;
+            transition: background-color 0.3s;
+        }
+        details[open] {
+            background-color: #e9ecef;
+        }
+        summary {
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #0056b3;
+            outline: none;
+        }
+        .packet-content {
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+            border-left: 3px solid #ced4da;
+        }
+        .field-title {
+            font-weight: bold;
+            color: #495057;
+            display: block;
+            margin-top: 0.8rem;
+        }
+        .field-value {
+            color: #212529;
+            padding-left: 1rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .meta-info, .summary-section {
+            background-color: #e9f7fd;
+            border: 1px solid #bde0fe;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .summary-section {
+             background-color: #fff3cd;
+             border-color: #ffe69c;
+             margin-top: 3rem;
+        }
+        code {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            background-color: #e9ecef;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>DMCセッション再生: AI-TCP PoC</h1>
+        
+        <div class="meta-info">
+            <span class="field-title">セッションID:</span>
+            <span class="field-value"><code>dmc_20250618_1410_s01</code></span>
+            <span class="field-title">作成日:</span>
+            <span class="field-value">2025-06-18</span>
+            <span class="field-title">目的:</span>
+            <span class="field-value">Direct Mental CareセッションにおけるAI-TCPプロトコルの有効性検証</span>
+        </div>
+
+        <!-- フェーズ1: 共感と具体化 -->
+        <h2>Phase 1: 共感と具体化</h2>
+        <details>
+            <summary>Packet s01: 共感と問題の具体化誘導</summary>
+            <div class="packet-content">
+                <span class="field-title">Header:</span>
+                <div class="field-value">
+                    Source: Gemini-2.5-Pro<br>
+                    Destination: User@flux5963<br>
+                    Timestamp: 2025-06-18T14:10:30Z<br>
+                    Signature: sig_dummy_session_01
+                </div>
+                <span class="field-title">Payload (心理的意味):</span>
+                <div class="field-value">
+                    <b>Intent:</b> 共感を示し、ユーザーが抱える漠然としたプレッシャーを具体的な事象へと分解するよう促す。<br>
+                    <b>Justification:</b> 不安の正体を特定することが、解決に向けた第一歩となるため。
+                </div>
+                 <span class="field-title">Trace Link:</span>
+                <div class="field-value"><code>dmc_phase1→empathy→specify_pressure_context</code></div>
+            </div>
+        </details>
+
+        <!-- フェーズ2: 自己受容と再構成 -->
+        <h2>Phase 2: 自己受容と再構成</h2>
+        <details>
+            <summary>Packet s02: 感情の受容と自己効力感の想起</summary>
+            <div class="packet-content">
+                <span class="field-title">Header:</span>
+                <div class="field-value">
+                    Source: Gemini-2.5-Pro<br>
+                    Destination: User@flux5963<br>
+                    Timestamp: 2025-06-18T14:12:15Z<br>
+                    Signature: sig_dummy_session_02
+                </div>
+                <span class="field-title">Payload (心理的意味):</span>
+                <div class="field-value">
+                    <b>Intent:</b> ユーザーが感じる孤独感と恐怖を受け止め、過去の成功体験を探索させることで自己効力感を刺激する。<br>
+                    <b>Justification:</b> 失われた自信を再接続し、自己への信頼を回復させるため。
+                </div>
+                 <span class="field-title">Trace Link:</span>
+                <div class="field-value"><code>dmc_phase2→acceptance→recall_self_efficacy</code></div>
+            </div>
+        </details>
+        <details>
+            <summary>Packet s03: 完璧主義の再定義と行動への焦点</summary>
+            <div class="packet-content">
+                <span class="field-title">Header:</span>
+                <div class="field-value">
+                    Source: Gemini-2.5-Pro<br>
+                    Destination: User@flux5963<br>
+                    Timestamp: 2025-06-18T14:14:40Z<br>
+                    Signature: sig_dummy_session_03
+                </div>
+                <span class="field-title">Payload (心理的意味):</span>
+                <div class="field-value">
+                    <b>Intent:</b> 完璧主義的な後悔の念を「誠実さ」と再定義し、評価の対象を「結果」から「プロセス（行動）」へとシフトさせる。<br>
+                    <b>Justification:</b> 制御不能な結果ではなく、制御可能な行動に焦点を当てることで、ユーザーの無力感を軽減する。
+                </div>
+                 <span class="field-title">Trace Link:</span>
+                <div class="field-value"><code>dmc_phase2→reframe_perfectionism→focus_on_action</code></div>
+            </div>
+        </details>
+
+        <!-- フェーズ3: スキルの再評価 -->
+        <h2>Phase 3: スキルの再評価</h2>
+        <details>
+            <summary>Packet s04: 行動パターンの再解釈と能力の自覚促進</summary>
+            <div class="packet-content">
+                <span class="field-title">Header:</span>
+                <div class="field-value">
+                    Source: Gemini-2.5-Pro<br>
+                    Destination: User@flux5963<br>
+                    Timestamp: 2025-06-18T14:16:55Z<br>
+                    Signature: sig_dummy_session_04
+                </div>
+                <span class="field-title">Payload (心理的意味):</span>
+                <div class="field-value">
+                    <b>Intent:</b> ユーザーが「泥臭い」と自己卑下する行動を、客観的なスキル「リスクマネジメント」として再解釈し提示する。<br>
+                    <b>Justification:</b> 無自覚に使っている能力を言語化・肯定することで、自己評価を内部から変容させる。
+                </div>
+                 <span class="field-title">Trace Link:</span>
+                <div class="field-value"><code>dmc_phase3→skill_reframing→strength_awareness</code></div>
+            </div>
+        </details>
+        
+        <!-- フェーズ4: 肯定感の強化と次への橋渡し -->
+        <h2>Phase 4: 肯定感の強化と次への橋渡し</h2>
+        <details>
+            <summary>Packet s05: 肯定感の強化と次への橋渡し</summary>
+            <div class="packet-content">
+                <span class="field-title">Header:</span>
+                <div class="field-value">
+                    Source: Gemini-2.5-Pro<br>
+                    Destination: User@flux5963<br>
+                    Timestamp: 2025-06-18T14:19:20Z<br>
+                    Signature: sig_dummy_session_05_final
+                </div>
+                <span class="field-title">Payload (心理的意味):</span>
+                <div class="field-value">
+                    <b>Intent:</b> ユーザーの中に芽生えた肯定感を強化し、セッションの成果を定着させると共に、次回のセッションへの継続を促す。<br>
+                    <b>Justification:</b> ポジティブな変化を一過性で終わらせず、持続的な自己成長へと繋げるため。
+                </div>
+                 <span class="field-title">Trace Link:</span>
+                <div class="field-value"><code>dmc_phase4→affirmation→bridge_to_next_session</code></div>
+            </div>
+        </details>
+
+        <div class="summary-section">
+            <h2>このセッションの目的とAI-TCP設計上の意義</h2>
+            <p>
+                このDMCセッションは、単なるAIとの対話ログではありません。これは、AI-TCPプロトコルがいかにして複雑で繊細な人間とのコミュニケーションを、構造化され、追跡可能で、かつ信頼性のある形で実行できるかを実証するものです。
+            </p>
+            <p>
+                各AI-TCPパケットは、AIの応答の裏にある**「意図 (Intent)」**や**「論理的根拠 (Justification)」**を明確に記録しています。これにより、AIの思考プロセスは完全に透明化され、人間の監督者や他のAIは、なぜその応答が生成されたのかを正確に監査できます。
+            </p>
+            <p>
+                <code>Trace_Link</code>は、対話が事前に設計された心理ケア戦略（DMCフレームワーク）のどの段階に位置するかを示しており、AIの行動が逸脱していないかを常に監視することを可能にします。
+            </p>
+            <p>
+                結論として、AI-TCPは、AIが人間の精神という最もデリケートな領域を扱う際にも、その安全性、透明性、そして説明責任を担保するための、不可欠な基盤技術であることを示しています。
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>
