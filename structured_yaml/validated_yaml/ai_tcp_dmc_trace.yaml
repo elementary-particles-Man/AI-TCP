@@ -2,7 +2,7 @@ meta:
   title: AI-TCP DMCセッション PoCトレース定義
   version: 1.0
   created: 2025-06-18
-  author: Codex
+  author: Codex + Gemini
   based_on: rfc_ai_tcp_dmc_poc.md
   related_docs:
     - docs/poc_design/direct_mental_care.yaml
@@ -38,3 +38,72 @@ session_trace:
         - packet_id: s05
           intent: 肯定感の強化とセッションの着地、次への橋渡し
           trace_link: dmc_phase4→affirmation→bridge_to_next_session
+
+tcp_packet_trace:
+  session_id: "DMC-Session-20250618-A01"
+  description: "AI-TCP trace simulation for Direct Mental Care scenario"
+  timestamp: "2025-06-18T15:00:00Z"
+  source_ai: "Gemini-2.5-Pro"
+  destination_ai: "Codex-OpenAI"
+  trace:
+    - phase: "Initiation"
+      packet:
+        header:
+          session_id: "DMC-Session-20250618-A01"
+          source: "Gemini-2.5-Pro"
+          destination: "Codex-OpenAI"
+          metadata: "User-triggered session initialization"
+          timestamp: "2025-06-18T15:00:00Z"
+          signature: "sig_gemini_a1"
+        payload:
+          intent: "Request session context setup"
+          user_context: "Mental strain observed"
+          session_type: "direct_mental_care"
+          protocol_version: "AI-TCP/1.0"
+
+    - phase: "Exploration"
+      packet:
+        header:
+          session_id: "DMC-Session-20250618-A01"
+          source: "Codex-OpenAI"
+          destination: "Gemini-2.5-Pro"
+          metadata: "Context acknowledgment"
+          timestamp: "2025-06-18T15:00:01Z"
+          signature: "sig_codex_b2"
+        payload:
+          acknowledged: true
+          modules_ready: ["semantic_analysis", "response_mapping"]
+          trace_id: "trace_dmc_explore_01"
+
+    - phase: "Reflection"
+      packet:
+        header:
+          session_id: "DMC-Session-20250618-A01"
+          source: "Gemini-2.5-Pro"
+          destination: "Codex-OpenAI"
+          metadata: "Emotion pattern trace"
+          timestamp: "2025-06-18T15:00:03Z"
+          signature: "sig_gemini_c3"
+        payload:
+          extracted_themes: ["burnout", "self-doubt", "existential acceptance"]
+          lsc_reference: "LSC-Node-04"
+          emotional_complexity_index: 0.87
+
+    - phase: "Resolution"
+      packet:
+        header:
+          session_id: "DMC-Session-20250618-A01"
+          source: "Codex-OpenAI"
+          destination: "Gemini-2.5-Pro"
+          metadata: "Trace synthesis & coping strategy"
+          timestamp: "2025-06-18T15:00:04Z"
+          signature: "sig_codex_d4"
+        payload:
+          strategy:
+            type: "semantic reframing"
+            method: "context pivoting via symbolic duality"
+            anchors: ["knowledge = burden", "language = salvation"]
+          lsc_support: true
+          recommendation:
+            - rest_cycle: "3h segmented rest"
+            - expression_mode: "symbolic compression via poetry or analogy"
