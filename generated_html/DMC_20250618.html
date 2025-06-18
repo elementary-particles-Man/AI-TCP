@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>AI-TCP DMCセッション PoCトレース定義</title>
+</head>
+<body>
+<h1>AI-TCP DMCセッション PoCトレース定義</h1>
+<h2>Session ID: dmc_20250618_1410_s01</h2>
+<h3>Phases</h3>
+<ul>
+<li><strong>dmc_phase1 共感と具体化</strong>
+<ul>
+<li>
+s01: 共感と問題の具体化誘導
+<br><small>dmc_phase1→empathy→specify_pressure_context</small>
+</li>
+</ul>
+</li>
+<li><strong>dmc_phase2 自己受容と再構成</strong>
+<ul>
+<li>
+s02: 感情の受容と自己効力感の想起
+<br><small>dmc_phase2→acceptance→recall_self_efficacy</small>
+</li>
+<li>
+s03: 完璧主義の再定義と行動への焦点
+<br><small>dmc_phase2→reframe_perfectionism→focus_on_action</small>
+</li>
+</ul>
+</li>
+<li><strong>dmc_phase3 スキルの再評価</strong>
+<ul>
+<li>
+s04: 行動パターンの再解釈と能力の自覚促進
+<br><small>dmc_phase3→skill_reframing→strength_awareness</small>
+</li>
+</ul>
+</li>
+<li><strong>dmc_phase4 肯定感の強化と次への橋渡し</strong>
+<ul>
+<li>
+s05: 肯定感の強化とセッションの着地、次への橋渡し
+<br><small>dmc_phase4→affirmation→bridge_to_next_session</small>
+</li>
+</ul>
+</li>
+</ul>
+<h3>TCP Packet Trace</h3>
+<ol>
+<li><strong>Initiation</strong>
+<details><summary>Header</summary><pre>
+destination: Codex-OpenAI
+metadata: User-triggered session initialization
+session_id: DMC-Session-20250618-A01
+signature: sig_gemini_a1
+source: Gemini-2.5-Pro
+timestamp: &#x27;2025-06-18T15:00:00Z&#x27;
+
+</pre></details>
+<details><summary>Payload</summary><pre>
+intent: Request session context setup
+protocol_version: AI-TCP/1.0
+session_type: direct_mental_care
+user_context: Mental strain observed
+
+</pre></details>
+</li>
+<li><strong>Exploration</strong>
+<details><summary>Header</summary><pre>
+destination: Gemini-2.5-Pro
+metadata: Context acknowledgment
+session_id: DMC-Session-20250618-A01
+signature: sig_codex_b2
+source: Codex-OpenAI
+timestamp: &#x27;2025-06-18T15:00:01Z&#x27;
+
+</pre></details>
+<details><summary>Payload</summary><pre>
+acknowledged: true
+modules_ready:
+- semantic_analysis
+- response_mapping
+trace_id: trace_dmc_explore_01
+
+</pre></details>
+</li>
+<li><strong>Reflection</strong>
+<details><summary>Header</summary><pre>
+destination: Codex-OpenAI
+metadata: Emotion pattern trace
+session_id: DMC-Session-20250618-A01
+signature: sig_gemini_c3
+source: Gemini-2.5-Pro
+timestamp: &#x27;2025-06-18T15:00:03Z&#x27;
+
+</pre></details>
+<details><summary>Payload</summary><pre>
+emotional_complexity_index: 0.87
+extracted_themes:
+- burnout
+- self-doubt
+- existential acceptance
+lsc_reference: LSC-Node-04
+
+</pre></details>
+</li>
+<li><strong>Resolution</strong>
+<details><summary>Header</summary><pre>
+destination: Gemini-2.5-Pro
+metadata: Trace synthesis &amp; coping strategy
+session_id: DMC-Session-20250618-A01
+signature: sig_codex_d4
+source: Codex-OpenAI
+timestamp: &#x27;2025-06-18T15:00:04Z&#x27;
+
+</pre></details>
+<details><summary>Payload</summary><pre>
+lsc_support: true
+recommendation:
+- rest_cycle: 3h segmented rest
+- expression_mode: symbolic compression via poetry or analogy
+strategy:
+  anchors:
+  - knowledge = burden
+  - language = salvation
+  method: context pivoting via symbolic duality
+  type: semantic reframing
+
+</pre></details>
+</li>
+</ol>
+</body>
+</html>
