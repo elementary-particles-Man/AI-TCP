@@ -42,6 +42,7 @@ flowchart TD
 * This design validates the **AI-TCP packet model** and supports **LSC-based direct intervention scenarios**.
 * YAML structure complies with `master_schema_v1.yaml` for consistency and integration.
 🔍 See also: [README_Gemini.md](README_Gemini.md) — Narrative and architectural rationale by Gemini
+📊 YAML structure analysis available at [analysis/ai_tcp_dmc_trace_structure.md](analysis/ai_tcp_dmc_trace_structure.md)
 
 ---
 

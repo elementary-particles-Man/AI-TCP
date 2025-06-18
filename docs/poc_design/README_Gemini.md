@@ -54,3 +54,10 @@ session\_trace:
 * **自動化とスケーラビリティ:** 対話生成からレポート出力までのパイプラインは、一度定義されれば完全に自動化可能です。これにより、大量のセッションデータを効率的に処理・分析することができ、システムのスケーラビリティを確保します。  
 * **関心の分離（Separation of Concerns）:** データ（YAML）、ロジック（Python）、プレゼンテーション（HTML）を明確に分離するアーキテクチャは、ソフトウェア工学におけるベストプラクティスです。これにより、各コンポーネントの独立した開発・保守・改良が容易になります。
 📄 This document complements the PoC structural overview: [README.md](README.md)
+📊 YAML structure analysis available at [analysis/ai_tcp_dmc_trace_structure.md](analysis/ai_tcp_dmc_trace_structure.md)
+
+---
+
+© 2025 [elementary-particles-Man](https://github.com/elementary-particles-Man)
+
+---
