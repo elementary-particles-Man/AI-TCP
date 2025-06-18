@@ -1,0 +1,39 @@
+meta:
+  task_id: codex_dmc_codegen_20250618
+  title: DMCセッションリプレイ用コード生成
+  created: 2025-06-18
+  assigned_to: Codex
+  based_on:
+    - structured_yaml/validated_yaml/ai_tcp_dmc_trace.yaml
+    - original_docs/rfc_ai_tcp_dmc_poc.md
+  objective: >
+    Geminiが作成予定の「DMCセッションHTMLリプレイ表示」に連動し、
+    YAMLファイルを読み込んでWeb表示形式に変換するための変換スクリプト（PythonまたはGo）を実装する。
+
+requirements:
+  - 入力ファイル: structured_yaml/validated_yaml/ai_tcp_dmc_trace.yaml
+  - 出力ファイル: docs/session_replay/DMC_20250618.html
+  - 使用言語: Python または Go（選択自由）
+  - ライブラリ制限: 可能な限り標準ライブラリを使用（例外時は明記）
+
+description: |
+  このタスクでは、DMCセッションのAI-TCPトレースをYAMLから読み取り、
+  HTML形式で視覚的に表示可能な静的Webページを自動生成するスクリプトを構築する。
+  Geminiが生成する静的HTMLと機能的に同一内容を出力することが目標。
+
+  主な内容構成：
+    - メタ情報：セッションID、作成日、参加AI
+    - 各フェーズ表示：Phase名＋Packetの要約
+    - Packet詳細：header＋payload
+    - 末尾に要約と今後の展開
+
+outputs:
+  - path: tools/gen_dmc_html.py
+    description: YAMLファイルをHTMLに変換するスクリプト
+  - path: generated_html/DMC_20250618.html
+    description: スクリプト実行結果として出力されるHTML（Gemini作成版と内容一致すること）
+
+notes:
+  - GeminiによるHTML出力との相違点があれば記録して報告
+  - LSCやAI-TCPの構造意義が反映されているか確認
+
