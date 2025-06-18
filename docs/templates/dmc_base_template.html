@@ -1,0 +1,136 @@
+<!-- 
+  AI-TCP HTML Template for Direct Mental Care Sessions
+  Author: Gemini 2.5 Pro
+  Date: 2025-06-18
+  Usage: Used by gen_dmc_html.py to render structured YAML into readable HTML
+-->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DMC Session Replay</title>
+    <style>
+        /* * 軽量な埋め込みCSS
+         * 外部ライブラリ不要、モバイルフレンドリ、可読性重視 
+         */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #fefefe;
+            color: #333;
+            margin: 0;
+            padding: 1rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+        }
+        h1 {
+            font-size: 2rem;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .session-meta {
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+        .session-meta strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        .session-phases details {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: box-shadow 0.2s ease-in-out;
+        }
+        .session-phases details:hover {
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        .session-phases summary {
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 1rem;
+            cursor: pointer;
+            outline: none;
+        }
+        .phase-content {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            border-top: 1px solid #eee;
+        }
+        .phase-content ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .phase-content li {
+            padding: 0.5rem 0;
+        }
+        code {
+            font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+            background-color: #eee;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>DMCセッション記録</h1>
+
+        <section class="session-meta">
+            <!-- 
+                gen_dmc_html.pyにより、このセクションにセッションのメタ情報が動的に挿入されます。
+                例：session_id, timestamp, source, destination など
+            -->
+            <strong>セッションID:</strong> <span id="session-id-placeholder">{session_id}</span><br>
+            <strong>タイムスタンプ:</strong> <span id="timestamp-placeholder">{timestamp}</span><br>
+            <strong>参加者:</strong> <span id="participants-placeholder">{source_ai} &harr; {destination_user}</span>
+        </section>
+
+        <section class="session-phases">
+            <!-- 
+                gen_dmc_html.pyにより、このセクションに各フェーズのdetails要素がループで動的に生成・挿入されます。
+                以下は、生成される要素の一例です。
+            -->
+            <details>
+                <summary>🧩 Phase 1: 共感と具体化</summary>
+                <div class="phase-content">
+                    <ul>
+                        <li><strong>Intent:</strong> 共感と問題の具体化誘導</li>
+                        <li><strong>Trace Link:</strong> <code>dmc_phase1→empathy→specify_pressure_context</code></li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>🧩 Phase 2: 自己受容と再構成</summary>
+                <div class="phase-content">
+                    <ul>
+                        <li><strong>Intent:</strong> 感情の受容と自己効力感の想起</li>
+                        <li><strong>Trace Link:</strong> <code>dmc_phase2→acceptance→recall_self_efficacy</code></li>
+                        <!-- このフェーズに複数のパケットがある場合は、li要素が追加されます -->
+                    </ul>
+                </div>
+            </details>
+            
+            <!-- 他のフェーズも同様に続きます -->
+
+        </section>
+
+    </div>
+
+</body>
+</html>
