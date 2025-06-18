@@ -15,10 +15,11 @@ import re
 import sys
 import webbrowser
 from html import escape
+from datetime import datetime
 
 import yaml
 
-DEFAULT_INPUT = "structured_yaml/validated_yaml/ai_tcp_dmc_trace.yaml"
+DEFAULT_INPUT = "docs/poc_design/direct_mental_care.yaml"
 DEFAULT_OUTPUT = None
 DEFAULT_TEMPLATE = "html_templates/dmc_base_template.html"
 
@@ -32,44 +33,82 @@ def load_yaml(path: Path) -> dict:
 
 
 def validate_yaml(data: dict) -> dict:
-    """Validate required keys for session_trace and packets."""
-    if "session_trace" not in data or not isinstance(data["session_trace"], dict):
-        raise ValueError("missing 'session_trace'")
-    session = data["session_trace"]
-    if "session_id" not in session:
-        raise ValueError("'session_id' is required in session_trace")
-    if "phases" not in session or not isinstance(session["phases"], list):
-        raise ValueError("'phases' list is required in session_trace")
+    """Basic structural validation. Missing fields are allowed."""
+    if not isinstance(data, dict):
+        raise ValueError("YAML root must be a mapping")
 
-    for ph in session["phases"]:
-        if "packets" not in ph or not isinstance(ph["packets"], list):
-            raise ValueError(f"phase {ph.get('id')} missing packets list")
-        for pkt in ph["packets"]:
-            for key in ("packet_id", "intent", "trace_link"):
-                if key not in pkt:
-                    raise ValueError(f"packet missing '{key}' in phase {ph.get('id')}")
+    session = data.get("session_trace")
+    if session and not isinstance(session, dict):
+        raise ValueError("'session_trace' must be a mapping if present")
+    if session:
+        phases = session.get("phases")
+        if phases and not isinstance(phases, list):
+            raise ValueError("'phases' must be a list")
+        if phases:
+            for ph in phases:
+                if not isinstance(ph, dict):
+                    raise ValueError("each phase must be a mapping")
+                packets = ph.get("packets")
+                if packets and not isinstance(packets, list):
+                    raise ValueError("'packets' must be a list")
 
-    # tcp_packet_trace is optional but if present should have 'trace'
     tcp = data.get("tcp_packet_trace")
-    if tcp and (not isinstance(tcp, dict) or "trace" not in tcp):
-        raise ValueError("invalid 'tcp_packet_trace' format")
+    if tcp and not isinstance(tcp, dict):
+        raise ValueError("'tcp_packet_trace' must be a mapping if present")
+
     return data
 
 
 def parse_yaml_trace(yaml_data: dict):
-    """Extract session header and phases."""
-    header = yaml_data.get("meta") or yaml_data["session_trace"].get("session_id")
-    phases = yaml_data["session_trace"].get("phases", [])
+    """Extract session header and phases if available."""
+    session = yaml_data.get("session_trace") or {}
+    header = yaml_data.get("meta") or session.get("session_id")
+    phases = session.get("phases", []) if isinstance(session, dict) else []
     tcp_trace = yaml_data.get("tcp_packet_trace")
     return header, phases, tcp_trace
 
 
-def generate_body_html(header, phases, tcp_trace) -> str:
+def compute_max_depth(node, current: int = 1) -> int:
+    """Recursively compute maximum depth of a YAML structure."""
+    if isinstance(node, dict):
+        if not node:
+            return current
+        return max(compute_max_depth(v, current + 1) for v in node.values())
+    if isinstance(node, list):
+        if not node:
+            return current
+        return max(compute_max_depth(v, current + 1) for v in node)
+    return current
+
+
+def generate_summary_html(data: dict) -> str:
+    """Create summary HTML section with meta information."""
+    session = data.get("session") or data.get("session_trace") or {}
+    start_time = session.get("start_time")
+    session_id = session.get("id") or session.get("session_id")
+    version = data.get("meta", {}).get("version")
+    depth = compute_max_depth(data)
+
+    parts: list[str] = ["<section class='summary'>"]
+    if start_time:
+        parts.append(f"<h2>セッション日時: {escape(str(start_time))}</h2>")
+    if session_id:
+        parts.append(f"<h2>セッションID: {escape(str(session_id))}</h2>")
+    if version:
+        parts.append(f"<h2>AI-TCPバージョン: {escape(str(version))}</h2>")
+    parts.append(f"<h2>YAML最大階層: {depth}</h2>")
+    parts.append("</section>")
+    return "\n".join(parts)
+
+
+def generate_body_html(header, phases, tcp_trace, summary_html: str = "") -> str:
     parts: list[str] = []
     session_title = header.get("title") if isinstance(header, dict) else None
     session_id = header.get("session_id") if isinstance(header, dict) else header
 
     parts.append("<h1>DMCセッション トレース</h1>")
+    if summary_html:
+        parts.append(summary_html)
     if session_title:
         parts.append(f"<h2>{escape(session_title)}</h2>")
     if session_id:
@@ -149,7 +188,10 @@ def parse_args() -> argparse.Namespace:
 
 def extract_date(session_id: str) -> str:
     match = re.search(r"(\d{8})", session_id)
-    return match.group(1) if match else session_id
+    if match:
+        return match.group(1)
+    from datetime import datetime
+    return datetime.now().strftime("%Y%m%d")
 
 
 def main() -> None:
@@ -159,9 +201,10 @@ def main() -> None:
 
     data = validate_yaml(load_yaml(input_path))
     header, phases, tcp_trace = parse_yaml_trace(data)
+    summary_html = generate_summary_html(data)
 
     session_id = header.get("session_id") if isinstance(header, dict) else header
-
+    
     output_path: Path
     if args.output:
         output_path = Path(args.output)
@@ -172,7 +215,7 @@ def main() -> None:
     if output_path.exists() and not args.force:
         raise FileExistsError(f"{output_path} already exists. Use --force to overwrite")
 
-    body_html = generate_body_html(header, phases, tcp_trace)
+    body_html = generate_body_html(header, phases, tcp_trace, summary_html)
     final_html = apply_template(body_html, template_path, str(session_id))
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
