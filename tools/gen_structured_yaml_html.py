@@ -1,41 +1,54 @@
 import os
 import yaml
 from pathlib import Path
+from jinja2 import Environment, FileSystemLoader
 
 # === 設定 ===
 INPUT_DIR = Path("structured_yaml")
+TEMPLATE_PATH = Path("docs/templates")
+TEMPLATE_FILE = "html_template_base.html"
 OUTPUT_FILE = Path("generated_html/structured_yaml_index.html")
 OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
 
-# === HTMLヘッダ ===
-html_parts = [
-    "<html>",
-    "<head><meta charset='utf-8'><title>Structured YAML Index</title></head>",
-    "<body>",
-    "<h1>🧾 AI-TCP Structured YAML Session Index</h1>",
-    "<p>This page lists PoC YAML sessions for AI-TCP protocols.</p>"
-]
+# === テンプレート読み込み ===
+env = Environment(loader=FileSystemLoader(TEMPLATE_PATH))
+template = env.get_template(TEMPLATE_FILE)
 
-# === YAMLファイルの読み込みとHTML化 ===
+# === YAMLファイルの読み込み ===
+sessions = []
+
 for yaml_file in sorted(INPUT_DIR.glob("*.yaml")):
     with open(yaml_file, "r", encoding="utf-8") as f:
         try:
             data = yaml.safe_load(f)
-            html_parts.append(f"<h2>{yaml_file.name}</h2><ul>")
-            html_parts.append(f"<li><b>Phase:</b> {data.get('phase', 'N/A')}</li>")
-            html_parts.append(f"<li><b>Agent:</b> {data.get('agent', 'N/A')}</li>")
-            html_parts.append(f"<li><b>Tags:</b> {', '.join(data.get('tags', []))}</li>")
-            html_parts.append(f"<li><b>Input:</b> {data.get('data', {}).get('input', 'N/A')}</li>")
-            html_parts.append(f"<li><b>Output:</b> {data.get('data', {}).get('output', 'N/A')}</li>")
-            html_parts.append("</ul>")
+            sessions.append({
+                "filename": yaml_file.name,
+                "phase": data.get("phase", "N/A"),
+                "agent": data.get("agent", "N/A"),
+                "tags": data.get("tags", []),
+                "input": data.get("data", {}).get("input", "N/A"),
+                "output": data.get("data", {}).get("output", "N/A"),
+            })
         except yaml.YAMLError as e:
-            html_parts.append(f"<p>Error parsing {yaml_file.name}: {e}</p>")
+            sessions.append({
+                "filename": yaml_file.name,
+                "phase": "Error",
+                "agent": "Parse Error",
+                "tags": [],
+                "input": f"Error parsing YAML: {e}",
+                "output": "N/A"
+            })
 
-# === HTMLフッタ ===
-html_parts.extend(["</body>", "</html>"])
+# === テンプレート適用 ===
+html = template.render(
+    title="Structured YAML Index",
+    header="🧾 AI-TCP Structured YAML Session Index",
+    description="This page lists PoC YAML sessions for AI-TCP protocols.",
+    sessions=sessions
+)
 
-# === HTML出力 ===
+# === 出力 ===
 with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-    f.write("\n".join(html_parts))
+    f.write(html)
 
 print(f"✅ HTML generated at {OUTPUT_FILE}")
