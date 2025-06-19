@@ -59,5 +59,14 @@ See full schema details at:
 
 ---
 
-*Last updated: 2025-06-20*
+## 🌐 View as HTML / HTMLで閲覧
 
+Generated HTML version of these YAML sessions is available at:
+
+➡️ [`generated_html/structured_yaml_index.html`](../generated_html/structured_yaml_index.html)
+
+HTML版では、すべてのセッションがスタイル付きで一覧表示されます。
+
+---
+
+*Last updated: 2025-06-20*
