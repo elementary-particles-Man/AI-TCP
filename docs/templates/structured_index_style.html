@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="../../html_templates/structured_index_style.css">
+</head>
+<body>
+  <h1>{{ header }}</h1>
+  <p>{{ description }}</p>
+
+  {% for session in sessions %}
+    <div class="session-block">
+      <h2>{{ session.filename }}</h2>
+      <ul>
+        <li><b>Phase:</b> {{ session.phase }}</li>
+        <li><b>Agent:</b> {{ session.agent }}</li>
+        <li><b>Tags:</b> {{ session.tags | join(", ") }}</li>
+        <li><b>Input:</b> {{ session.input }}</li>
+        <li><b>Output:</b> {{ session.output }}</li>
+      </ul>
+    </div>
+  {% endfor %}
+
+</body>
+</html>
