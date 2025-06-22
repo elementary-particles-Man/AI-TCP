@@ -10,6 +10,7 @@ This index lists all RFC drafts currently available in the `docs/rfc_drafts/` di
 | 002    | LLM Compliance                    | Requirements for model compliance            |
 | 003    | AI-TCP Packet Format              | Packet structure and flow definition         |
 | 004    | Reasoning & Thought Chain Logging| Logging inference and reasoning paths        |
+| 014    | Unified Metadata Format          | Standardized metadata headers for packets   |
 
 ## 🛠️ Metadata
 
