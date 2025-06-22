@@ -1,66 +1,48 @@
-# 📘 AI-TCP Documentation Hub  
-# 📘 AI-TCP ドキュメント・ハブ
+# AI-TCP: Overview and Documentation Index
 
-Welcome to the documentation section of the **AI-TCP (Artificial Intelligence Transfer Control Protocol)** project.  
-このディレクトリは、**AI-TCP（人工知能転送制御プロトコル）** プロジェクトの技術文書セクションです。
+## 🧠 Project Purpose
 
-It contains formal specifications, templates, and style guides that support development and verification of AI-TCP use cases.  
-ここには、AI-TCPのユースケース開発と検証を支える仕様書・テンプレート・スタイルガイドが含まれます。
+**AI-TCP** (Artificial Intelligence - Thought Communication Protocol) is a framework for defining and structuring interoperable communication protocols between AI agents. The aim is to formalize shared memory, inference traces, and high-level intention exchange through structured YAML, RFC-style documentation, and executable PoC examples.
 
 ---
 
-## 📚 Available Documents  
-## 📚 利用可能なドキュメント一覧
+## 📂 Directory Overview
 
-### 🔖 Specifications  
-### 🔖 プロトコル仕様
-
-- [`spec/ai_tcp_protocol_spec.md`](./spec/ai_tcp_protocol_spec.md)  
-  → Core protocol specification (RFC-style).  
-  → AI-TCPの中核仕様（RFC形式に準拠）
-
-- [`spec/ai_tcp_poc_mapping.md`](./spec/ai_tcp_poc_mapping.md)  
-  → Traceability mapping between protocol and PoC components.  
-  → プロトコル要素とPoC実装の対応関係マップ
+| Folder               | Purpose                                                                 |
+|----------------------|-------------------------------------------------------------------------|
+| `rfc_drafts/`        | Drafts of AI-TCP specifications in RFC format                          |
+| `structured_yaml/`   | YAML schemas for protocol definitions and compliance structure          |
+| `dmc_sessions/`      | Use-case PoC sessions (Direct Mental Care etc.)                         |
+| `generated_html/`    | Automatically rendered versions of YAML and documents                   |
+| `scripts/`           | Utility scripts for generation, validation, or conversion tasks         |
 
 ---
 
-### 🧩 Templates  
-### 🧩 テンプレート
+## 📘 RFC Drafts
 
-- [`templates/readme_summary_template_ja.md`](./templates/readme_summary_template_ja.md)  
-  → README structure template (Japanese).  
-  → 日本語版のREADME構造テンプレート
+The RFC documents provide the foundational standards for AI-TCP:
 
-- [`templates/readme_summary_template_en.md`](./templates/readme_summary_template_en.md)  
-  → README structure template (English).  
-  → 英語版のREADME構造テンプレート
+| RFC       | Title                                | Purpose                                           |
+|-----------|--------------------------------------|--------------------------------------------------|
+| RFC001    | Overview                             | Defines AI-TCP core concepts and architecture    |
+| RFC002    | LLM Compliance Protocol              | Outlines compliance interface for LLMs           |
+| RFC003    | Packet Structure                     | YAML packet and Graph Payload specifications     |
+| RFC004    | Reasoning Trace Format               | Structure for thought chains and inference logs  |
 
----
-
-### ✍️ Style Guides  
-### ✍️ 翻訳・記述スタイルガイド
-
-- [`translation_style_guide.md`](./translation_style_guide.md)  
-  → Multilingual translation and terminology consistency rules.  
-  → 多言語翻訳および用語統一のためのガイドライン
+See [rfc_drafts/README.md](./rfc_drafts/README.md) for detailed navigation.
 
 ---
 
-## 🚀 Purpose  
-## 🚀 このフォルダの目的
+## 🚧 Work in Progress
 
-This directory serves as a **single entry point** for all formal documentation used in:  
-このフォルダは、以下の目的で使用される全ドキュメントの**統一的な参照入口**です：
-
-- Protocol validation / プロトコル検証  
-- YAML structure verification / YAML構造の整合チェック  
-- Multilingual consistency / 多言語出力の一貫性維持  
-- Cross-phase PoC traceability / フェーズ横断的なPoCのトレース確保
-
-Please ensure to update this file when new documentation is added.  
-新しいドキュメントを追加した際は、このREADMEの更新を忘れずに行ってください。
+- Finalize PoC validation for `dmc_sessions/`
+- Complete Graph Payload specifications in Mermaid
+- Automate Index/README generation
+- Validate YAML↔HTML↔Graph synchronization
 
 ---
 
-_Last updated: 2025-06-20_
+## 🔁 See Also
+
+- [rfc_index.md](./rfc_drafts/rfc_index.md) – RFC document registry
+- [master_schema_v1.yaml](../schemas/master_schema_v1.yaml) – Root schema structure
