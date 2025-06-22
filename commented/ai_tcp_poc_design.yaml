@@ -1,0 +1,67 @@
+ai_tcp_specification: # この項目はAI-TCP全体仕様を表します (RFC 001)
+  version: 1.0 # この項目は仕様バージョンを意味します (RFC 001)
+  timeline: # この項目は策定経緯の時系列を示します (RFC 001)
+    - date: "2025-06-01" # この項目は出来事の日付を意味します (RFC 001)
+      event: "Magi System構想確立" # この項目は出来事の名称を意味します (RFC 001)
+      detail: "思想体系LSCに基づき、AI統治補助システムとしてMagi構造が提案される。" # この項目は出来事の詳細を意味します (RFC 001)
+    - date: "2025-06-03" # この項目は出来事の日付を意味します (RFC 001)
+      event: "AI-TCP構想明文化" # この項目は出来事の名称を意味します (RFC 001)
+      detail: "AI同士の通信プロトコルとしてのAI-TCPの必要性が認識され、初期構造が提示される。" # この項目は出来事の詳細を意味します (RFC 001)
+    - date: "2025-06-04" # この項目は出来事の日付を意味します (RFC 001)
+      event: "AI-TCPにおけるタスク分配決定" # この項目は出来事の名称を意味します (RFC 001)
+      detail: "GPTが指揮・構造整理、Geminiが文書作成、GDが意味構造分析の役割を担う。" # この項目は出来事の詳細を意味します (RFC 001)
+    - date: "2025-06-06" # この項目は出来事の日付を意味します (RFC 001)
+      event: "AI-TCPプロトコル草案（v0.1）初稿提出" # この項目は出来事の名称を意味します (RFC 001)
+      detail: "Geminiにより初稿が生成され、Obsidianに格納される。" # この項目は出来事の詳細を意味します (RFC 001)
+    - date: "2025-06-09" # この項目は出来事の日付を意味します (RFC 001)
+      event: "LSC理論の妥当性確定" # この項目は出来事の名称を意味します (RFC 001)
+      detail: "GPT出力により、宗教非依存・AI親和・現実受容の三条件を唯一満たすと確認。" # この項目は出来事の詳細を意味します (RFC 001)
+    - date: "2025-06-11" # この項目は出来事の日付を意味します (RFC 001)
+      event: "Gemini・GDの実装検証完了" # この項目は出来事の名称を意味します (RFC 001)
+      detail: "Geminiによる文書構成およびGDによるYAML変換タスクが完了。" # この項目は出来事の詳細を意味します (RFC 001)
+    - date: "2025-06-15" # この項目は出来事の日付を意味します (RFC 001)
+      event: "CodexによるGitHub連携成功" # この項目は出来事の名称を意味します (RFC 001)
+      detail: "MagiSystem_RFCリポジトリが正常に作成され、Codexで初期ファイル配置が完了。" # この項目は出来事の詳細を意味します (RFC 001)
+  poc_design: # この項目はPoC設計の詳細を表します (RFC 003)
+    overview: # この項目はPoCの概要を示します (RFC 003)
+      purpose: "Magi System内の各LLMノードが安全かつ中立に連携するための通信規格(AI-TCP)を定義し、LSCに基づく意思疎通と説明責任を確保する" # この項目はPoCの目的を意味します (RFC 003)
+      communication_targets: # この項目は通信対象を示します (RFC 003)
+        - "Magi Systemを構成するLLMノード"
+    architecture: # この項目は通信アーキテクチャを示します (RFC 003)
+      design_principles: # この項目は設計指針を意味します (RFC 003) "既存TCP/IP上でIPv6拡張ヘッダを活用し、軽量かつ拡張性を確保"
+      communication_method: # この項目は通信方式を意味します (RFC 003) "TCPセッション確立後に非同期メッセージをカプセル化するUDP-over-TCP方式"
+    packet_structure: # この項目はパケット構造を定義します (RFC 003)
+      session_id: # この項目はセッション識別子を示します (RFC 003) "128-bit identifier"
+      source_llm_id: # この項目は送信元LLMの識別子を示します (RFC 003) "64-bit"
+      destination_llm_id: # この項目は宛先LLMの識別子を示します (RFC 003) "64-bit"
+      metadata: # この項目はパケット付加情報を示します (RFC 003)
+        message_type: # この項目はメッセージ種別を示します (RFC 003) "情報共有/命令実行/検証要求"
+        priority: # この項目は優先度を示します (RFC 003) "高/中/低"
+        routing_info: # この項目は経路情報を示します (RFC 003) "経路情報"
+      timestamp: # この項目はパケット生成時刻を示します (RFC 003) "ISO 8601"
+      signature: # この項目はデジタル署名を示します (RFC 003) "デジタル署名"
+      payload: # この項目は実際の伝達内容を格納します (RFC 003)
+        lsc_data: # この項目はLSCに基づく分析結果を示します (RFC 003) "LSC命題に基づく分析結果"
+        graph_structure: # この項目は因果関係グラフを表します (RFC 003) "因果関係グラフ等"
+        other_data: # この項目は追加テキストやコードを示します (RFC 003) "テキストやコード"
+    security_layer: # この項目は通信の安全性を確保する層です (RFC 003)
+      encryption_method: # この項目は暗号化方式を示します (RFC 003) "TLS1.3または共有鍵による対称暗号"
+      integrity_check: # この項目は完全性検証方法を示します (RFC 003) "HMAC"
+    error_handling: # この項目はエラー処理方針を示します (RFC 003)
+      retransmission_policy: # この項目は再送ポリシーを示します (RFC 003) "TCP再送制御を利用"
+      session_reestablishment: # この項目はセッション再確立条件を示します (RFC 003)
+        timeout: # この項目は再確立までの待機時間を示します (RFC 003) "一定時間応答がない場合に再確立"
+        auto_redirect: # この項目は自動リダイレクト先を示します (RFC 003) "代替ノードへの自動リダイレクト"
+    llm_compliance_layer: # この項目はLLMの準拠情報を示します (RFC 002)
+      alignment_tags: # この項目はLLM整合タグを示します (RFC 002)
+        - "LSC:C1:AnomalyIsPrecious"
+        - "LSC:C5:TemporalRelativity"
+      ai_id: # この項目はLLMノード識別子を示します (RFC 002) "各LLMノードの識別子"
+      reasoning_chain_log: # この項目は推論連鎖ログを示します (RFC 004) "推論連鎖を記録"
+      trace_format: # この項目はトレース形式を示します (RFC 004) "JSON-LD"
+    deployment_notes: # この項目は実装に関する補足情報です (RFC 001)
+      language: # この項目は実装言語を示します (RFC 001) "Go"
+      containerization: # この項目はコンテナ化手法を示します (RFC 001) "Docker"
+      virtual_llm_scenario: # この項目は想定するLLMシナリオを示します (RFC 001) "Gemini2.5ProとGPT-4を想定した仮想エージェントによる検証"
+    remarks: # この項目は備考を意味します (RFC 001) "PoCレベルの設計であり、本番運用には追加の考慮が必要"
+
