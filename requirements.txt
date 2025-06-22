@@ -1,1 +1,2 @@
-pyppeteer
+Jinja2>=3.0
+PyYAML>=5.4
