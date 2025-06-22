@@ -1,48 +1,34 @@
-# AI-TCP: Overview and Documentation Index
+# 🗂️ AI-TCP Documentation Overview
 
-## 🧠 Project Purpose
-
-**AI-TCP** (Artificial Intelligence - Thought Communication Protocol) is a framework for defining and structuring interoperable communication protocols between AI agents. The aim is to formalize shared memory, inference traces, and high-level intention exchange through structured YAML, RFC-style documentation, and executable PoC examples.
+This directory contains the complete documentation structure for the AI-TCP project, including its specifications, drafts, and session data.
 
 ---
 
-## 📂 Directory Overview
+## 📘 Structure
 
-| Folder               | Purpose                                                                 |
-|----------------------|-------------------------------------------------------------------------|
-| `rfc_drafts/`        | Drafts of AI-TCP specifications in RFC format                          |
-| `structured_yaml/`   | YAML schemas for protocol definitions and compliance structure          |
-| `dmc_sessions/`      | Use-case PoC sessions (Direct Mental Care etc.)                         |
-| `generated_html/`    | Automatically rendered versions of YAML and documents                   |
-| `scripts/`           | Utility scripts for generation, validation, or conversion tasks         |
+### `/rfc_drafts/`
+Contains all RFC specification drafts related to AI-TCP.
 
----
+- `000_rfc_index.md` – Index listing of all RFC drafts
+- `001_ai_tcp_overview.md` – Overview of AI-TCP philosophy and architecture
+- `002_llm_compliance.md` – Requirements for language model compliance
+- `003_packet_definition.md` – Technical definition of TCP-style packet structures
+- `004_thought_logging.md` – Specification for inference and reasoning chain logging
 
-## 📘 RFC Drafts
+### `/dmc_sessions/`
+Contains YAML and HTML logs of real-time AI mental session use cases for PoC.
 
-The RFC documents provide the foundational standards for AI-TCP:
-
-| RFC       | Title                                | Purpose                                           |
-|-----------|--------------------------------------|--------------------------------------------------|
-| RFC001    | Overview                             | Defines AI-TCP core concepts and architecture    |
-| RFC002    | LLM Compliance Protocol              | Outlines compliance interface for LLMs           |
-| RFC003    | Packet Structure                     | YAML packet and Graph Payload specifications     |
-| RFC004    | Reasoning Trace Format               | Structure for thought chains and inference logs  |
-
-See [rfc_drafts/README.md](./rfc_drafts/README.md) for detailed navigation.
+### `/assets/`
+Visual aids and diagrams to supplement RFC documents (e.g., Mermaid exports)
 
 ---
 
-## 🚧 Work in Progress
+## 🛠️ Contribution Guide
 
-- Finalize PoC validation for `dmc_sessions/`
-- Complete Graph Payload specifications in Mermaid
-- Automate Index/README generation
-- Validate YAML↔HTML↔Graph synchronization
+- **Update RFCs** via `rfc_drafts/`
+- **Link from index** in `000_rfc_index.md`
+- All additions should follow Markdown RFC format guidelines
 
 ---
 
-## 🔁 See Also
-
-- [rfc_index.md](./rfc_drafts/rfc_index.md) – RFC document registry
-- [master_schema_v1.yaml](../schemas/master_schema_v1.yaml) – Root schema structure
+_Last updated: 2025-06-22_
