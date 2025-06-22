@@ -46,8 +46,17 @@ data:
 HTML形式で各セッションを見るには以下を参照してください：
 
 ➡️ [`generated_html/dmc_mental_001.html`](../generated_html/dmc_mental_001.html) など
+> 出力は [`html_template_dmc.html`](../docs/templates/html_template_dmc.html) により生成されます.
 
-> 出力は [`html_template_dmc.html`](../docs/templates/html_template_dmc.html) により生成されます。
+### 🛠 Convert YAML to HTML
+
+If you have YAML session files in this directory, run:
+
+```bash
+python scripts/convert_dmc_sessions_to_html.py
+```
+
+The resulting HTML files will be saved under `html_sessions/`.
 
 ---
 
