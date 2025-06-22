@@ -38,7 +38,7 @@ This directory contains structured YAML definitions for the AI-TCP protocol and 
 python tools/validate_structured_yaml.py structured_yaml/<file>.yaml
 ```
 
-- 成功時：✅ Valid structured YAML.
+- 成功時：✅ Valid YAML.
 - 失敗時：❌ Missing required keys: ...
 
 ---
