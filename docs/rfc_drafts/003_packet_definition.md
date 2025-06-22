@@ -26,8 +26,7 @@ To formalize the structure and minimal required fields for any AI-TCP-compliant 
 ```yaml
 graph_payload:
   graph_structure: |
-    mmd:flowchart TD
-    A --> B
+    [Mermaid構造は mermaid/003_packet_definition.mmd.md に移動されました]
 
 reasoning_trace:
   - step: 1

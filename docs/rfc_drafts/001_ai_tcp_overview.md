@@ -28,11 +28,7 @@ Each packet includes reasoning logs, profile metadata, and an embedded graph str
 ```yaml
 graph_payload:
   graph_structure: |
-    mmd:flowchart TD
-    A[Start] --> B[Parse YAML]
-    B --> C{Validate}
-    C --> D[Reasoning]
-    D --> E[Reply]
+    [Mermaid構造は mermaid/001_ai_tcp_overview.mmd.md に移動されました]
 reasoning_trace:
   - step: 1
     input: Receive
@@ -67,11 +63,7 @@ The `graph_payload.graph_structure` field is expected to contain a Mermaid-forma
 ```yaml
 graph_payload:
   graph_structure: |
-    mmd:flowchart TD
-    A[User Request] --> B[Parse Request]
-    B --> C{Intent Detected?}
-    C -- Yes --> D[Route Internally]
-    C -- No --> E[Ask Clarification]
+    [Mermaid構造は mermaid/001_ai_tcp_overview.mmd.md に移動されました]
 reasoning_trace:
   - step: 1
     input: "Request: Book a flight"
