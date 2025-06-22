@@ -1,0 +1,23 @@
+# YAMLテンプレート：Graph構造例
+
+template_basic:
+  graph_payload:
+    graph_structure: |
+      mmd:flowchart TD
+      A[Start] --> B[Process] --> C[End]
+
+template_feedback_loop:
+  graph_payload:
+    graph_structure: |
+      mmd:flowchart TD
+      A --> B
+      B --> C
+      C -->|Feedback| B
+
+template_decision_tree:
+  graph_payload:
+    graph_structure: |
+      mmd:flowchart TD
+      A --> B{Check}
+      B -->|Yes| C[Action]
+      B -->|No| D[Cancel]
