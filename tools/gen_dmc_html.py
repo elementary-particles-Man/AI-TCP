@@ -49,36 +49,40 @@ def generate_html_from_yaml(yaml_path: Path) -> None:
     yaml_text = yaml.dump(data, allow_unicode=True, sort_keys=False)
     mermaid = _extract_mermaid(_find_graph_structure(data))
 
-    html_parts = ["<!DOCTYPE html>", "<html lang=\"en\">", "<head>",
-                  "  <meta charset=\"UTF-8\">",
-                  f"  <title>{yaml_path.name}</title>",
-                  "  <script src=\"https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js\"></script>",
-                  "  <script src=\"https://cdn.plot.ly/plotly-latest.min.js\"></script>",
-                  "  <style>",
-                  "    body {font-family: sans-serif; display: flex; margin: 0; padding: 1em;}",
-                  "    .main {flex: 2; margin-right: 1em;}",
-                  "    .side {flex: 1; overflow-x: auto; background:#f8f8f8; padding:1em;border-radius:8px;}",
-                  "    pre {white-space: pre-wrap;}",
-                  "  </style>",
-                  "</head>", "<body>"]
+    html_parts = [
+        "<!DOCTYPE html>",
+        "<html lang=\"en\">",
+        "<head>",
+        "  <meta charset=\"UTF-8\">",
+        f"  <title>{yaml_path.name}</title>",
+        "  <script src=\"https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js\"></script>",
+        "  <style>",
+        "    body {font-family: sans-serif; display: flex; margin: 0; padding: 1em;}",
+        "    .yaml {flex: 1; margin-right: 1em; overflow-x: auto; background:#f8f8f8; padding:1em; border-radius:8px;}",
+        "    .mermaid {flex: 2;}",
+        "    pre {white-space: pre-wrap;}",
+        "  </style>",
+        "</head>",
+        "<body>"
+    ]
 
-    if mermaid:
-        html_parts.append("  <div class=\"main\">")
-        html_parts.append("    <h2>Mermaid Graph</h2>")
-        html_parts.append("    <!-- Mermaid描画部 -->")
-        html_parts.append("    <pre><code class=\"language-mermaid\">")
-        html_parts.append(mermaid)
-        html_parts.append("    </code></pre>")
-        html_parts.append("  </div>")
-    else:
-        html_parts.append("  <div class=\"main\"><p>No Mermaid graph found.</p></div>")
-
-    html_parts.append("  <div class=\"side\">")
+    html_parts.append("  <div class=\"yaml\">")
     html_parts.append("    <h2>YAML</h2>")
     html_parts.append("    <pre>")
     html_parts.append(yaml_text)
     html_parts.append("    </pre>")
     html_parts.append("  </div>")
+
+    if mermaid:
+        html_parts.append("  <div class=\"mermaid\">")
+        html_parts.append("    <h3>Graph構造:</h3>")
+        html_parts.append("    <!-- Mermaid構造部 -->")
+        html_parts.append("    <pre><code class=\"language-mermaid\">")
+        html_parts.append(mermaid)
+        html_parts.append("    </code></pre>")
+        html_parts.append("  </div>")
+    else:
+        html_parts.append("  <div class=\"mermaid\"><p>Mermaid構造は含まれていません</p></div>")
 
     html_parts.append("  <script>mermaid.initialize({startOnLoad:true});</script>")
     html_parts.append("</body></html>")
