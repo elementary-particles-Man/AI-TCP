@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 import yaml
 
 YAML_DIR = Path("structured_yaml")
@@ -40,6 +41,8 @@ def generate_html(yaml_path: Path) -> None:
 
     mermaid_blocks = _find_mermaid_blocks(data)
 
+    rel_path = os.path.relpath(yaml_path, OUTPUT_DIR)
+
     html_lines = [
         "<!DOCTYPE html>",
         "<html lang=\"en\">",
@@ -54,6 +57,7 @@ def generate_html(yaml_path: Path) -> None:
         "</head>",
         "<body>",
         f"  <h2>Structure Map: {yaml_path.name}</h2>",
+        f"  <p><a href=\"{rel_path}\" target=\"_blank\">🔗 YAMLソースを見る</a></p>",
     ]
 
     if mmd_content:
