@@ -32,6 +32,7 @@ The rise of autonomous reasoning agents (LLMs) demands not just AI safety, but A
 
 - `graph_sender.py` – copy an AI-TCP YAML packet to `output/` and print its graph and trace.
 - `graph_receiver.py` – watch `input/` for YAML packets and display their contents.
+- `scripts/convert_mmd_to_images.js` – render `.mmd` files from `mermaid_blocks/` into `generated_images/` using [mmdc](https://github.com/mermaid-js/mermaid-cli).
 
 ## 🌐 Future Goals
 
