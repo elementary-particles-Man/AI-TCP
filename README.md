@@ -28,6 +28,11 @@ The rise of autonomous reasoning agents (LLMs) demands not just AI safety, but A
 - ✉️ `ai_tcp_timeline.yaml`: Governance and development chronology
 - 🏗️ `ai_tcp_poc_design.yaml`: Architecture and packet structure
 
+## 🛠 CLI Tools
+
+- `graph_sender.py` – copy an AI-TCP YAML packet to `output/` and print its graph and trace.
+- `graph_receiver.py` – watch `input/` for YAML packets and display their contents.
+
 ## 🌐 Future Goals
 
 - RFC submission to IETF
