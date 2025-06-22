@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+import os
 import re
 import sys
 import webbrowser
@@ -216,6 +217,8 @@ def main() -> None:
         raise FileExistsError(f"{output_path} already exists. Use --force to overwrite")
 
     body_html = generate_body_html(header, phases, tcp_trace, summary_html)
+    rel_link = os.path.relpath(input_path, output_path.parent)
+    body_html = f'<p><a href="{rel_link}" target="_blank">🔗 YAMLソースを見る</a></p>\n' + body_html
     final_html = apply_template(body_html, template_path, str(session_id))
 
     output_path.parent.mkdir(parents=True, exist_ok=True)

@@ -69,4 +69,17 @@ HTML版では、すべてのセッションがスタイル付きで一覧表示�
 
 ---
 
+## 🔧 YAML構造の分離方針
+
+- `master_schema_v1.yaml` は AI-TCP 全体の基盤構造です。
+- 必要に応じて以下のように分割してください：
+
+| モジュール名 | 用途 |
+|--------------|------|
+| llm_compliance_v1.yaml | LLM間で守るべき構文と構造要件 |
+| packet_structure_v1.yaml | Packet本体の必須キーと意味記述 |
+| reason_trace_v1.yaml | Reasoningログ（trace）の形式 |
+
+- 分割には `$ref:` コメント記法を用い、上位構造との接続性を保ちます。
+
 *Last updated: 2025-06-20*

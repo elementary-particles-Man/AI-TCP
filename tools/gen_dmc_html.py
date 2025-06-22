@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 import yaml
 
 DMC_DIR = Path("dmc_sessions")
@@ -49,6 +50,8 @@ def generate_html_from_yaml(yaml_path: Path) -> None:
     yaml_text = yaml.dump(data, allow_unicode=True, sort_keys=False)
     mermaid = _extract_mermaid(_find_graph_structure(data))
 
+    rel_path = os.path.relpath(yaml_path, OUTPUT_DIR)
+
     html_parts = [
         "<!DOCTYPE html>",
         "<html lang=\"en\">",
@@ -63,7 +66,8 @@ def generate_html_from_yaml(yaml_path: Path) -> None:
         "    pre {white-space: pre-wrap;}",
         "  </style>",
         "</head>",
-        "<body>"
+        "<body>",
+        f"  <p><a href=\"{rel_path}\" target=\"_blank\">🔗 YAMLソースを見る</a></p>"
     ]
 
     html_parts.append("  <div class=\"yaml\">")
