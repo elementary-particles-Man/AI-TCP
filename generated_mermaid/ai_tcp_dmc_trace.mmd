@@ -1,0 +1,210 @@
+flowchart TD
+  root["root"]
+  n0["meta:"]
+  root --> n0
+  n1["title: AI-TCP DMCセッション PoCトレース定義"]
+  n0 --> n1
+  n2["version: 1.0"]
+  n0 --> n2
+  n3["created: 2025-06-18"]
+  n0 --> n3
+  n4["author: Codex + Gemini"]
+  n0 --> n4
+  n5["based_on: rfc_ai_tcp_dmc_poc.md"]
+  n0 --> n5
+  n6["related_docs:"]
+  n0 --> n6
+  n7["- docs/poc_design/direct_mental_care.yaml"]
+  n6 --> n7
+  n8["- dmc_sessions/trace_packets/gemini_dmc_session_20250618.md"]
+  n6 --> n8
+  n9["session_trace:"]
+  root --> n9
+  n10["session_id: dmc_20250618_1410_s01"]
+  n9 --> n10
+  n11["phases:"]
+  n9 --> n11
+  n12["- id: dmc_phase1"]
+  n11 --> n12
+  n13["name: 共感と具体化"]
+  n12 --> n13
+  n14["packets:"]
+  n12 --> n14
+  n15["- packet_id: s01"]
+  n14 --> n15
+  n16["intent: 共感と問題の具体化誘導"]
+  n15 --> n16
+  n17["trace_link: dmc_phase1→empathy→specify_pressure_context"]
+  n15 --> n17
+  n18["- id: dmc_phase2"]
+  n11 --> n18
+  n19["name: 自己受容と再構成"]
+  n18 --> n19
+  n20["packets:"]
+  n18 --> n20
+  n21["- packet_id: s02"]
+  n20 --> n21
+  n22["intent: 感情の受容と自己効力感の想起"]
+  n21 --> n22
+  n23["trace_link: dmc_phase2→acceptance→recall_self_efficacy"]
+  n21 --> n23
+  n24["- packet_id: s03"]
+  n20 --> n24
+  n25["intent: 完璧主義の再定義と行動への焦点"]
+  n24 --> n25
+  n26["trace_link: dmc_phase2→reframe_perfectionism→focus_on_action"]
+  n24 --> n26
+  n27["- id: dmc_phase3"]
+  n11 --> n27
+  n28["name: スキルの再評価"]
+  n27 --> n28
+  n29["packets:"]
+  n27 --> n29
+  n30["- packet_id: s04"]
+  n29 --> n30
+  n31["intent: 行動パターンの再解釈と能力の自覚促進"]
+  n30 --> n31
+  n32["trace_link: dmc_phase3→skill_reframing→strength_awareness"]
+  n30 --> n32
+  n33["- id: dmc_phase4"]
+  n11 --> n33
+  n34["name: 肯定感の強化と次への橋渡し"]
+  n33 --> n34
+  n35["packets:"]
+  n33 --> n35
+  n36["- packet_id: s05"]
+  n35 --> n36
+  n37["intent: 肯定感の強化とセッションの着地、次への橋渡し"]
+  n36 --> n37
+  n38["trace_link: dmc_phase4→affirmation→bridge_to_next_session"]
+  n36 --> n38
+  n39["tcp_packet_trace:"]
+  root --> n39
+  n40["session_id: \"DMC-Session-20250618-A01\""]
+  n39 --> n40
+  n41["description: \"AI-TCP trace simulation for Direct Mental Care scenario\""]
+  n39 --> n41
+  n42["timestamp: \"2025-06-18T15:00:00Z\""]
+  n39 --> n42
+  n43["source_ai: \"Gemini-2.5-Pro\""]
+  n39 --> n43
+  n44["destination_ai: \"Codex-OpenAI\""]
+  n39 --> n44
+  n45["trace:"]
+  n39 --> n45
+  n46["- phase: \"Initiation\""]
+  n45 --> n46
+  n47["packet:"]
+  n46 --> n47
+  n48["header:"]
+  n47 --> n48
+  n49["session_id: \"DMC-Session-20250618-A01\""]
+  n48 --> n49
+  n50["source: \"Gemini-2.5-Pro\""]
+  n48 --> n50
+  n51["destination: \"Codex-OpenAI\""]
+  n48 --> n51
+  n52["metadata: \"User-triggered session initialization\""]
+  n48 --> n52
+  n53["timestamp: \"2025-06-18T15:00:00Z\""]
+  n48 --> n53
+  n54["signature: \"sig_gemini_a1\""]
+  n48 --> n54
+  n55["payload:"]
+  n47 --> n55
+  n56["intent: \"Request session context setup\""]
+  n55 --> n56
+  n57["user_context: \"Mental strain observed\""]
+  n55 --> n57
+  n58["session_type: \"direct_mental_care\""]
+  n55 --> n58
+  n59["protocol_version: \"AI-TCP/1.0\""]
+  n55 --> n59
+  n60["- phase: \"Exploration\""]
+  n45 --> n60
+  n61["packet:"]
+  n60 --> n61
+  n62["header:"]
+  n61 --> n62
+  n63["session_id: \"DMC-Session-20250618-A01\""]
+  n62 --> n63
+  n64["source: \"Codex-OpenAI\""]
+  n62 --> n64
+  n65["destination: \"Gemini-2.5-Pro\""]
+  n62 --> n65
+  n66["metadata: \"Context acknowledgment\""]
+  n62 --> n66
+  n67["timestamp: \"2025-06-18T15:00:01Z\""]
+  n62 --> n67
+  n68["signature: \"sig_codex_b2\""]
+  n62 --> n68
+  n69["payload:"]
+  n61 --> n69
+  n70["acknowledged: true"]
+  n69 --> n70
+  n71["modules_ready: [\"semantic_analysis\", \"response_mapping\"]"]
+  n69 --> n71
+  n72["trace_id: \"trace_dmc_explore_01\""]
+  n69 --> n72
+  n73["- phase: \"Reflection\""]
+  n45 --> n73
+  n74["packet:"]
+  n73 --> n74
+  n75["header:"]
+  n74 --> n75
+  n76["session_id: \"DMC-Session-20250618-A01\""]
+  n75 --> n76
+  n77["source: \"Gemini-2.5-Pro\""]
+  n75 --> n77
+  n78["destination: \"Codex-OpenAI\""]
+  n75 --> n78
+  n79["metadata: \"Emotion pattern trace\""]
+  n75 --> n79
+  n80["timestamp: \"2025-06-18T15:00:03Z\""]
+  n75 --> n80
+  n81["signature: \"sig_gemini_c3\""]
+  n75 --> n81
+  n82["payload:"]
+  n74 --> n82
+  n83["extracted_themes: [\"burnout\", \"self-doubt\", \"existential acceptance\"]"]
+  n82 --> n83
+  n84["lsc_reference: \"LSC-Node-04\""]
+  n82 --> n84
+  n85["emotional_complexity_index: 0.87"]
+  n82 --> n85
+  n86["- phase: \"Resolution\""]
+  n45 --> n86
+  n87["packet:"]
+  n86 --> n87
+  n88["header:"]
+  n87 --> n88
+  n89["session_id: \"DMC-Session-20250618-A01\""]
+  n88 --> n89
+  n90["source: \"Codex-OpenAI\""]
+  n88 --> n90
+  n91["destination: \"Gemini-2.5-Pro\""]
+  n88 --> n91
+  n92["metadata: \"Trace synthesis & coping strategy\""]
+  n88 --> n92
+  n93["timestamp: \"2025-06-18T15:00:04Z\""]
+  n88 --> n93
+  n94["signature: \"sig_codex_d4\""]
+  n88 --> n94
+  n95["payload:"]
+  n87 --> n95
+  n96["strategy:"]
+  n95 --> n96
+  n97["type: \"semantic reframing\""]
+  n96 --> n97
+  n98["method: \"context pivoting via symbolic duality\""]
+  n96 --> n98
+  n99["anchors: [\"knowledge = burden\", \"language = salvation\"]"]
+  n96 --> n99
+  n100["lsc_support: true"]
+  n95 --> n100
+  n101["recommendation:"]
+  n95 --> n101
+  n102["- rest_cycle: \"3h segmented rest\""]
+  n101 --> n102
+  n103["- expression_mode: \"symbolic compression via poetry or analogy\""]
+  n101 --> n103
