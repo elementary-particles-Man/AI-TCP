@@ -51,3 +51,53 @@ AI-TCP is intended for inter-AI communication, not for user-facing authenticatio
 - YAML Core 1.2
 - Mermaid JS 10+
 - AI-TCP PoC 2025
+
+## 7. Graph Semantics
+The `graph_payload.graph_structure` field is expected to contain a Mermaid-formatted graph, prefixed by `mmd:`.
+
+- **Nodes** represent conceptual or reasoning units (e.g., Parse, Validate, Evaluate).
+- **Edges** represent logical or causal transitions between those units.
+- **Branching** may represent reasoning forks or conditional paths.
+- The graph provides an interpretable mental model that complements the reasoning_trace log.
+
+## 8. Example Interaction
+
+### Sending Packet Example
+
+```yaml
+graph_payload:
+  graph_structure: |
+    mmd:flowchart TD
+    A[User Request] --> B[Parse Request]
+    B --> C{Intent Detected?}
+    C -- Yes --> D[Route Internally]
+    C -- No --> E[Ask Clarification]
+reasoning_trace:
+  - step: 1
+    input: "Request: Book a flight"
+    output: "Intent = travel_request"
+llm_profile:
+  id: GPT-4
+  version: 2025.3
+```
+
+### Expected Response
+
+```yaml
+reasoning_trace:
+  - step: 2
+    input: "Intent = travel_request"
+    output: "Proceed to flight search handler"
+auto_redirect:
+  type: module_call
+  next_module: flight_booking
+```
+
+## 9. Future Work
+
+Future extensions to AI-TCP may include:
+
+- Diagnostics packets (e.g., failure trace embedding)
+- Enhanced security & signature fields
+- Cross-LLM negotiation for task ownership
+- Lifecycle hooks for model confidence tracking
