@@ -10,3 +10,4 @@
 - [008_interop_extensibility.md](008_interop_extensibility.md) - RFC 008: Interoperability & Extensibility (Updated: 2025-06-22)
 - [009_ai_operational_limits.md](009_ai_operational_limits.md) - RFC 009: AI Operational Limits & Ethics (Updated: 2025-06-22)
 - [011_llm_role_design.md](011_llm_role_design.md) - RFC 011: LLM Role Design in AI-TCP (Updated: 2025-06-22)
+- [012_conflict_resolution.md](012_conflict_resolution.md) - RFC 012: AI Packet Conflict Resolution in AI-TCP (Updated: 2025-06-22)
