@@ -2,71 +2,63 @@
 
 ## 1. Introduction
 
-This document describes how AI-TCP documentation, structured YAML, and trace outputs
-should be organized inside an Obsidian vault. The goal is to maintain
-consistency across vaults so that RFC drafts, session logs, and generated
-artifacts remain navigable and linkable.
+This RFC defines the conventions for organizing AI-TCP documentation, YAML artifacts, and trace outputs within an Obsidian vault. The goal is to maintain consistency across vaults and GitHub so that all protocol artifacts remain easily navigable, linkable, and portable.
 
-## 2. Folder Structure Conventions
+## 2. Folder Structure
 
-- `docs/` – Human-readable documentation and RFC drafts.
-- `structured_yaml/` – YAML session definitions including `validated_yaml/`.
-- `dmc_sessions/` – Direct Mental Care session notes and transcripts.
-- `generated_mermaid/` – Stand-alone Mermaid diagrams (`.mmd.md`).
-- `generated_html/` – HTML renders of RFC documents.
+AI-TCP/
+├─ docs/
+│ ├─ rfc_drafts/ # Markdown-based RFCs (e.g., 001_ai_tcp_overview.md)
+│ ├─ assets/ # Diagrams or images for RFCs
+│ └─ poc_design/ # PoC scenarios and design specs
+├─ structured_yaml/
+│ ├─ validated_yaml/ # Schema-validated YAML examples
+│ └─ tcp_logic_001.yaml # Main YAML definitions
+├─ dmc_sessions/ # Narrative logs and transcripts of DMC sessions
+│ └─ gemini_dmc_session_20250618.md
+├─ generated_mermaid/ # Renderable Mermaid diagrams (.mmd.md)
+├─ generated_html/ # Rendered HTML views of RFCs and payloads
 
-All folders live at the root of the vault so relative links remain stable.
+markdown
+コピーする
+編集する
 
-## 3. File Naming and Indexing
+## 3. File Naming & Indexing
 
-RFC files follow the pattern `NNN_<topic>.md` where `NNN` is a zero padded
-identifier. YAML sessions are named `<session_type>_<domain>_<serial>.yaml` as
-specified in RFC 002. A simple index such as `000_rfc_index.md` lists the RFCs
-and SHOULD be updated whenever new drafts are added.
+- RFC drafts use the pattern `NNN_<topic>.md`, where `NNN` is a zero-padded ID (e.g., `013_obsidian_schema.md`).
+- YAML files follow `<schema>_v<version>.yaml` or `<type>_<domain>_<serial>.yaml` as defined in RFC 002.
+- Mermaid files should use `.mmd.md` suffix to trigger Obsidian rendering.
+- Index files:
+  - `000_rfc_index.md`: manual RFC registry
+  - `README.md` in `rfc_drafts/`: auto-generated via `generate_rfc_toc.py`
 
-## 4. Mermaid Support
+## 4. Mermaid Compatibility
 
-Obsidian renders Mermaid graphs when files use the `.mmd.md` extension.
-All Graph Payloads extracted from YAML SHOULD be saved under
-`generated_mermaid/` using this format so they can be embedded with:
+Mermaid graphs:
+- MUST be placed in `.mmd.md` files under `generated_mermaid/`
+- MUST use `<br>` for line breaks instead of `\n`
+- SHOULD be embedded in YAML payloads using `mmd:` prefix if needed
+- Obsidian renders Mermaid inline with:
 
 ```markdown
 ![[generated_mermaid/001_example.mmd.md]]
-```
+5. Link Conventions
+All internal links MUST be relative.
 
-## 5. Link Conventions
+Use wiki-style syntax for Obsidian links, e.g., [[structured_yaml/dmc_mental_001.yaml|DMC Session]].
 
-Use relative paths for all links. In Obsidian, links may use the wiki-style
-syntax with optional aliases:
+Between RFCs: [[003_packet_definition.md]]
 
-```markdown
-[[structured_yaml/dmc_mental_001.md|DMC Example]]
-```
+Avoid absolute paths to ensure portability across environments.
 
-Links between RFCs SHOULD reference the filename directly, e.g.
-`[[003_packet_definition.md]]`. Avoid absolute paths so the vault can be moved
-without breaking references.
+6. Future Enhancements
+Integration of Obsidian ↔ Git auto-sync scripts
 
-## 6. Example Vault Layout
+Expanded multilingual support in note metadata and aliases
 
-```
-AI-TCP/
-├─ docs/
-│  └─ rfc_drafts/
-│     └─ 013_obsidian_schema.md
-├─ structured_yaml/
-│  ├─ validated_yaml/
-│  └─ tcp_logic_001.md
-├─ dmc_sessions/
-│  └─ gemini_dmc_session_20250618.md
-├─ generated_mermaid/
-└─ generated_html/
-```
-
-This layout allows Obsidian to index all AI-TCP artifacts while keeping
-related assets grouped by type.
-
-## 7. Status
-
+7. Status
 Status: Draft
+
 Last Updated: 2025-06-22
+
+Maintainer: elementary-particles-Man

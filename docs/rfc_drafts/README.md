@@ -1,6 +1,24 @@
-# AI-TCP RFC Drafts
+# RFC Index: AI-TCP Project
 
-- [001_ai_tcp_overview.md](001_ai_tcp_overview.md) - RFC 001: AI-TCP Protocol Overview (Updated: 2025-06-22)
-- [002_llm_compliance.md](002_llm_compliance.md) - RFC 002: LLM Compliance Layer in AI-TCP (Updated: 2025-06-22)
-- [003_packet_definition.md](003_packet_definition.md) - RFC 003: AI-TCP Packet Structure Definition (Updated: 2025-06-22)
-- [004_reasoning_trace_structure.md](004_reasoning_trace_structure.md) - RFC 004: Reasoning Trace & Thought Chain Structure (Updated: 2025-06-22)
+This index lists all RFC drafts currently available in the `docs/rfc_drafts/` directory.
+
+## 🗂️ RFC Listings
+
+| RFC ID | Title                             | Description                                  |
+|--------|-----------------------------------|----------------------------------------------|
+| 001    | AI-TCP Overview                   | General structure and protocol philosophy    |
+| 002    | LLM Compliance                    | Requirements for model compliance            |
+| 003    | AI-TCP Packet Format              | Packet structure and flow definition         |
+| 004    | Reasoning & Thought Chain Logging | Logging inference and reasoning paths        |
+| 005    | Multi-AI Directive Protocol       | Routing high-level instructions across agents|
+| 006    | Protocol Trust Layer              | Identity assurance and auditability          |
+| 007    | Dynamic Context Flow              | Real-time adjustment of shared context       |
+| 008    | Interoperability & Extensibility  | Ensuring modular, forward-compatible design  |
+| 009    | AI Operational Limits & Ethics    | Operational and ethical boundaries           |
+| 012    | AI Packet Conflict Resolution     | Mechanisms for resolving packet-level conflicts |
+| 013    | Obsidian Integration Schema       | Folder and linking conventions for vaults    |
+
+## 🛠️ Metadata
+
+- Last updated: 2025-06-22
+- Maintainer: elementary-particles-Man
