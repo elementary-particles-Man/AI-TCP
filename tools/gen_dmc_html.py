@@ -1,9 +1,13 @@
 from pathlib import Path
 import os
 import yaml
+from jinja2 import Environment, FileSystemLoader, select_autoescape
+import html
 
 DMC_DIR = Path("dmc_sessions")
 OUTPUT_DIR = Path("generated_html/dmc_sessions")
+TEMPLATE_DIR = Path("html_templates")
+TEMPLATE_FILE = "dmc_session_template.html"
 
 # Ensure output directory exists
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -28,7 +32,7 @@ def _find_graph_structure(obj):
     return None
 
 
-def _extract_mermaid(code: str) -> str | None:
+def _extract_mermaid(code: str | None) -> str | None:
     if not isinstance(code, str):
         return None
     if "mmd:" not in code:
@@ -36,68 +40,46 @@ def _extract_mermaid(code: str) -> str | None:
     return code.split("mmd:", 1)[1].strip()
 
 
-def generate_html_from_yaml(yaml_path: Path) -> None:
+def _to_html_tree(obj) -> str:
+    """Convert a Python object to nested <ul> HTML."""
+    if isinstance(obj, dict):
+        items = [f"<li><strong>{html.escape(str(k))}:</strong> {_to_html_tree(v)}</li>" for k, v in obj.items()]
+        return "<ul>" + "".join(items) + "</ul>"
+    elif isinstance(obj, list):
+        items = [f"<li>{_to_html_tree(v)}</li>" for v in obj]
+        return "<ul>" + "".join(items) + "</ul>"
+    else:
+        return html.escape(str(obj))
+
+
+def generate_html_from_yaml(yaml_path: Path, template) -> None:
     output_file = OUTPUT_DIR / f"{yaml_path.stem}.html"
     try:
-        with open(yaml_path, "r", encoding="utf-8") as f:
-            data = yaml.safe_load(f)
+        data = yaml.safe_load(yaml_path.read_text(encoding="utf-8"))
     except yaml.YAMLError as e:
         print(f"❌ Failed to parse {yaml_path.name}: {e}")
-        # write 0 byte file for fail safe
         output_file.write_text("", encoding="utf-8")
         return
 
-    yaml_text = yaml.dump(data, allow_unicode=True, sort_keys=False)
     mermaid = _extract_mermaid(_find_graph_structure(data))
-
+    tree_html = _to_html_tree(data)
     rel_path = os.path.relpath(yaml_path, OUTPUT_DIR)
 
-    html_parts = [
-        "<!DOCTYPE html>",
-        "<html lang=\"en\">",
-        "<head>",
-        "  <meta charset=\"UTF-8\">",
-        f"  <title>{yaml_path.name}</title>",
-        "  <script src=\"https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js\"></script>",
-        "  <style>",
-        "    body {font-family: sans-serif; display: flex; margin: 0; padding: 1em;}",
-        "    .yaml {flex: 1; margin-right: 1em; overflow-x: auto; background:#f8f8f8; padding:1em; border-radius:8px;}",
-        "    .mermaid {flex: 2;}",
-        "    pre {white-space: pre-wrap;}",
-        "  </style>",
-        "</head>",
-        "<body>",
-        f"  <p><a href=\"{rel_path}\" target=\"_blank\">🔗 YAMLソースを見る</a></p>"
-    ]
-
-    html_parts.append("  <div class=\"yaml\">")
-    html_parts.append("    <h2>YAML</h2>")
-    html_parts.append("    <pre>")
-    html_parts.append(yaml_text)
-    html_parts.append("    </pre>")
-    html_parts.append("  </div>")
-
-    if mermaid:
-        html_parts.append("  <div class=\"mermaid\">")
-        html_parts.append("    <h3>Graph構造:</h3>")
-        html_parts.append("    <!-- Mermaid構造部 -->")
-        html_parts.append("    <pre><code class=\"language-mermaid\">")
-        html_parts.append(mermaid)
-        html_parts.append("    </code></pre>")
-        html_parts.append("  </div>")
-    else:
-        html_parts.append("  <div class=\"mermaid\"><p>Mermaid構造は含まれていません</p></div>")
-
-    html_parts.append("  <script>mermaid.initialize({startOnLoad:true});</script>")
-    html_parts.append("</body></html>")
-
-    output_file.write_text("\n".join(html_parts), encoding="utf-8")
+    html_text = template.render(
+        title=yaml_path.name,
+        yaml_tree=tree_html,
+        mermaid=mermaid,
+        yaml_rel_path=rel_path,
+    )
+    output_file.write_text(html_text, encoding="utf-8")
     print(f"✅ Generated {output_file}")
 
 
 def generate_all():
+    env = Environment(loader=FileSystemLoader(TEMPLATE_DIR), autoescape=select_autoescape(["html"]))
+    template = env.get_template(TEMPLATE_FILE)
     for path in sorted(DMC_DIR.glob("*.yaml")):
-        generate_html_from_yaml(path)
+        generate_html_from_yaml(path, template)
 
 
 if __name__ == "__main__":

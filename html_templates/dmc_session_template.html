@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="../html_templates/structured_index_style.css">
+  <style>
+    .yaml-tree ul { list-style-type: none; padding-left: 1rem; }
+    .yaml-tree li { margin: 0.2em 0; }
+    pre.mermaid { background:#f8f8f8; padding:1em; border-radius:8px; overflow-x:auto; }
+  </style>
+</head>
+<body>
+  <div class="session-block">
+    <h1>{{ title }}</h1>
+    <p><a href="{{ yaml_rel_path }}" target="_blank">🔗 YAMLソースを見る</a></p>
+    <div class="yaml-tree">
+      {{ yaml_tree | safe }}
+    </div>
+  </div>
+  {% if mermaid %}
+  <div class="session-block">
+    <h2>Graph構造</h2>
+    <pre class="mermaid">{{ mermaid }}</pre>
+  </div>
+  {% endif %}
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({startOnLoad:true});</script>
+</body>
+</html>
