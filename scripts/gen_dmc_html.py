@@ -20,6 +20,34 @@ from datetime import datetime
 
 import yaml
 
+
+def _find_graph_structure(obj):
+    """Recursively search for graph_payload.graph_structure."""
+    if isinstance(obj, dict):
+        if "graph_payload" in obj:
+            gp = obj["graph_payload"]
+            if isinstance(gp, dict) and "graph_structure" in gp:
+                return gp["graph_structure"]
+        for v in obj.values():
+            result = _find_graph_structure(v)
+            if result is not None:
+                return result
+    elif isinstance(obj, list):
+        for item in obj:
+            result = _find_graph_structure(item)
+            if result is not None:
+                return result
+    return None
+
+
+def _extract_mermaid(code: str | None) -> str | None:
+    if not isinstance(code, str):
+        return None
+    if "mmd:" not in code:
+        return None
+    return code.split("mmd:", 1)[1].strip()
+
+
 DEFAULT_INPUT = "docs/poc_design/direct_mental_care.yaml"
 DEFAULT_OUTPUT = None
 DEFAULT_TEMPLATE = "html_templates/dmc_base_template.html"
@@ -122,7 +150,9 @@ def generate_body_html(header, phases, tcp_trace, summary_html: str = "") -> str
             parts.append("<article>")
             parts.append(f"<h3>{escape(pkt.get('packet_id'))}</h3>")
             parts.append("<ul>")
-            parts.append(f"<li><strong>Intent:</strong> {escape(pkt.get('intent', ''))}</li>")
+            parts.append(
+                f"<li><strong>Intent:</strong> {escape(pkt.get('intent', ''))}</li>"
+            )
             trace = pkt.get("trace_link")
             if trace:
                 parts.append(f"<li><strong>Trace:</strong> {escape(trace)}</li>")
@@ -157,7 +187,10 @@ def generate_body_html(header, phases, tcp_trace, summary_html: str = "") -> str
 def format_payload(payload) -> str:
     """Recursively format payload dict or list as HTML."""
     if isinstance(payload, dict):
-        items = [f"<li><strong>{escape(k)}:</strong> {format_payload(v)}</li>" for k, v in payload.items()]
+        items = [
+            f"<li><strong>{escape(k)}:</strong> {format_payload(v)}</li>"
+            for k, v in payload.items()
+        ]
         return "<ul>" + "".join(items) + "</ul>"
     if isinstance(payload, list):
         items = [f"<li>{format_payload(v)}</li>" for v in payload]
@@ -177,13 +210,29 @@ def apply_template(body_html: str, template_path: Path, session_id: str) -> str:
     return html
 
 
+def save_mermaid(graph_code: str, out_path: Path) -> None:
+    """Save Mermaid code to a `.mmd.md` file wrapped in a code block."""
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write("```mermaid\n")
+        f.write(graph_code)
+        f.write("\n```\n")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate HTML from DMC trace YAML")
     parser.add_argument("--input", "-i", default=DEFAULT_INPUT, help="YAML input path")
     parser.add_argument("--output", "-o", help="HTML output path")
-    parser.add_argument("--template", "-t", default=DEFAULT_TEMPLATE, help="HTML template path")
-    parser.add_argument("--force", action="store_true", help="overwrite existing output")
-    parser.add_argument("--open", action="store_true", help="open generated HTML in browser")
+    parser.add_argument(
+        "--template", "-t", default=DEFAULT_TEMPLATE, help="HTML template path"
+    )
+    parser.add_argument(
+        "--force", action="store_true", help="overwrite existing output"
+    )
+    parser.add_argument("--mmd", help="path to output Mermaid diagram (.mmd.md)")
+    parser.add_argument(
+        "--open", action="store_true", help="open generated HTML in browser"
+    )
     return parser.parse_args()
 
 
@@ -192,6 +241,7 @@ def extract_date(session_id: str) -> str:
     if match:
         return match.group(1)
     from datetime import datetime
+
     return datetime.now().strftime("%Y%m%d")
 
 
@@ -205,7 +255,7 @@ def main() -> None:
     summary_html = generate_summary_html(data)
 
     session_id = header.get("session_id") if isinstance(header, dict) else header
-    
+
     output_path: Path
     if args.output:
         output_path = Path(args.output)
@@ -218,12 +268,20 @@ def main() -> None:
 
     body_html = generate_body_html(header, phases, tcp_trace, summary_html)
     rel_link = os.path.relpath(input_path, output_path.parent)
-    body_html = f'<p><a href="{rel_link}" target="_blank">🔗 YAMLソースを見る</a></p>\n' + body_html
+    body_html = (
+        f'<p><a href="{rel_link}" target="_blank">🔗 YAMLソースを見る</a></p>\n'
+        + body_html
+    )
     final_html = apply_template(body_html, template_path, str(session_id))
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(final_html, encoding="utf-8")
     print(f"[OK] HTML出力完了: {output_path}")
+
+    if args.mmd:
+        graph_code = _extract_mermaid(_find_graph_structure(data))
+        if graph_code:
+            save_mermaid(graph_code, Path(args.mmd))
 
     if args.open:
         webbrowser.open(output_path.resolve().as_uri())
