@@ -211,11 +211,11 @@ def apply_template(body_html: str, template_path: Path, session_id: str) -> str:
 
 
 def save_mermaid(graph_code: str, out_path: Path) -> None:
-    """Save Mermaid code to a `.mmd.md` file wrapped in a code block."""
+    """Save Mermaid code to a `.mmd.md` file wrapped in a Markdown fence."""
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as f:
         f.write("```mermaid\n")
-        f.write(graph_code)
+        f.write(graph_code.rstrip())
         f.write("\n```\n")
 
 
