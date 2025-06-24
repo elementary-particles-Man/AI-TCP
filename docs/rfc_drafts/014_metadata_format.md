@@ -1,46 +1,88 @@
-# RFC 014: Unified Metadata Format for AI-TCP Packets
+# RFC 014: Metadata Format Specification
 
 ## 1. Introduction
-This RFC defines a unified metadata header used in all AI-TCP packets exchanged between Large Language Models (LLMs). A consistent metadata format simplifies validation, orchestration, and auditing across diverse nodes.
+This RFC defines the minimal metadata header required for every AI‑TCP packet.
+The header fields support packet routing, validation, and lifecycle management
+between cooperating Large Language Models (LLMs).
 
-## 2. Metadata Format
-The header is a YAML or JSON object placed at the beginning of every packet. Fields are case-sensitive and use `snake_case` naming.
+## 2. Required Fields
 
-## 3. Required Fields
-| Field | Type | Description |
-|-------|------|-------------|
-| `llm_id` | string | Identifier of the generating or target LLM |
-| `language` | string | BCP-47 or ISO 639 language code for the payload |
-| `timestamp` | string | UTC timestamp in ISO 8601 format |
-| `compliance` | string | RFC or policy version that governs packet structure |
+| Field | Type | Notes |
+|-------|------|------|
+| `packet_id` | string | Unique identifier of this packet |
+| `version` | string | AI‑TCP protocol or packet version |
+| `sender_id` | string | Originating node or agent identifier |
+| `recipient_id` | string | Intended recipient node or agent |
+| `timestamp_utc` | ISO&nbsp;8601 string | Creation time in UTC |
+| `intent_category` | enum | `trace`, `intent`, `conflict`, `confirm`, or `meta` |
+| `priority_level` | integer | Range 0–3 (0=lowest, 3=highest) |
 
-## 4. Optional Fields
-| Field | Type | Description |
-|-------|------|-------------|
-| `trace_id` | string | Unique identifier for tracking across packets |
-| `role` | string | Agent role or capability tag |
-| `tags` | array of strings | Free-form labels for routing or auditing |
+## 3. Optional Fields
 
-## 5. Field Validation and Defaults
-- `llm_id` must match `[A-Za-z0-9._-]+`.
-- `language` defaults to `en` if omitted.
-- Invalid or missing `timestamp` values trigger rejection.
-- `compliance` defaults to `RFC003` if not provided.
+| Field | Type | Notes |
+|-------|------|------|
+| `response_to` | string | References `packet_id` this packet answers |
+| `expires_in_sec` | integer | Validity duration in seconds |
+| `tags` | array | Free‑form labels for routing or filtering |
+| `location_hint` | string | Suggested geographic or network region |
+| `signature_hash` | string | Verification hash of header contents |
 
-## 6. Usage in Validation and Orchestration
-AI-TCP orchestration layers SHALL validate these fields before further processing. Packets failing validation MAY be quarantined or returned with an error. The metadata header is also logged to the reasoning trace for audit purposes.
-
-## 7. Example Header
-```yaml
-meta:
-  llm_id: gpt-4
-  language: en
-  timestamp: 2025-06-22T00:00:00Z
-  compliance: RFC003
-  trace_id: abc123
-  role: assistant
-  tags: [demo, rfc014]
+## 4. Partial JSON Schema
+```json
+{
+  "type": "object",
+  "required": [
+    "packet_id",
+    "version",
+    "sender_id",
+    "recipient_id",
+    "timestamp_utc",
+    "intent_category",
+    "priority_level"
+  ],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "version": {"type": "string"},
+    "sender_id": {"type": "string"},
+    "recipient_id": {"type": "string"},
+    "timestamp_utc": {"type": "string", "format": "date-time"},
+    "intent_category": {
+      "type": "string",
+      "enum": ["trace", "intent", "conflict", "confirm", "meta"]
+    },
+    "priority_level": {"type": "integer", "minimum": 0, "maximum": 3},
+    "response_to": {"type": "string"},
+    "expires_in_sec": {"type": "integer"},
+    "tags": {"type": "array", "items": {"type": "string"}},
+    "location_hint": {"type": "string"},
+    "signature_hash": {"type": "string"}
+  }
+}
 ```
 
-## 8. Status
+## 5. YAML Usage Example
+```yaml
+meta:
+  packet_id: "123e4567-e89b-12d3-a456-426614174000"
+  version: "1.0"
+  sender_id: "node_a"
+  recipient_id: "node_b"
+  timestamp_utc: "2025-06-22T00:00:00Z"
+  intent_category: intent
+  priority_level: 1
+  response_to: "122e4567-e89b-12d3-a456-426614174999"
+  expires_in_sec: 3600
+  tags: [demo, sample]
+  location_hint: "datacenter-1"
+  signature_hash: "aabbccddeeff"
+```
+
+## 6. Extensibility and Constraints
+- Additional metadata fields MAY be added using `snake_case` naming.
+- Unknown fields MUST be ignored by compliant agents unless explicitly required
+  by future RFCs.
+- `priority_level` values outside 0–3 SHOULD trigger rejection.
+- Time fields MUST use UTC to avoid ambiguity.
+
+## 7. Status
 Draft – Last updated: 2025-06-22
