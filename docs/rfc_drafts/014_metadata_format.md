@@ -1,29 +1,33 @@
 # RFC 014: Metadata Format Specification
 
-## 1. Overview
-This RFC defines the standard metadata header used in all AI-TCP packets. The header ensures every packet carries minimal routing, auditing, and processing information in a consistent manner.
+## 1. Introduction
+
+This RFC defines the standard metadata header used in all AI-TCP packets. The header ensures every packet carries minimal routing, auditing, and processing information in a consistent manner. These fields support packet routing, validation, and lifecycle management between cooperating Large Language Models (LLMs).
 
 ## 2. Required Fields
-| Field | Type | Description |
-|-------|------|-------------|
-| `packet_id` | string | Unique identifier for the packet |
-| `version` | string | Metadata format version identifier |
-| `sender_id` | string | Originating agent or system |
-| `recipient_id` | string | Intended recipient agent or system |
-| `timestamp_utc` | ISO 8601 | Coordinated Universal Time of packet creation |
-| `intent_category` | enum | One of: `trace`, `intent`, `conflict`, `confirm`, `meta` |
-| `priority_level` | integer | Priority from `0` (lowest) to `3` (highest) |
+
+| Field             | Type            | Description                                              |
+| ----------------- | --------------- | -------------------------------------------------------- |
+| `packet_id`       | string          | Unique identifier of this packet                         |
+| `version`         | string          | Protocol or packet version identifier                    |
+| `sender_id`       | string          | Originating agent or node identifier                     |
+| `recipient_id`    | string          | Intended recipient agent or node                         |
+| `timestamp_utc`   | ISO 8601 string | Coordinated Universal Time of packet creation            |
+| `intent_category` | enum            | One of: `trace`, `intent`, `conflict`, `confirm`, `meta` |
+| `priority_level`  | integer         | Range 0–3 (0=lowest, 3=highest)                          |
 
 ## 3. Optional Fields
-| Field | Type | Description |
-|-------|------|-------------|
-| `response_to` | string | Packet ID that this message replies to |
-| `expires_in_sec` | integer | Time-to-live in seconds |
-| `tags` | list | Arbitrary labels for routing or filtering |
-| `location_hint` | string | Suggested geographic or network location |
-| `signature_hash` | string | Cryptographic hash or signature for verification |
+
+| Field            | Type    | Description                                        |
+| ---------------- | ------- | -------------------------------------------------- |
+| `response_to`    | string  | References `packet_id` this packet replies to      |
+| `expires_in_sec` | integer | Validity duration in seconds                       |
+| `tags`           | list    | Arbitrary labels for routing or filtering          |
+| `location_hint`  | string  | Suggested geographic or network region             |
+| `signature_hash` | string  | Cryptographic verification hash of header contents |
 
 ## 4. Partial JSON Schema
+
 ```json
 {
   "type": "object",
@@ -57,6 +61,7 @@ This RFC defines the standard metadata header used in all AI-TCP packets. The he
 ```
 
 ## 5. YAML Usage Example
+
 ```yaml
 meta:
   packet_id: "pkt-001"
@@ -73,10 +78,14 @@ meta:
   signature_hash: "abc123def"
 ```
 
-## 6. Notes
-- All required fields MUST appear in every metadata header.
-- Optional fields MAY be omitted if not applicable.
-- New fields can be added in future revisions, but implementations MUST ignore unknown keys for forward compatibility.
-- Versioning of the metadata format allows parsers to adapt to changes over time.
+## 6. Extensibility and Constraints
 
-*End of RFC 014*
+* Additional metadata fields MAY be added using `snake_case` naming.
+* Unknown fields MUST be ignored by compliant agents unless explicitly required by future RFCs.
+* `priority_level` values outside 0–3 SHOULD trigger rejection.
+* Time fields MUST use UTC to avoid ambiguity.
+* Versioning of the metadata format allows parsers to adapt to changes over time.
+
+## 7. Status
+
+Draft – Last updated: 2025-06-24

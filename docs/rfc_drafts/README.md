@@ -20,7 +20,7 @@
 | 009    | [AI Operational Limits & Ethics](009_ai_operational_limits.md) | 2025-06-22 | Constraints and safety protocols for AI agents.                        |
 | 012    | [AI Packet Conflict Resolution](012_conflict_resolution.md) | 2025-06-22    | Resolving packet-level command conflicts.                              |
 | 013    | [Obsidian Integration Schema](013_obsidian_schema.md)      | 2025-06-22    | Folder, link, and file layout for Obsidian vault integration.          |
-| 014    | [Unified Metadata Format for Packets](014_metadata_format.md) | 2025-06-22 | Standard metadata headers for all AI-TCP messages.                     |
+| 014    | [Metadata Format Specification](014_metadata_format.md) | 2025-06-22 | Required and optional metadata headers for AI-TCP packets. |
 
 ---
 
