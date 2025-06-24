@@ -17,7 +17,7 @@ This index lists all RFC drafts currently available in the `docs/rfc_drafts/` di
 | 009    | AI Operational Limits & Ethics    | Operational and ethical boundaries           |
 | 012    | AI Packet Conflict Resolution     | Mechanisms for resolving packet-level conflicts |
 | 013    | Obsidian Integration Schema       | Folder and linking conventions for vaults    |
-| 014    | Unified Metadata Format           | Standardized metadata headers for packets    |
+| 014    | Metadata Format Specification     | Standardized metadata headers for packets    |
 
 ## 🛠️ Metadata
 
