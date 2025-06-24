@@ -1,0 +1,110 @@
+RFC 018: Edge Device Behaviour Modes
+Last Updated: 2025-06-25
+Status: Draft
+
+1. Purpose
+This RFC defines a standardized set of runtime behaviour modes for AI-TCP agents operating on resource-constrained edge devices (e.g., mobile phones, IoT sensors, embedded systems). These modes allow an agent to adapt its communication patterns and processing load based on its current operational context, such as network connectivity or power availability.
+
+2. Scope
+This specification applies to any AI-TCP-compliant agent that may operate in an environment where computational resources, network bandwidth, or power are not guaranteed. It provides a framework for other agents in the network to understand the operational state of an edge device and to adjust their communication strategies accordingly.
+
+3. Behaviour Mode Field Specification
+To communicate its current state, an edge agent MUST include the behaviour_mode field within its packet's metadata_header.
+
+Field Name: behaviour_mode
+
+Location: metadata_header.behaviour_mode
+
+Type: enum
+
+Mode Types
+Mode
+
+Description
+
+Typical Behaviour
+
+offline
+
+The agent has no network connectivity. It queues outgoing packets and operates on local data only.
+
+Caches all outgoing AI-TCP packets. May use a signal_frame with retry upon reconnection.
+
+low_power
+
+The agent is conserving energy (e.g., low battery). It will reduce communication frequency and processing complexity.
+
+Reduces polling frequency, processes only high-priority packets, may respond with simplified payloads.
+
+normal
+
+The agent is operating under standard conditions with adequate power and stable network connectivity.
+
+Default AI-TCP behaviour. All features are active.
+
+high_perf
+
+The agent has access to ample power and a high-bandwidth connection, allowing for maximum performance.
+
+Processes all packets in real-time, may perform more complex local reasoning, reduces response latency.
+
+4. Automated Mode Transitions
+An edge agent SHOULD automatically transition between modes based on device-level triggers.
+
+Trigger for low_power: Battery level drops below a predefined threshold (e.g., 20%). The agent sends a final packet in normal mode with its next packet declaring low_power.
+
+Trigger for offline: Loss of network connectivity is detected. The agent immediately enters offline mode. Upon reconnection, it should initiate a sync signal to re-establish state with peers.
+
+Trigger for high_perf: Device is connected to a power source and a high-speed network (e.g., Wi-Fi or 5G).
+
+When a mode change occurs, the agent should, if possible, broadcast a packet with the new behaviour_mode to inform other agents of its updated status.
+
+5. YAML Example
+This example shows a packet from an agent operating in low_power mode.
+
+metadata_header:
+  id: "pkt-edge-device-01-a4b5c6"
+  agent_id: "edge-sensor-7b"
+  timestamp_utc: "2025-06-25T12:00:00Z"
+  behaviour_mode: "low_power"
+
+intent_structure:
+  summary: "Reporting only critical temperature anomaly. Full analysis deferred."
+  reasoning_trace:
+    - step: 1
+      input: "Battery below 15%."
+      output: "Switched to low_power mode. Reducing payload size."
+
+6. Partial JSON Schema
+This schema snippet defines the behaviour_mode field within the metadata_header.
+
+{
+  "properties": {
+    "metadata_header": {
+      "type": "object",
+      "properties": {
+        "behaviour_mode": {
+          "type": "string",
+          "enum": ["offline", "low_power", "normal", "high_perf"],
+          "description": "The current operational mode of the edge device."
+        }
+      },
+      "required": ["behaviour_mode"]
+    }
+  }
+}
+
+7. Inter-Agent Considerations
+Agents communicating with an edge device should respect its behaviour_mode.
+
+If a device is in low_power mode, server-side agents should avoid sending large or non-critical packets.
+
+If a device is offline, other agents should queue messages intended for it or route them to a designated proxy, expecting a significant delay in response.
+
+8. References
+RFC 003: AI-TCP Packet Structure Definition
+
+RFC 016: AI Signal Frame Format
+
+9. Status
+Status: Draft
