@@ -1,29 +1,32 @@
 # 🛠️ AI-TCP Tools Directory
 
-このディレクトリは、**AI-TCP Vault構造を支援するツールスクリプト群**を格納する中核領域です。  
-意図（YAML）→ 構造（Mermaid）→ 可視ログ（HTML）といった変換フローを自動化します。
+AI-TCP Vault 構造の変換を支援する Go スクリプト群を格納しています。
+YAML で記述された意図定義を HTML/Mermaid/JSON へ変換できます。
 
----
+## 📁 ディレクトリ構成
 
-## 📁 ディレクトリ構成と用途
+| ディレクトリ | 用途 |
+|--------------|--------------------------------------------|
+| `yaml/`      | 入力 YAML ファイル群 |
+| `graph/`     | Mermaid 形式のグラフ出力先 |
+| `html_logs/` | HTML テーブル出力先 |
+| `link_map/`  | 生成されるリンクマップ JSON |
+| `tools/`     | 本スクリプト群 |
 
-| ディレクトリ         | 用途                               |
-|----------------------|------------------------------------|
-| `yaml/`              | YAML形式の意図定義ファイル群         |
-| `mermaid/`           | Mermaid構文出力ファイル（*.mmd.md） |
-| `html_logs/`         | 意図トレースのHTML表形式ログ         |
-| `tools/`             | 変換スクリプト・リンク生成スクリプト |
-| `link_map.json`      | YAML・Mermaid・HTMLの対応関係マップ  |
+## 📌 主なスクリプトと使用例
 
----
-
-## 📌 このディレクトリの主なスクリプト
-
-### 1. `yaml_to_mermaid.go`
-YAMLファイルを読み込み、対応するMermaid構造図を出力します。
-
-- **依存**: `gopkg.in/yaml.v3`
-- **実行方法**:
+- **yaml_to_mermaid.go**
   ```bash
-  cd tools/
-  go run yaml_to_mermaid.go ../yaml/intent_001.yaml
+  cd tools
+  go run yaml_to_mermaid.go ../yaml/intent_001.yaml ../graph/intent_001.mmd
+  ```
+- **yaml_to_html.go**
+  ```bash
+  cd tools
+  go run yaml_to_html.go ../yaml/intent_001.yaml ../html_logs/intent_001.html
+  ```
+- **gen_link_map.go**
+  ```bash
+  cd tools
+  go run gen_link_map.go ../yaml ../html_logs ../graph ../link_map/map.json
+  ```
