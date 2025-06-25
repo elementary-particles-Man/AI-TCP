@@ -1,92 +1,76 @@
-PoC Phase 2: Artifact Index
-This document lists all artifacts generated and validated during Phase 2 of the AI-TCP Proof-of-Concept.
-
+4.1 PoC成果物リスト (GPT-1)
+ファイルパス: docs/poc_logs/poc_phase2_index.md
 ファイル名
-
 種別
-
 担当
-
 概要
-
-docs/rfc_drafts/002_llm_compliance.md
-
-RFC
-
-Gemini
-
-LLMが準拠すべき要件定義（改訂版）
-
-docs/rfc_drafts/003_packet_definition.md
-
-RFC
-
-Gemini
-
-意図パケットの構造定義（改訂版）
-
-docs/poc_logs/reverse_read_intent_001.md
-
-Log
-
-Gemini
-
-Mermaid/NarrativeからYAMLへの逆受信検証ログ
-
-docs/Guidelines/GG06_evaluation_metrics.md
-
-Guideline
-
-Gemini
-
-PoCの成功を定義する評価指標
-
-docs/poc_logs/structure_map_index.md
-
-Index
-
-Gemini
-
-リポジトリの主要フォルダ構造インデックス
-
-docs/poc_logs/link_map_verification.md
-
-Log
-
-Gemini
-
-link_map.jsonの逆検証テーブル
-
-docs/poc_logs/poc_phase2_flow.mmd.md
-
+structured_yaml/intent_001.yaml
+YAML
+Manual
+PoCの初期意図構造データ
+AI-TCP_Structure/graph/intent_001.mmd.md
 Mermaid
-
+Codex
+YAMLからMermaidへの変換結果
+docs/poc_logs/intent_narrative_001.md
+Narrative
 Gemini
-
-PoCフェーズ2の全体ワークフロー図
-
-docs/structure_terms.md
-
-Glossary
-
+Mermaidグラフの意味解釈・言語化
+docs/poc_logs/poc_003_reverse...md
+Log
 Gemini
+逆受信テストの検証ログ
 
-AI-TCPの構造に関する共通用語集
-
-成果物 6/10: フォルダ構造インデックス
+4.2 フォルダ構造インデックス (GPT-2)
 ファイルパス: docs/poc_logs/structure_map_index.md
-
 Repository Structure Map
-This document provides a clickable index of the primary directories within the AI-TCP repository.
-
 YAML Definitions: /structured_yaml/
-
 Mermaid Graphs: /AI-TCP_Structure/graph/
+PoC Logs: /docs/poc_logs/
+RFCs: /docs/rfc_drafts/
+4.3 リンクマップ逆検証テーブル (GPT-3)
+ファイルパス: docs/poc_logs/link_map_verification.md
+Verification Table for link_map.json
+Intent ID
+From (起点)
+Relation (関係性)
+To (終点)
+Status
+DMC-NARRATIVE-001
+intent_narrative_001.md
+is_narrative_for
+intent_001.html
+✅ Verified
+DMC-GRAPH-VERIFY-001
+verify_graph_001.md
+validates
+intent_001.mmd.md
+✅ Verified
 
-HTML Logs: /AI-TCP_Structure/html_logs/
+4.4 PoCフェーズ進行フロー図 (GPT-4)
+ファイルパス: docs/poc_logs/poc_phase_workflow.mmd.md
+flowchart TD
+    subgraph "PoC Phase 1 & 2"
+        A[1. Define Intent<br>(YAML)] --> B[2. Generate Visual Model<br>(Mermaid)];
+        B --> C[3. Create Narrative<br>(Human-Readable Text)];
+        C --> D[4. Reverse-Reception Test<br>(Reconstruct YAML)];
+    end
+    D --> E((Phase 3: External LLM Test));
 
-PoC Logs & Summaries: /docs/poc_logs/
 
-RFC Drafts: /docs/rfc_drafts/
+4.5 構造用語の共通定義集 (GPT-5)
+ファイルパス: docs/structure_terms.md
+AI-TCP Common Structural Terms
+Term
+Definition
+Related RFC
+Intent Packet
+The canonical YAML structure representing an agent's structured thought, composed of components and connections.
+RFC 003
+Graph Payload
+The visual representation of an Intent Packet, typically rendered as a Mermaid graph.
+RFC 003
+Reasoning Trace
+A sequential log outlining the step-by-step logic that led to the current state or packet.
+RFC 004
 
-Automation Tools: /tools/
