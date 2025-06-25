@@ -1,0 +1,17 @@
+{
+  "intent_001": {
+    "yaml": "AI-TCP_Structure/yaml/intent_001.yaml",
+    "mermaid": "AI-TCP_Structure/mermaid/intent_001.mmd.md",
+    "html": "AI-TCP_Structure/html_logs/intent_001.html"
+  },
+  "intent_002": {
+    "yaml": "AI-TCP_Structure/yaml/intent_002.yaml",
+    "mermaid": "AI-TCP_Structure/mermaid/intent_002.mmd.md",
+    "missing": true
+  },
+  "intent_003": {
+    "yaml": "AI-TCP_Structure/yaml/intent_003.yaml",
+    "html": "AI-TCP_Structure/html_logs/intent_003.html",
+    "missing": true
+  }
+}
