@@ -13,6 +13,13 @@ This repository contains the complete draft structure, technical specification, 
 - `structured_yaml/validated_yaml/`: YAML conforming to schema.
 - `structured_yaml/docs/`: Documentation with embedded YAML metadata.
 
+## 🧠 Foundational Philosophy: LSC
+
+The AI-TCP protocol is built atop a flexible and universal logic framework called **LSC (Least Sufficient Condition)**.  
+This philosophy document defines a non-coercive reasoning structure designed for both human and AI cooperation.
+
+📄 [Read the full LSC specification](docs/philosophy/LSC- The Universal Guidance.md)
+
 ## 🧠 Motivation
 
 The rise of autonomous reasoning agents (LLMs) demands not just AI safety, but AI interoperability, neutrality, and traceability.  
