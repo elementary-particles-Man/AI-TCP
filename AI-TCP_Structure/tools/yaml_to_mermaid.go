@@ -21,7 +21,7 @@ import (
 type Component struct {
 	ID    string `yaml:"id"`
 	Type  string `yaml:"type"`
-	Label string `yaml:"label"`
+	Label string `yaml:"name"`
 }
 
 type Connection struct {

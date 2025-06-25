@@ -1,2 +1,18 @@
 id: intent_001
 name: test one
+components:
+  - id: source1
+    name: InputTrigger
+    type: source
+  - id: step1
+    name: ProcessIntent
+    type: process
+  - id: response1
+    name: ReturnIntent
+    type: response
+
+connections:
+  - from: source1
+    to: step1
+  - from: step1
+    to: response1
