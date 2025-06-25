@@ -30,3 +30,8 @@ YAML で記述された意図定義を HTML/Mermaid/JSON へ変換できます�
   cd tools
   go run gen_link_map.go ../yaml ../html_logs ../graph ../link_map/map.json
   ```
+ - **gen_structure_tree.go**
+  ```bash
+  cd tools
+  go run gen_structure_tree.go .. ../../docs/poc_logs/structure_map.mmd.md
+  ```
