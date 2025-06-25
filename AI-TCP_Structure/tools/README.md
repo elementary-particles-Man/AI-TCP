@@ -35,3 +35,6 @@ go run inject_graph_labels.go ../yaml/intent_001.yaml ../graph/intent_001.mmd.md
 
 📝 .mmd.md ファイルは Mermaid 描画ブロックを含む Markdown 形式で出力され、Obsidian のライブプレビューで直接グラフとして描画可能です。
 リンクマップや構造ツリーと合わせて、Vault全体のトレース可視化が可能になります。
+✅ intent_yaml_to_mermaid.py
+cd ../..
+python scripts/intent_yaml_to_mermaid.py AI-TCP_Structure/yaml/intent_001.yaml AI-TCP_Structure/graph/intent_001.mmd.md
