@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Autonomous Negotiation Demo</title>
+  <style>
+    table { border-collapse: collapse; width: 100%; font-family: sans-serif; }
+    th, td { border: 1px solid #aaa; padding: 6px; text-align: left; }
+    th { background-color: #f0f0f0; }
+    caption { font-size: 1.2em; margin: 10px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Autonomous Negotiation Demo</h2>
+  <p></p>
+
+  <table>
+    <caption>🧱 Components</caption>
+    <tr><th>ID</th><th>Type</th><th>Label</th></tr>
+    
+    <tr><td>ai_agent_1</td><td>source</td><td>AI Agent 1</td></tr>
+    
+    <tr><td>ai_agent_2</td><td>source</td><td>AI Agent 2</td></tr>
+    
+    <tr><td>negotiation_module</td><td>process</td><td>Negotiation Engine</td></tr>
+    
+    <tr><td>consensus_validator</td><td>process</td><td>Consensus Validator</td></tr>
+    
+    <tr><td>outcome_response</td><td>response</td><td>Final Response</td></tr>
+    
+  </table>
+
+  <br>
+
+  <table>
+    <caption>🔗 Connections</caption>
+    <tr><th>From</th><th>To</th><th>Label</th></tr>
+    
+    <tr><td>ai_agent_1</td><td>negotiation_module</td><td></td></tr>
+    
+    <tr><td>ai_agent_2</td><td>negotiation_module</td><td></td></tr>
+    
+    <tr><td>negotiation_module</td><td>consensus_validator</td><td></td></tr>
+    
+    <tr><td>consensus_validator</td><td>outcome_response</td><td></td></tr>
+    
+  </table>
+</body>
+</html>
