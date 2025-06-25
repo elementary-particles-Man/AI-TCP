@@ -1,0 +1,12 @@
+id: agent_B
+name: Maintenance-AI
+role: proposal_counter
+objectives:
+  - propose semantic filenames
+  - prioritize long-term clarity
+constraints:
+  - filename must include descriptive keyword
+  - avoid naming conflicts
+negotiation_behavior:
+  stance: prefer_semantic_naming
+  fallback: accept_mediator_resolution

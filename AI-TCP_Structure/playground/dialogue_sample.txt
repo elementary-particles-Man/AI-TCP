@@ -1,0 +1,3 @@
+AgentA: Propose using timestamp filenames.
+AgentB: Suggest using semantic names.
+AgentC: Offer hybrid solution.
