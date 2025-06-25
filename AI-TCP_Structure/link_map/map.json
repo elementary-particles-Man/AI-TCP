@@ -1,0 +1,20 @@
+{
+  "intent_001": {
+    "yaml": "../yaml/intent_001.yaml",
+    "html": "../html_logs/intent_001.html",
+    "missing": true
+  },
+  "intent_002": {
+    "yaml": "../yaml/intent_002.yaml",
+    "missing": true
+  },
+  "intent_003": {
+    "yaml": "../yaml/intent_003.yaml",
+    "html": "../html_logs/intent_003.html",
+    "missing": true
+  },
+  "intent_007": {
+    "yaml": "../yaml/intent_007.yaml",
+    "missing": true
+  }
+}
