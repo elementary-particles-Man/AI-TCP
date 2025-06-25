@@ -1,0 +1,37 @@
+/* File: html_templates/narrative_style.css */
+
+body {
+  font-family: sans-serif;
+  margin: 2rem;
+  background-color: #f9fafa;
+  color: #222;
+}
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #2a4b6e; /* calm blue tone */
+}
+
+a {
+  color: #1a5e9a;
+}
+
+pre {
+  background: #f4f4f4;
+  padding: 1em;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+details {
+  margin-bottom: 1em;
+  padding: 0.5em;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 4px;
+}
