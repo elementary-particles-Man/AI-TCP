@@ -2,20 +2,24 @@ id: intent_007
 name: Autonomous Negotiation Demo
 components:
   - id: ai_agent_1
-    name: AI Agent 1
     type: source
+    label: AI Agent 1
+
   - id: ai_agent_2
-    name: AI Agent 2
     type: source
+    label: AI Agent 2
+
   - id: negotiation_module
-    name: Negotiation Engine
     type: process
+    label: Negotiation Engine
+
   - id: consensus_validator
-    name: Consensus Validator
     type: process
+    label: Consensus Validator
+
   - id: outcome_response
-    name: Final Response
     type: response
+    label: Final Response
 
 connections:
   - from: ai_agent_1
