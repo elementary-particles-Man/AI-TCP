@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    },
+    "lang": {
+      "type": "string"
+    },
+    "phase": {
+      "type": "string"
+    },
+    "agent": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      }
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "input": {
+          "type": "string"
+        },
+        "output": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "timestamp",
+    "lang",
+    "phase",
+    "data"
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
