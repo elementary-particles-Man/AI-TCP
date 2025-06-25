@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Log</title>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"></script>
+  <style>
+body{font-family:sans-serif;padding:1em;}
+.msg{padding:0.5em;border-radius:8px;margin-bottom:1em;}
+.user{background:#e3f2fd;border-left:4px solid #42a5f5;}
+.assistant{background:#f1f8e9;border-left:4px solid #66bb6a;}
+.system{background:#f5f5f5;border-left:4px solid #aaa;}
+.tokens{text-align:right;color:#666;font-size:0.8em;}
+</style>
+</head>
+<body>
+<div class="msg user">
+<pre>Hello, show me a flowchart.</pre>
+<div class="tokens">Tokens: 5</div>
+</div>
+<div class="msg assistant">
+<pre>Sure, here is a diagram:
+
+```mermaid
+graph TD
+  A[Start] --&gt; B{Decision}
+  B --&gt;|Yes| C[Option 1]
+  B --&gt;|No| D[Option 2]
+```</pre>
+<div class="tokens">Tokens: 20</div>
+</div>
+<div class="msg user">
+<pre>Thanks!</pre>
+<div class="tokens">Tokens: 1</div>
+</div>
+  <script>mermaid.initialize({startOnLoad:true});</script>
+</body>
+</html>

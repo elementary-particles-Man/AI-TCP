@@ -117,6 +117,18 @@ Markdown 内の LaTeX 数式を MathJax 互換形式に変換します。
 
 python scripts/convert_md_math_to_mathjax.py docs/rfc_drafts/rfc_lsc_001.md
 
+pytools/chatlog_to_html.py
+
+Python
+
+Markdown 形式の対話ログを色分けされた HTML ビューアに変換します。
+
+.md (対話ログ)
+
+.html
+
+python pytools/chatlog_to_html.py samples/chatlog_sample.md generated_html/chatlog_view.html --count-tokens
+
 ⚠️ 注意点と今後の拡張余地
 Go バージョン: 現在の Go スクリプトは Go 1.23 以降で動作することを確認しています。
 
