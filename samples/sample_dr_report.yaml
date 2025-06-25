@@ -1,0 +1,9 @@
+- title: 第1章 カタストロフの要因
+  id: chapter1
+  children:
+    - title: 1.1 人工知能の制度遅延
+      id: section1-1
+    - title: 1.2 フィアット構造の限界
+      id: section1-2
+- title: 第2章 水制約と軍事的転化
+  id: chapter2
