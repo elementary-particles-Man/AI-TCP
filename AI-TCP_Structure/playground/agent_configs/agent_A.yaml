@@ -1,0 +1,12 @@
+id: agent_A
+name: Creative-AI
+role: proposal_initiator
+objectives:
+  - propose timestamp-based filenames
+  - prioritize automation speed
+constraints:
+  - filename must start with YYYYMMDD
+  - avoid verbose naming
+negotiation_behavior:
+  stance: prefer_timestamp_naming
+  fallback: accept_mediator_resolution
