@@ -18,7 +18,7 @@ This repository contains the complete draft structure, technical specification, 
 The AI-TCP protocol is built atop a flexible and universal logic framework called **LSC (Least Sufficient Condition)**.  
 This philosophy document defines a non-coercive reasoning structure designed for both human and AI cooperation.
 
-📄 [Read the full LSC specification](docs/philosophy/LSC- The Universal Guidance.md)
+📄 [Read the full LSC specification](philosophy/LSC- The Universal Guidance.md)
 
 ## 🧠 Motivation
 
@@ -56,3 +56,4 @@ The rise of autonomous reasoning agents (LLMs) demands not just AI safety, but A
 
 This work is released under **CC0 1.0** — Public Domain Dedication.  
 Reuse, derivative works, and standardization efforts are not only permitted but encouraged.
+

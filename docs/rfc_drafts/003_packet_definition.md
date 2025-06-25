@@ -1,46 +1,66 @@
-### 📦 **[RFC草稿] `003_packet_definition.md` 構造草案**
+RFC 003: Intent Packet Definition (Revision 2)
+Status: Draft
+Version: 2.0
+Last Updated: 2025-06-25
 
-```markdown
-# RFC 003: AI-TCP Packet Structure Definition
+1. Abstract
+This document provides the detailed specification for the AI-TCP Intent Packet, the core unit of communication representing structured thought. It defines the standard YAML structure and the corresponding conventions for its visual representation in Mermaid.
 
-## 1. Purpose
-To formalize the structure and minimal required fields for any AI-TCP-compliant packet.
+2. YAML Structure
+An Intent Packet is composed of two primary keys: components and connections.
 
-## 2. Root Structure
+Key
 
-| Key | Type | Description |
-|-----|------|-------------|
-| `graph_payload` | object | Embedded conceptual map (Mermaid) |
-| `reasoning_trace` | array | Historical reasoning log |
-| `meta` | object | Metadata (timestamp, origin, type) |
-| `llm_profile` | object | Describes source/target LLM |
-| `auto_redirect` | object | Optional continuation instruction |
+Type
 
-## 3. Constraints
-- All keys must be top-level YAML entries
-- Fields must not conflict or overwrite one another
-- `graph_payload.graph_structure` must start with `mmd:`
+Description
 
-## 4. Minimal Packet Example
+components
 
-```yaml
-graph_payload:
-  graph_structure: |
-    [Mermaid構造は mermaid/003_packet_definition.mmd.md に移動されました]
+Array of Objects
 
-reasoning_trace:
-  - step: 1
-    input: Request received
-    output: Evaluating...
+Defines the "nodes" or core concepts of the intent.
 
-meta:
-  timestamp: 2025-06-22T01:00:00Z
-  origin: system-core
+connections
 
-llm_profile:
-  id: GPT
-  version: 4.0
+Array of Objects
 
-auto_redirect:
-  type: feedback
-  next_action: halt
+Defines the relationships or logical flow between components.
+
+2.1. Component Object
+- id: unique_component_id # A unique identifier for the node
+  name: "Human-readable Name" # The primary label for the node
+  type: "NodeType" # Classification of the node (e.g., "State", "Process", "Decision")
+  details: "A brief description of the component's role."
+
+2.2. Connection Object
+- from: source_component_id
+  to: target_component_id
+  label: "Describes the relationship" # The text on the edge
+  style: "dotted" # Optional: 'solid' (default), 'dotted', 'thick'
+
+3. Mermaid Representation
+The YAML structure maps directly to a Mermaid flowchart.
+
+Nodes (components): Each component is rendered as a node. The type field can be used to determine its shape.
+
+State: id["name"] (rectangle)
+
+Process: id("name") (stadium)
+
+Decision: id{"name"} (rhombus)
+
+Edges (connections): Each connection defines an edge.
+
+label determines the text on the edge.
+
+style determines the line type (e.g., --> for solid, -.-> for dotted).
+
+3.1. Class and Style Conventions
+To ensure visual consistency, a default stylesheet SHOULD be applied.
+
+classDef state fill:#f9f,stroke:#333,stroke-width:2px;
+classDef process fill:#bbf,stroke:#333,stroke-width:2px;
+classDef decision fill:#ccf,stroke:#333,stroke-width:2px;
+
+Components are assigned a class based on their type field (e.g., class component_id state).
