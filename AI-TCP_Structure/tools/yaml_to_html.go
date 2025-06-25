@@ -1,3 +1,10 @@
+// yaml_to_html.go converts an intent YAML file to an HTML table.
+//
+// Usage:
+//   go run yaml_to_html.go <input.yaml> <output.html>
+// Example:
+//   go run yaml_to_html.go ../yaml/intent_001.yaml ../html_logs/intent_001.html
+
 package main
 
 import (
@@ -68,10 +75,11 @@ const htmlTemplate = `
 `
 
 func main() {
-	if len(os.Args) < 2 {
-		log.Fatalf("Usage: %s <input.yaml>\n", os.Args[0])
+	if len(os.Args) < 3 {
+		log.Fatalf("Usage: %s <input.yaml> <output.html>\n", os.Args[0])
 	}
 	inputPath := os.Args[1]
+	outputPath := os.Args[2]
 
 	yamlFile, err := os.ReadFile(inputPath)
 	if err != nil {
@@ -89,8 +97,7 @@ func main() {
 		log.Fatalf("Failed to parse template: %v", err)
 	}
 
-	outputPath := filepath.Join("html_logs", intent.ID+".html")
-	err = os.MkdirAll("html_logs", 0755)
+	err = os.MkdirAll(filepath.Dir(outputPath), 0755)
 	if err != nil {
 		log.Fatalf("Failed to create output directory: %v", err)
 	}

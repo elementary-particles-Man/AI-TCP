@@ -1,3 +1,10 @@
+// yaml_to_mermaid.go converts an intent YAML file to a Mermaid "graph TD" diagram.
+//
+// Usage:
+//   go run yaml_to_mermaid.go <input.yaml> <output.mmd>
+// Example:
+//   go run yaml_to_mermaid.go ../yaml/intent_001.yaml ../graph/intent_001.mmd
+
 package main
 
 import (
@@ -5,6 +12,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"gopkg.in/yaml.v3"
@@ -77,10 +85,11 @@ func generateMermaid(intent *Intent) string {
 }
 
 func main() {
-	if len(os.Args) < 2 {
-		log.Fatalf("Usage: %s <input.yaml>\n", os.Args[0])
+	if len(os.Args) < 3 {
+		log.Fatalf("Usage: %s <input.yaml> <output.mmd>\n", os.Args[0])
 	}
 	inputPath := os.Args[1]
+	outputPath := os.Args[2]
 	intent, err := loadYAML(inputPath)
 	if err != nil {
 		log.Fatalf("Failed to load YAML: %v\n", err)
@@ -88,8 +97,7 @@ func main() {
 
 	output := generateMermaid(intent)
 
-	outputPath := fmt.Sprintf("mermaid/%s.mmd.md", intent.ID)
-	err = os.MkdirAll("mermaid", 0755)
+	err = os.MkdirAll(filepath.Dir(outputPath), 0755)
 	if err != nil {
 		log.Fatalf("Failed to create output dir: %v\n", err)
 	}
