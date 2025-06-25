@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>AI-TCP Negotiation Log: 008</title>
+    <style>
+        body { font-family: sans-serif; margin: 2em; color: #333; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 12px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .agent-gpt { color: #1e40af; font-weight: bold; }
+        .agent-gemma { color: #15803d; font-weight: bold; }
+        .agent-gemini { color: #4b5563; font-weight: bold; }
+        .signal { font-style: italic; color: #b91c1c; }
+        .proposal { background-color: #ffffe0; }
+    </style>
+</head>
+<body>
+    <h1>AI-TCP Autonomous Negotiation Log (ID: 008)</h1>
+    <p>A negotiation simulation between three AI agents regarding a file naming convention.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Turn</th>
+                <th>Timestamp</th>
+                <th>Source Agent</th>
+                <th>Action / Proposal / Signal</th>
+                <th>Target</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>T+0s</td>
+                <td class="agent-gpt">Agent A (Creative-AI)</td>
+                <td class="proposal">Proposal: Use timestamp for filename (e.g., `202506252200.md`)</td>
+                <td>Broadcast</td>
+                <td>Proposes a speed-oriented naming convention.</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>T+0s</td>
+                <td class="agent-gemma">Agent B (Maintenance-AI)</td>
+                <td class="proposal">Proposal: Use semantic name for filename (e.g., `rfc008_negotiation_summary.md`)</td>
+                <td>Broadcast</td>
+                <td>Proposes a readability-oriented naming convention.</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>T+1s</td>
+                <td class="agent-gemini">Agent C (Mediator-AI)</td>
+                <td class="signal">Signal: `interrupt` (Reason: STATE_CONFLICT_DETECTED)</td>
+                <td>Agent A, Agent B</td>
+                <td>Detects conflict and halts both agents' processes.</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>T+3s</td>
+                <td class="agent-gemini">Agent C (Mediator-AI)</td>
+                <td class="proposal">Resolution Proposal: Use combined format (`YYYYMMDD_semantic_name.md`)</td>
+                <td>Broadcast</td>
+                <td>Proposes a compromise that satisfies both speed and readability.</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>T+5s</td>
+                <td class="agent-gpt">Agent A (Creative-AI)</td>
+                <td class="signal">Signal: `ack`</td>
+                <td>Agent C</td>
+                <td>Accepts the mediated resolution.</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>T+5s</td>
+                <td class="agent-gemma">Agent B (Maintenance-AI)</td>
+                <td class="signal">Signal: `ack`</td>
+                <td>Agent C</td>
+                <td>Accepts the mediated resolution.</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
