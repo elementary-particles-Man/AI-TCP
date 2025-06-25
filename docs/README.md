@@ -22,6 +22,17 @@ Contains YAML and HTML logs of real-time AI mental session use cases for PoC.
 Visual aids and diagrams to supplement RFC documents (e.g., Mermaid exports)
 
 ---
+Phase 3: Graph Payload-Based Inter-AI Communication
+In this phase, AI-TCP introduces a new structure called "Graph Payload" using Mermaid syntax.
+This allows LLMs to communicate not just with plain text or YAML, but with interpretable graph semantics.
+Graph Payloads enable:
+Intent clarification through graph edges
+Role-based rendering (e.g., source, process, response)
+Bidirectional interpretation and negotiation
+This phase includes:
+Graph transmission & reception PoC
+Reverse parsing from Graph to YAML
+Use case: conflict negotiation and resolution
 
 ## 🛠️ Contribution Guide
 
