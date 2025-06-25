@@ -26,6 +26,12 @@ go run gen_structure_tree.go .. ../../docs/poc_logs/structure_map.mmd.md
 ✅ check_semantics.go
 cd tools
 go run check_semantics.go ../yaml/intent_001.yaml
+✅ enrich_yaml_semantics.go
+cd tools
+go run enrich_yaml_semantics.go ../yaml/intent_001.yaml ../enriched_yaml -description "Sample" -next intent_002
+✅ inject_graph_labels.go
+cd tools
+go run inject_graph_labels.go ../yaml/intent_001.yaml ../graph/intent_001.mmd.md ../graph_labeled/intent_001.mmd.md
 
 📝 .mmd.md ファイルは Mermaid 描画ブロックを含む Markdown 形式で出力され、Obsidian のライブプレビューで直接グラフとして描画可能です。
 リンクマップや構造ツリーと合わせて、Vault全体のトレース可視化が可能になります。
