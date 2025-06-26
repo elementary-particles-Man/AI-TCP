@@ -1,0 +1,36 @@
+project:
+  id: 20250626_Critical_Geopolitical_Alert
+  title: Critical Geopolitical Alert - Meta-Crisis Log
+  date: 2025-06-26
+  phases:
+    - id: 1
+      title: Crisis Awareness and Initial Analysis
+      agents: [User, ChatGPT]
+      start_time: "04:33 JST"
+      summary: |
+        ユーザーの危機意識から始まり、NATO・米国・フランスの防衛構造崩壊懸念に言及。
+        ChatGPTが複合危機と位置付けて応答。
+    - id: 2
+      title: Defining AI's Role and Alert Creation
+      agents: [User, ChatGPT]
+      start_time: "04:48 JST"
+      summary: |
+        ユーザーがAIに対する役割意識を提示。GPTがCritical Alertを作成。
+        Geminiへの移行決定。
+    - id: 3
+      title: Deepening Analysis and Defining Roles
+      agents: [User, Gemini]
+      summary: |
+        Geminiが静的分析を受け、動的シミュレーションへの移行を提案。
+        ユーザーが役割分担（スカラー vs ベクトル）を提示。
+    - id: 4
+      title: Document Generation and Process Management
+      agents: [Gemini, GPT]
+      summary: |
+        日本語版Alert生成、G1-G4タスク実行。
+        全成果物が生成・英訳され、GitHubに格納。
+    - id: 5
+      title: Repository Storage and Current Status
+      agents: [User, Gemini]
+      summary: |
+        リポジトリ格納が完了、Geminiが検証・待機モードへ。
