@@ -1,12 +1,42 @@
-# Critical Geopolitical Alert (2025-06-26)
+# 2025年6月26日 緊急地政学アラート（Critical Geopolitical Alert）
 
-このディレクトリには、2025年6月26日に生成された重大な地政学的アラートに関するドキュメントを格納しています。
+本ディレクトリは、AI-TCP PoCにおける「DRユニット → ナラティブ構築 → 政策誘導」プロセスの検証として実施された、地政学的危機対応の試験ケースです。
 
-## Alert Components
+## 概要
 
-- [G1_Narrative_Summary.md - Observation Layer](./G1_Narrative_Summary.md): 初期観測・兆候分析
-- [G2_Causal_Analysis.md - Analysis Layer](./G2_Causal_Analysis.md): 脅威構造の因果分析
-- [G3_Strategic_Proposal.md - Strategic Options](./G3_Strategic_Proposal.md): 対応オプション・影響評価
-- [G4_Keyword_Definition.md - Policy Definition](./G4_Keyword_Definition.md): 政策誘導・定義モジュール
+このアラートは、DRユニットが検出した地政学的兆候（Critical Risk）を起点とし、以下の段階的処理を通じて構成されています：
 
-各ドキュメントは、地政学的リスクの検出から対応策の立案までを段階的に整理したものです。
+1. **DRユニットによる兆候検知と初期記述**
+2. **GPT統合判断と構造補正**
+3. **Geminiによるナラティブ構築**
+4. **PoCへの格納・形式整理（Markdown + Mermaid）**
+5. **GitHubを通じたRFC・外部共有への準備**
+
+---
+
+## ファイル一覧
+
+| ファイル名 | 概要 |
+|------------|------|
+| `G1_Narrative_Summary.md` | DRユニットによる初期分析の要約と背景認識 |
+| `G2_YAML_Structured_Report.md` | ナラティブをYAML変換し構造整理したもの |
+| `G3_Analytical_Insight.md` | 因果マップと戦略分析によるリスク洞察 |
+| `G4_Actionable_Policy.md` | 対応政策案と即応指針の明示（DR計画） |
+
+---
+
+## Mermaid構造（`graph_payload/` 配下）
+
+| ファイル名 | 内容 |
+|------------|------|
+| `semantic_flow.mmd.md` | DR → GPT → Gemini → Git Push → RFC までの情報伝達フロー |
+| `alert_policy_topology.mmd.md` | リスク発生から政策実行までの構造モデル |
+
+> ※ Mermaidコードは Obsidian 環境でのプレビュー表示を前提としています。
+
+---
+
+## 位置づけと目的
+
+このアラート群は、AI-TCPプロトコルのPoCにおいて、AI同士による情報連携・意思決定補助・文脈共有の妥当性を検証するものです。今後のナラティブ自動構築・DR迅速化・プロトコル評価における基礎資料として活用されます。
+
