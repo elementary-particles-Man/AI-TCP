@@ -1,33 +1,37 @@
-# DRレポート：YAML構造化ナラティブ
-# 目的：Web掲載・データベース化のための構造化データ
-# 作成日：2025-06-26
+> **This document is the English version of G2_JP.md.**
 
-- chapter: 'ブロックA：米国の戦略的転換と国内イデオロギー'
-  summary: '米国の政策が予測不能な形で急変する「制度的リスク」が顕在化。急進的な政策案と、それを阻む制度的抵抗を無力化する「プロジェクト2025」の存在が、従来のパワーバランスを覆す可能性を示唆している。'
-  sections:
-    - title: 'A.1. 提案されている外交政策と予算の再編'
-      narrative: 'トランプ政権周辺から、海外援助75%削減や国連・NATOへの資金拠出停止といった急進的な政策案が浮上。これらは議会の抵抗が予想されるが、米国の国際的役割を根本から放棄する強い意志を示すものであり、同盟国に深刻な不確実性をもたらしている。政策の実現性以上に、この「揺さぶり」自体が地政学的リスクとなっている。'
-    - title: 'A.2. 「プロジェクト2025」の枠組みと保守派の制度設計'
-      narrative: '「プロジェクト2025」は、単なる政策集ではない。大統領に権力を集中させ、抵抗が予想される連邦官僚機構を政治的に忠実な人材に入れ替えることで「行政国家を解体」するための、周到に準備された実行計画である。これは、米国の政策決定プロセスそのものを変質させ、チェック・アンド・バランスを形骸化させる構造的脅威だ。'
-    - title: 'A.3. 「アンチ・フィアット」のイデオロギー的ベクトル'
-      narrative: '「金準備透明化法案」の提出など、「アンチ・フィアット（反法定通貨）」思想が具体的な政治行動に結びつき始めた。これは国家債務やインフレへの不信感を背景に、FRBなど既存の金融システムへのイデオロギー的挑戦を意味する。主流ではないが、米国の金融政策の安定性に対する新たなリスク要因として浮上している。'
+```yaml
+# DR Report: YAML Structured Narrative
+# Purpose: Structured data for web publication and database integration
+# Date: 2025-06-26
 
-- chapter: 'ブロックB：三極の地政学的不安定化'
-  summary: '中東、南アジア、欧州の三極で、それぞれが連鎖しうる安全保障危機が同時進行している。一点の破綻が全体に波及する「ドミノ効果」のリスクをはらむ、極めて脆弱なグローバルセキュリティ環境が形成されている。'
+- chapter: 'Block A: The U.S. Strategic Shift and Domestic Ideology'
+  summary: 'The "institutional risk" of U.S. policy changing unpredictably is becoming apparent. The existence of "Project 2025," designed to neutralize resistance to radical policy proposals, suggests a potential overhaul of the traditional power balance.'
   sections:
-    - title: 'B.1. イスラエル＝ヒズボラ戦線'
-      narrative: 'イスラエルとヒズボラの対立は、より広範なイランとの紛争に従属する「管理された紛争」状態にある。双方が全面戦争を望んでいないため小競り合いに留まるが、この均衡は極めて脆弱である。特に、国連レバノン暫定軍（UNIFIL）のマンデートを巡る米国の動向が、地域の安定を左右する新たな火種となりつつある。'
-    - title: 'B.2. パキスタンの複合的危機'
-      narrative: 'パキスタンは、IMFの厳格な緊縮財政と、インドとの軍事的緊張という二つの圧力に同時に晒されている。経済的破綻と軍事衝突のリスクが相互に連関する「複合的危機」の典型例であり、核保有国である同国の不安定化は、地域全体の安全保障を根底から揺るがしかねない重大な懸念事項である。'
-    - title: 'B.3. NATOの内部結束と戦略的整合性'
-      narrative: 'NATOは「国防費GDP比5%」という新たな目標を採択し、米国の要求に応える形で結束を演出した。しかし、スペインの公然たる反対や、ウクライナ支援、対中戦略における温度差は、同盟内に深刻な亀裂が存在することを示している。米国の取引的な外交姿勢は、NATOを「二重軌道」化させ、有事における一体的な対応能力を蝕んでいる。'
+    - title: 'A.1. Proposed Reorganization of Foreign Policy and Budgets'
+      narrative: 'Radical proposals, such as a 75% cut in foreign aid and defunding the UN/NATO, have emerged from circles around the Trump administration. While congressional resistance is expected, these proposals signal a strong intent to abandon America''s traditional international role, creating profound uncertainty for allies. The political "disruption" itself is a geopolitical risk, more so than the feasibility of the policies.'
+    - title: 'A.2. The "Project 2025" Framework and Conservative Institutional Design'
+      narrative: '"Project 2025" is not merely a collection of policies. It is a well-prepared execution plan to "dismantle the administrative state" by concentrating power in the presidency and replacing the federal bureaucracy with politically loyal personnel. This is a structural threat that could alter the U.S. policymaking process itself and hollow out the system of checks and balances.'
+    - title: 'A.3. The "Anti-Fiat" Ideological Vector'
+      narrative: 'The "Anti-Fiat" ideology is translating into concrete political action, such as the introduction of the "Gold Reserve Transparency Act." This represents an ideological challenge to the existing financial system, including the Federal Reserve, fueled by distrust over national debt and inflation. While not mainstream, it has emerged as a new risk factor for the stability of U.S. monetary policy.'
 
-- chapter: 'ブロックC：AIによる社会経済の構造変容'
-  summary: 'AIによる雇用破壊の「速度」に政府の政策対応が全く追いついておらず、この「非同期性」が先進国内部に新たな社会不安の火種を生み出している。技術的変革がもたらす富の格差拡大は、政治的不信を増幅させる危険な段階にある。'
+- chapter: 'Block B: Tri-Polar Geopolitical Instability'
+  summary: 'Security crises that could trigger chain reactions are progressing simultaneously in the Middle East, South Asia, and Europe. A highly fragile global security environment has formed, carrying the risk of a "domino effect" where a single point of failure could cascade through the entire system.'
   sections:
-    - title: 'C.1. AIに起因する雇用破壊'
-      narrative: 'Intel、IBM、Amazonなど主要企業が、AI導入による効率化を理由に、数万人規模の雇用削減を公式に発表・断行している。特にホワイトカラー職や管理部門が対象となっており、AIによる労働代替が憶測のフェーズを終え、現実の経済活動として加速していることが明確になった。'
-    - title: 'C.2. 政府によるセーフティネットと労働力適応イニシアチブ'
-      narrative: 'G7各国政府の対応は、UBIのような抜本的なセーフティネット構築には至らず、「行動計画の策定」や「リスキリング支援」といった準備段階に留まっている。企業の迅速な雇用削減に対し、政府の対応は著しく遅れており、技術革新がもたらす社会的インパクトへの備えが全く不十分であることが露呈している。'
-    - title: 'C.3. マクロ経済への影響分析'
-      narrative: 'IMFやPwCの分析によれば、AIは生産性を向上させる一方、労働から資本への所得移転を加速させ、富の格差を「大幅に拡大」させる可能性が高い。AIスキルを持つ労働者の賃金が急騰する一方で、代替される多数の労働者が生まれる。この経済構造の二極化は、社会の分断を決定的にするだろう。'
+    - title: 'B.1. The Israel-Hezbollah Front'
+      narrative: 'The Israel-Hezbollah conflict is in a state of "managed conflict," subordinate to the broader conflict with Iran. It remains contained to skirmishes as neither side desires a full-scale war, but this equilibrium is extremely fragile. Notably, U.S. moves concerning the UNIFIL mandate are becoming a new flashpoint that could destabilize the region.'
+    - title: 'B.2. Pakistan''s Compound Crisis'
+      narrative: 'Pakistan is simultaneously exposed to two pressures: strict IMF-imposed austerity and military tensions with India. This is a textbook example of a "compound crisis" where economic collapse and military conflict risks are interlinked. The instability of this nuclear-armed state is a grave concern that could fundamentally shake regional security.'
+    - title: 'B.3. NATO''s Internal Cohesion and Strategic Alignment'
+      narrative: 'NATO adopted a new "5% of GDP for defense" target, projecting unity in response to U.S. demands. However, Spains public opposition and differing stances on Ukraine and China strategy reveal serious cracks in the alliance. The transactional U.S. foreign policy risks putting NATO on a "two-track" path, eroding its capacity for unified action in a crisis.'
+
+- chapter: 'Block C: AI-driven Socio-Economic Transformation'
+  summary: 'The "asynchronicity" between the speed of AI-driven job displacement and the slow pace of government policy response is creating new sources of social unrest. The widening wealth gap caused by this technological shift is at a dangerous stage, poised to amplify political distrust.'
+  sections:
+    - title: 'C.1. Job Displacement Attributed to AI'
+      narrative: 'Major corporations like Intel, IBM, and Amazon have officially announced and are executing tens of thousands of layoffs, citing efficiency gains from AI. White-collar and administrative roles are particularly affected, making it clear that AI-driven labor replacement has moved from speculation to an accelerating economic reality.'
+    - title: 'C.2. Government Safety Nets and Workforce Adaptation Initiatives'
+      narrative: 'The response from G7 governments has not progressed to establishing fundamental safety nets like UBI, remaining at the preparatory stage of "formulating action plans" and "supporting reskilling." The government response is severely lagging behind rapid corporate layoffs, revealing a total lack of preparedness for the social impact of technological innovation.'
+    - title: 'C.3. Macroeconomic Impact Analysis'
+      narrative: 'Analyses from the IMF and PwC suggest that while AI boosts productivity, it is likely to "significantly widen" wealth inequality by accelerating the income shift from labor to capital. As wages for AI-skilled workers soar, a large number of displaced workers will be created. This economic polarization will decisively fragment society.'
+```

@@ -1,55 +1,57 @@
-DRレポート：構成メタ分析
-本レポートは、現在進行中の複合的危機を、三つの異なるが相互に深く連関するベクトル（A, B, C）として描き出している。その全体構造は以下のように分析できる。
+This document is the English version of G3_JP.md.
 
-1. 時間軸（Timeline）
-ブロックC（AIによる社会変容）： 現在進行形かつ指数関数的に加速中。 技術革新は日々進展し、雇用破壊は既に始まっている。最も変化の速度が速いベクトル。
+DR Report: Meta-Analysis of Structure
+This report depicts the ongoing meta-crisis as three distinct but deeply interconnected vectors (A, B, and C). Its overall structure can be analyzed as follows.
 
-ブロックA（米国の戦略転換）： 短〜中期（0〜4年）。 政権交代や選挙サイクルに強く依存するが、「プロジェクト2025」のように、変化を加速させるための計画が既に存在する。
+1. Timeline
+Block C (AI-driven Social Transformation): Ongoing and accelerating exponentially. Technological innovation advances daily, and job displacement has already begun. This is the vector with the fastest rate of change.
 
-ブロックB（地政学的不安定化）： 中〜長期。 長年の歴史的対立が背景にあるが、ブロックAやCからの影響を受け、突発的に危機が顕在化する。
+Block A (U.S. Strategic Shift): Short to Medium Term (0-4 years). Strongly dependent on administrative changes and election cycles, but plans to accelerate change, like "Project 2025," are already in place.
 
-2. 因果構造（Causal Structure）
-各ブロックは独立しておらず、相互に影響を及ぼし合うフィードバックループを形成している。
+Block B (Geopolitical Instability): Medium to Long Term. Rooted in long-standing historical conflicts, but crises can erupt suddenly due to impacts from Blocks A and C.
 
-A → B: 米国の孤立主義的転換が、NATOの結束を弱め、中東や南アジアにおける力の空白を生み、地政学リスクを増大させる。
+2. Causal Structure
+The blocks are not independent; they form a feedback loop where they mutually influence each other.
 
-C → A: AIによる国内の経済格差拡大と社会不安が、ポピュリズムや急進的な政治思想（「アンチ・フィアット」等）の温床となり、米国の政治的転換を後押しする。
+A → B: America's isolationist turn weakens NATO cohesion, creates power vacuums in the Middle East and South Asia, and increases geopolitical risk.
 
-(A + C) → 社会全体の脆弱性増大: 対外的な安全保障の枠組み（A）と、国内の社会経済的安定（C）が同時に揺らぐことで、外部からのショックと内部からの突き上げに対する国家全体の耐性が著しく低下する。
+C → A: Widening domestic economic inequality and social unrest caused by AI become a breeding ground for populism and radical political ideologies (like "Anti-Fiat"), which in turn fuels America's political transformation.
 
-この構造は、以下のMermaid図で可視化できる。
+(A + C) → Increased Overall Systemic Vulnerability: The simultaneous erosion of external security frameworks (A) and internal socio-economic stability (C) significantly degrades a nation's overall resilience to both external shocks and internal pressures.
+
+This structure can be visualized with the following Mermaid diagram:
 
 graph TD
-    subgraph 外部環境 (Geopolitical Environment)
-        A["<div style='font-weight:bold; font-size:1.1em;'>A: 米国の戦略転換</div>- 国際協調からの離脱<br>- 同盟関係の揺らぎ<br>- 予測不能性の増大"]
-        B["<div style='font-weight:bold; font-size:1.1em;'>B: 地政学リスクの顕在化</div>- NATO結束の亀裂<br>- 中東・南アジアの不安定化<br>- 紛争解決メカニズムの機能不全"]
+    subgraph Geopolitical Environment
+        A["<div style='font-weight:bold; font-size:1.1em;'>A: U.S. Strategic Shift</div>- Withdrawal from Int'l Cooperation<br>- Alliance Instability<br>- Increased Unpredictability"]
+        B["<div style='font-weight:bold; font-size:1.1em;'>B: Geopolitical Risk Manifestation</div>- Cracks in NATO Cohesion<br>- M.E. & South Asia Instability<br>- Failure of Conflict Resolution Mechanisms"]
     end
 
-    subgraph 国内環境 (Socio-Economic Environment)
-        C["<div style='font-weight:bold; font-size:1.1em;'>C: AIによる社会経済変容</div>- 雇用破壊と経済格差の加速<br>- 政府の対応の遅延<br>- 社会不安の増大"]
+    subgraph Socio-Economic Environment
+        C["<div style='font-weight:bold; font-size:1.1em;'>C: AI-driven Socio-Economic Shift</div>- Accelerated Job Displacement & Inequality<br>- Lagging Government Response<br>- Rising Social Unrest"]
     end
 
-    subgraph "複合的危機 (Meta-Crisis)"
-        Z["<div style='color:red; font-weight:bold; font-size:1.2em;'>文明レベルの<br>システム脆弱性</div>"]
+    subgraph "Meta-Crisis"
+        Z["<div style='color:red; font-weight:bold; font-size:1.2em;'>Civilizational<br>Systemic Vulnerability</div>"]
     end
 
-    A -- "力の空白を生む" --> B
-    B -- "外部ショック" --> Z
-    C -- "国内の分断を煽る" --> A
-    C -- "内部からの突き上げ" --> Z
+    A -- "Creates Power Vacuums" --> B
+    B -- "External Shocks" --> Z
+    C -- "Fuels Domestic Division" --> A
+    C -- "Internal Upheaval" --> Z
 
     style A fill:#e3f2fd,stroke:#333,stroke-width:2px
     style B fill:#ffebee,stroke:#333,stroke-width:2px
     style C fill:#e8f5e9,stroke:#333,stroke-width:2px
     style Z fill:#fce4ec,stroke:#c2185b,stroke-width:4px
 
-3. 対処フェーズ（Response Phase）
-本レポートで示された危機は、異なる対処フェーズの課題が混在している。
+3. Response Phase
+The crisis presented in this report involves a mixture of challenges from different response phases.
 
-予防（Prevention）： ブロックCにおけるセーフティネット構築の遅れは、今すぐ対処すべき「予防」段階の課題である。ここでの失敗は、将来の社会不安を確定させる。
+Prevention: The delay in building safety nets in Block C is a "prevention" phase issue that must be addressed immediately. Failure here guarantees future social unrest.
 
-応急（Emergency Response）： ブロックBにおける各地域の紛争は、いつ本格的な危機に発展してもおかしくない「応急」段階にある。外交的介入や抑止力の維持が求められる。
+Emergency Response: The regional conflicts in Block B are in an "emergency" phase, where they could escalate into a full-blown crisis at any moment. Diplomatic intervention and deterrence are required.
 
-復旧（Recovery / Adaptation）： ブロックAで示された米国の構造的変化は、もはや元には戻らない「新しい現実」として受け入れ、それに「適応」していく必要がある。これは「復旧」よりも「適応」のフェーズである。
+Recovery / Adaptation: The structural changes in the U.S. outlined in Block A must be accepted as a "new reality" to which we must "adapt," rather than "recover" from. This is more of an adaptation phase.
 
-これらのフェーズが同時進行していることが、本危機の対処を極めて困難にしている。
+The simultaneous progression of these phases makes responding to this meta-crisis exceptionally difficult.
