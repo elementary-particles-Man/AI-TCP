@@ -1,0 +1,16 @@
+ico_poc:
+  sensing_layer:
+    sources:
+      - log_data
+      - geopolitics_feed
+      - dr_reports
+    correlation_engine: true
+  simulation_layer:
+    enabled: true
+    interventions:
+      - diplomacy
+      - fiscal_policy
+      - sanctions
+  consensus_layer:
+    format: scenario_tree
+    output: markdown_summary
