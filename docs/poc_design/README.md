@@ -48,4 +48,17 @@ flowchart TD
 
 © 2025 [elementary-particles-Man](https://github.com/elementary-particles-Man)
 
+
+## 2025年6月26日：Critical Geopolitical Alert（Meta-Crisis）
+
+- [PoCドキュメント統合版](20250626_Critical_Geopolitical_Alert/)
+
+```mermaid
+flowchart TD
+  DR[兆候検知（人間/AI）] --> GPT[統合判断]
+  GPT --> Gemini[ナラティブ構築]
+  GPT --> Codex[構造化・可視化]
+  Codex --> Push[リポジトリ配置]
+  Push --> Review[統合検証（GPT）]
+```
 ---
