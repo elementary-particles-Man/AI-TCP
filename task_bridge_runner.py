@@ -1,39 +1,24 @@
-import os
+# --- task_bridge_runner.py ---
 import time
-import json
-from dispatcher import dispatch_task
+from pathlib import Path
 from validator import main_validator
-from utils import write_log, archive_task, load_json_safely
+from dispatcher import dispatch_task
+from utils import load_json_safely, write_log, archive_task
 
-INSTRUCTION_PATH = "cli_instructions/new_task.json"
-OUTPUT_PATH = "cli_logs/output.json"
-ARCHIVE_DIR = "cli_archives"
+INSTRUCTION_PATH = Path("F:/マイドライブ/AI-TCP/cli_instructions/new_task.json")
+OUTPUT_LOG = Path("F:/マイドライブ/AI-TCP/cli_logs/output.json")
+ARCHIVE_DIR = Path("F:/マイドライブ/AI-TCP/cli_archives/")
 
+print(f"✅ Watching: {INSTRUCTION_PATH}")
 
-def task_bridge_runner():
-    print("[AI-TCP] Task bridge runner started. Monitoring for tasks...")
-    while True:
-        if os.path.exists(INSTRUCTION_PATH):
-            try:
-                task = load_json_safely(INSTRUCTION_PATH)
-                main_validator(task)
-                result = dispatch_task(task)
-                write_log(result, OUTPUT_PATH)
-                archive_task(task, ARCHIVE_DIR)
-            except Exception as e:
-                error_result = {
-                    "execution_status": "error",
-                    "message": str(e),
-                    "details": {}
-                }
-                write_log(error_result, OUTPUT_PATH)
-            finally:
-                try:
-                    os.remove(INSTRUCTION_PATH)
-                except Exception:
-                    pass
-        time.sleep(2)  # Polling interval
-
-
-if __name__ == "__main__":
-    task_bridge_runner()
+while True:
+    if INSTRUCTION_PATH.exists():
+        try:
+            task = load_json_safely(INSTRUCTION_PATH)
+            main_validator(task)
+            result = dispatch_task(task)
+            write_log(result, OUTPUT_LOG)
+            archive_task(INSTRUCTION_PATH, ARCHIVE_DIR)
+        except Exception as e:
+            print(f"Error: {str(e)}")
+    time.sleep(3)
