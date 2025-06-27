@@ -1,0 +1,25 @@
+{
+  "id": "chatcmpl-acw1egrz7liz4sefdoduws",
+  "object": "chat.completion",
+  "created": 1750997118,
+  "model": "google/gemma-3-4b",
+  "choices": [
+    {
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "こんにちは！疎通確認のテストですね。問題なく通信できています。何か他に試したいことや、質問はありますか？\n",
+        "reasoning_content": ""
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 23,
+    "completion_tokens": 28,
+    "total_tokens": 51
+  },
+  "stats": {},
+  "system_fingerprint": "google/gemma-3-4b"
+}
