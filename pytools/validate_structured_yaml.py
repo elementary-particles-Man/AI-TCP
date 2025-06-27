@@ -56,7 +56,7 @@ def validate_file(path: str) -> int:
             print(f"⚠ Warning: {path}:{lineno}: {msg}")
         return 1
 
-    print("✅ Valid YAML.")
+    print("Valid YAML.")
     for lineno, msg in warnings:
         print(f"⚠ Warning: {path}:{lineno}: {msg}")
     return 0

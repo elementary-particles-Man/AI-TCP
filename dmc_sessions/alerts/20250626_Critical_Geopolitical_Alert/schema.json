@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Meta-Crisis Log Schema",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "phases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "title": {
+                "type": "string"
+              },
+              "agents": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "start_time": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string"
+              }
+            },
+            "required": ["id", "title", "agents", "start_time", "summary"]
+          }
+        }
+      },
+      "required": ["id", "title", "date", "phases"]
+    }
+  },
+  "required": ["project"]
+}

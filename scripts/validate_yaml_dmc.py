@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Validate structured_yaml/dmc_mental_001.yaml against schema.json.
+"""Validate a YAML file against a JSON Schema.
 
-This script loads the YAML file and validates its structure using a
+This script loads a YAML file and validates its structure using a
 JSON Schema definition. It prints each validation error with the
-corresponding field path and reason. Designed for Python 3.7.
+corresponding field path and reason.
 """
 
 from __future__ import annotations
@@ -22,30 +22,42 @@ try:
 except ImportError as exc:  # pragma: no cover - library missing
     sys.exit("jsonschema is required: pip install jsonschema")
 
-SCHEMA_PATH = Path("schema.json")
-YAML_PATH = Path("structured_yaml/dmc_mental_001.yaml")
-
 
 def load_json(path: Path):
+    """Load JSON from a file."""
     with path.open("r", encoding="utf-8") as fh:
         return json.load(fh)
 
 
 def load_yaml(path: Path):
+    """Load YAML from a file."""
     with path.open("r", encoding="utf-8") as fh:
         return yaml.safe_load(fh)
 
 
 def main() -> None:
-    if not SCHEMA_PATH.is_file():
-        print(f"Schema file not found: {SCHEMA_PATH}", file=sys.stderr)
-        sys.exit(1)
-    if not YAML_PATH.is_file():
-        print(f"YAML file not found: {YAML_PATH}", file=sys.stderr)
+    """Main validation logic."""
+    if len(sys.argv) < 2:
+        print(f"Usage: {sys.argv[0]} <yaml_file> [schema_file]", file=sys.stderr)
         sys.exit(1)
 
-    schema = load_json(SCHEMA_PATH)
-    data = load_yaml(YAML_PATH)
+    yaml_path = Path(sys.argv[1])
+    if not yaml_path.is_file():
+        print(f"YAML file not found: {yaml_path}", file=sys.stderr)
+        sys.exit(1)
+
+    # If schema is provided, use it. Otherwise, look for schema.json in the same dir.
+    if len(sys.argv) > 2:
+        schema_path = Path(sys.argv[2])
+    else:
+        schema_path = yaml_path.parent / "schema.json"
+
+    if not schema_path.is_file():
+        print(f"Schema file not found: {schema_path}", file=sys.stderr)
+        sys.exit(1)
+
+    schema = load_json(schema_path)
+    data = load_yaml(yaml_path)
 
     validator = Draft7Validator(schema)
     errors = sorted(validator.iter_errors(data), key=lambda e: e.path)
@@ -61,4 +73,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

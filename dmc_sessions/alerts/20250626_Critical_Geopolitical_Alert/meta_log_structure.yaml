@@ -1,7 +1,7 @@
 project:
   id: 20250626_Critical_Geopolitical_Alert
   title: Critical Geopolitical Alert - Meta-Crisis Log
-  date: 2025-06-26
+  date: "2025-06-26"
   phases:
     - id: 1
       title: Crisis Awareness and Initial Analysis
@@ -20,17 +20,20 @@ project:
     - id: 3
       title: Deepening Analysis and Defining Roles
       agents: [User, Gemini]
+      start_time: ""
       summary: |
         Geminiが静的分析を受け、動的シミュレーションへの移行を提案。
         ユーザーが役割分担（スカラー vs ベクトル）を提示。
     - id: 4
       title: Document Generation and Process Management
       agents: [Gemini, GPT]
+      start_time: ""
       summary: |
         日本語版Alert生成、G1-G4タスク実行。
         全成果物が生成・英訳され、GitHubに格納。
     - id: 5
       title: Repository Storage and Current Status
       agents: [User, Gemini]
+      start_time: ""
       summary: |
         リポジトリ格納が完了、Geminiが検証・待機モードへ。
