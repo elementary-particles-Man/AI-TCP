@@ -1,105 +1,46 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
+"""Generate a Mermaid flowchart from cli_logs/output.json."""
+from __future__ import annotations
+
 import json
-import os
 from datetime import datetime
+from pathlib import Path
 
-# --- 設定項目 ---
-# このスクリプトが置かれているディレクトリを基準とする
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# AI-TCPのルートディレクトリまで遡る
-PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))
+INPUT_PATH = Path("cli_logs/output.json")
+OUTPUT_DIR = Path("cli_logs")
 
-# 入力・出力先の定義
-INPUT_JSON_PATH = os.path.join(PROJECT_ROOT, "AI-TCP_Structure", "task_bridge", "cli_logs", "output.json")
-OUTPUT_MD_PATH = os.path.join(PROJECT_ROOT, "AI-TCP_Structure", "graph", "latest_output_visualization.mmd.md")
 
-def generate_mermaid_from_output(output_data: dict) -> str:
-    """
-    output.jsonのデータを受け取り、Mermaid.jsのgraph TD形式の文字列を生成する。
-    """
-    meta = output_data.get("response_metadata", {})
-    result = output_data.get("execution_result", {})
-    error = output_data.get("error_details")
+def _br(text: str) -> str:
+    """Replace newlines with <br>."""
+    return text.replace("\n", "<br>")
 
-    # --- ノードとスタイルの定義 ---
-    graph_str = "graph TD\n"
-    graph_str += "    %% --- スタイル定義 ---\n"
-    graph_str += "    classDef success fill:#d4edda,stroke:#c3e6cb,stroke-width:2px;\n"
-    graph_str += "    classDef error fill:#f8d7da,stroke:#f5c6cb,stroke-width:2px;\n"
-    graph_str += "    classDef process fill:#e2e3e5,stroke:#d6d8db;\n"
-    graph_str += "    classDef io fill:#cce5ff,stroke:#b8daff;\n\n"
 
-    # --- ノードの定義 ---
-    task_id = meta.get('original_task_id', 'N/A')
-    resp_id = meta.get('response_id', 'N/A')
-    status = meta.get('execution_status', 'unknown')
+def build_flowchart(data: dict) -> str:
+    """Return Mermaid flowchart code based on execution result."""
+    status = data.get("execution_status", "error")
+    message = _br(str(data.get("message", "")))
+    details = data.get("details", {})
 
-    graph_str += f"    %% --- ノード定義 ---\n"
-    graph_str += f"    A[new_task.json<br/>id: {task_id}]:::io\n"
-    graph_str += f"    B{{Gemini CLI Agent<br/>実行: {meta.get('executed_by', 'N/A')}}};;;process\n"
-    graph_str += f"    C[output.json<br/>id: {resp_id}]:::io\n"
+    lines = ["flowchart TD", "    start([start]) --> validate[validate]", "    validate --> dispatch[dispatch]", "    dispatch --> commit[commit]"]
 
-    # ステータスに応じて結果ノードを追加
     if status == "success":
-        result_message = result.get("message", "No message")
-        graph_str += f"    D[\"✅ 成功<br/>{result_message}\"]:::success\n"
-        # 詳細情報の追加
-        details = result.get("details", {})
-        details_str = "<br/>".join([f"{k}: {v}" for k, v in details.items()])
-        graph_str += f"    E[\"詳細<br/>{details_str}\"]\n"
-        graph_str += "    D --> E\n"
-
+        pr_name = _br(str(details.get("pr_name", "pr")))
+        lines.append(f"    commit --> pr[pr生成]")
+        lines.append(f"    pr --> complete[完了<br>{pr_name}]")
     else:
-        error_message = error.get("message", "No message") if error else "Unknown error"
-        graph_str += f"    D[\"❌ 失敗<br/>{error_message}\"]:::error\n"
-        if error and "code" in error:
-             graph_str += f"    E[\"エラーコード: {error.get('code')}\"]\n"
-             graph_str += "    D --> E\n"
+        lines.append(f"    commit --> error[{message}]")
+    return "\n".join(lines)
 
 
-    # --- 関係性の定義 ---
-    graph_str += "\n    %% --- 関係性定義 ---\n"
-    graph_str += f"    A --依頼--> B\n"
-    graph_str += f"    B --実行結果--> C\n"
-    graph_str += f"    C --ステータス--> D\n"
-
-    return graph_str
-
-def main():
-    """
-    メイン関数
-    """
-    print(f"[INFO] output.json を読み込んでいます: {INPUT_JSON_PATH}")
-    if not os.path.exists(INPUT_JSON_PATH):
-        print(f"[ERROR] 入力ファイルが見つかりません: {INPUT_JSON_PATH}")
-        return
-
-    try:
-        with open(INPUT_JSON_PATH, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-    except json.JSONDecodeError as e:
-        print(f"[ERROR] JSONの解析に失敗しました: {e}")
-        return
-
-    print("[INFO] Mermaidグラフを生成しています...")
-    mermaid_content = generate_mermaid_from_output(data)
-
-    output_wrapper = f"""
-# AI-TCP 実行結果可視化
-
-- **生成日時:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-- **元データ:** `{os.path.basename(INPUT_JSON_PATH)}`
-
-```mermaid
-{mermaid_content}
-```
-"""
-    
-    print(f"[INFO] Mermaidファイルを保存しています: {OUTPUT_MD_PATH}")
-    with open(OUTPUT_MD_PATH, 'w', encoding='utf-8') as f:
-        f.write(output_wrapper)
-    
-    print("[INFO] 処理が正常に完了しました。")
+def main() -> None:
+    if not INPUT_PATH.exists():
+        raise SystemExit(f"Input file not found: {INPUT_PATH}")
+    data = json.loads(INPUT_PATH.read_text(encoding="utf-8"))
+    chart = build_flowchart(data)
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    out_path = OUTPUT_DIR / f"{timestamp}.mmd.md"
+    out_path.write_text(f"```mermaid\n{chart}\n```\n", encoding="utf-8")
+    print(f"Mermaid saved to {out_path}")
 
 
 if __name__ == "__main__":
