@@ -1,6 +1,6 @@
 import os
+ALLOWED_BASE_PATH = os.path.abspath("F:/マイドライブ/AI-TCP_Task")
 
-ALLOWED_BASE_PATH = os.path.abspath("D:/MyData/AI-TCP-Repo/")
 
 def validate_git_commit_task(task: dict) -> None:
     if "execution_target" not in task:
