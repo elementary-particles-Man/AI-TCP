@@ -1,11 +1,11 @@
-# --- task_bridge_runner.py ---
 import time
 from pathlib import Path
 from validator import main_validator
 from dispatcher import dispatch_task
 from utils import load_json_safely, write_log, archive_task
 
-IINSTRUCTION_PATH = Path("F:/マイドライブ/AI-TCP_Task/cli_instructions/new_task.json")
+# ✅ リネーム後のパスに合わせる！
+INSTRUCTION_PATH = Path("F:/マイドライブ/AI-TCP_Task/cli_instructions/new_task.json")
 OUTPUT_LOG = Path("F:/マイドライブ/AI-TCP_Task/cli_logs/output.json")
 ARCHIVE_DIR = Path("F:/マイドライブ/AI-TCP_Task/cli_archives/")
 
