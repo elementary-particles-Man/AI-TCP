@@ -3,6 +3,8 @@
 **AI-TCP** is a proposed international protocol framework for secure, neutral, and traceable inter-LLM communication in the age of autonomous intelligence.  
 It is designed to enable resilient coordination between large language models (LLMs) across geopolitical, institutional, and ethical boundaries, under human-governed supervision.
 
+# This comment is added for Git commit verification.
+
 This repository contains the complete draft structure, technical specification, and governance proposal for AI-TCP, as well as foundational documents for its inclusion in the "Magi System"—a tri-LLM distributed decision-making architecture.
 
 ## 📂 Repository Structure
