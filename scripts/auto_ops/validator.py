@@ -1,5 +1,7 @@
 import os
 
+# This comment is added for Git commit verification.
+
 ALLOWED_BASE_PATH = os.path.abspath("D:/My Data/Develop/Project INFINITY/AI-TCP")
 
 def validate_git_commit_task(task: dict) -> None:

@@ -1,5 +1,7 @@
 # --- utils.py ---
 
+# This comment is added for Git commit verification.
+
 import json
 import os
 import shutil
