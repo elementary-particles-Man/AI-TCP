@@ -1,16 +1,1 @@
-=== ファイル存在チェック ===
-[OK] D:\My Data\Develop\Project INFINITY\AI-TCP\scripts\auto_ops\validate_task.py
-[OK] D:\My Data\Develop\Project INFINITY\AI-TCP\tests\test_validator_git_commit.py
-
-=== pytest 実行 ===
-============================= test session starts =============================
-platform win32 -- Python 3.10.6, pytest-8.4.1, pluggy-1.6.0
-rootdir: D:\My Data\Develop\Project INFINITY\AI-TCP
-plugins: anyio-4.9.0
-collected 1 item
-
-tests\test_validator_git_commit.py .                                     [100%]
-
-============================== 1 passed in 0.03s ==============================
-
-=== Validation Completed ===
+test log
