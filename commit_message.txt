@@ -1,1 +1,1 @@
-【AI-TCP】スクリプト実行中の修正をコミット
+【AI-TCP】validate_task.py機能拡充テスト＆検証

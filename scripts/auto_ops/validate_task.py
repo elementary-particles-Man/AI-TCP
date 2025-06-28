@@ -4,9 +4,17 @@ import subprocess
 import json
 
 # This script is designed to be called by the AI-TCP agent
-# It reads its configuration from a JSON file (new_task.json) for files_to_check, log_path, and pytest_target
+# It reads its configuration from a JSON file (new_task.json) for log_path and pytest_target
+# files_to_check are passed as command-line arguments
 
 def main():
+    if len(sys.argv) < 2:
+        print("Usage: python validate_task.py <comma_separated_files>")
+        sys.exit(1)
+
+    files_arg = sys.argv[1]
+    files_to_check = files_arg.split(',')
+
     # Assuming new_task.json is located at a known path relative to the project root
     # For this example, we'll hardcode the path as it's provided in the context
     new_task_json_path = Path("D:/My Data/Develop/Project INFINITY/AI-TCP/AI-TCP_Structure/task_bridge/cli_instructions/new_task.json")
@@ -18,7 +26,6 @@ def main():
     with new_task_json_path.open("r", encoding="utf-8") as f:
         task_config = json.load(f)
 
-    files_to_check = task_config["execution_target"]["files_to_check"]
     log_path_str = task_config["task_payload"]["log_path"]
     pytest_target = task_config["task_payload"]["pytest_target"]
 
@@ -33,7 +40,8 @@ def main():
                 f.write(f"[NG] {path} (NOT FOUND)\n")
 
         f.write("\n=== pytest 実行 ===\n")
-        result = subprocess.run(["pytest", pytest_target], capture_output=True, text=True)
+        files_to_check_str = ";".join(files_to_check)
+        result = subprocess.run(["pytest", pytest_target, f"--files-to-check={files_to_check_str}"], capture_output=True, text=True)
         f.write(result.stdout)
         f.write("\n=== Validation Completed ===\n")
 
