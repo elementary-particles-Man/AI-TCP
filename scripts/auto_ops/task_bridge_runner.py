@@ -3,61 +3,86 @@ import time
 import shutil
 from datetime import datetime
 import subprocess
+from pathlib import Path
 
 # === 設定 ===
-NEW_TASK_JSON = r"D:\My Data\Develop\Project INFINITY\AI-TCP\cli_instructions\new_task.json"
-LOG_FILE = r"D:\My Data\Develop\Project INFINITY\AI-TCP\cli_logs\TaskValidation.txt"
-ARCHIVE_DIR = r"D:\My Data\Develop\Project INFINITY\AI-TCP\cli_archives"
+NEW_TASK_JSON = Path(r"D:\My Data\Develop\Project INFINITY\AI-TCP\cli_instructions\new_task.json")
+LOG_FILE = Path(r"D:\My Data\Develop\Project INFINITY\AI-TCP\cli_logs\TaskValidation.txt")
+ARCHIVE_DIR = Path(r"D:\My Data\Develop\Project INFINITY\AI-TCP\cli_archives")
+FLAG_FILE = NEW_TASK_JSON.with_suffix(".flag")
 
-PROMPT = (
-    "new_task.json（フルパス: D:\\My Data\\Develop\\Project INFINITY\\AI-TCP\\cli_instructions\\new_task.json）を確認し、"
+PROMPT_TEMPLATE = (
+    "new_task.json（フルパス: {json_path}）を確認し、"
     "内容に従ってタスクを完了して下さい。\n"
-    "作業ログは \"D:\\My Data\\Develop\\Project INFINITY\\AI-TCP\\cli_logs\\TaskValidation.txt\" に記載して下さい。\n"
+    "作業ログは \"{log_path}\" に記載して下さい。\n"
     "全てのタスクが完了したら、必ずログファイルの末尾に [Task Completed] を追記して下さい。\n"
 )
 
 # === ディレクトリ準備 ===
-if not os.path.exists(ARCHIVE_DIR):
-    os.makedirs(ARCHIVE_DIR)
+ARCHIVE_DIR.mkdir(parents=True, exist_ok=True)
+
+print(f"[INFO] Watching task file: {NEW_TASK_JSON.resolve()}")
+print(f"[INFO] Log will be written to: {LOG_FILE.resolve()}")
+print(f"[INFO] Archive directory: {ARCHIVE_DIR.resolve()}")
 
 # === 常駐ループ ===
 while True:
-    if os.path.exists(NEW_TASK_JSON):
+    if NEW_TASK_JSON.exists():
         print("[INFO] new_task.json を検知しました。Gemini CUI を起動します。")
 
         # 既存ログをアーカイブ or 削除
-        if os.path.exists(LOG_FILE):
+        if LOG_FILE.exists():
             ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-            shutil.move(LOG_FILE, os.path.join(ARCHIVE_DIR, f"TaskValidation_{ts}.txt"))
+            shutil.move(LOG_FILE, ARCHIVE_DIR / f"TaskValidation_{ts}.txt")
             print(f"[INFO] 古いログをアーカイブしました: TaskValidation_{ts}.txt")
 
         # Gemini CUI を起動（プロンプトを標準入力で渡す、-y 付与）
-        subprocess.run(
-            ["gemini-cui", "-y"],
-            input=PROMPT.encode("utf-8"),
-            check=False
+        prompt = PROMPT_TEMPLATE.format(
+            json_path=NEW_TASK_JSON.resolve(),
+            log_path=LOG_FILE.resolve(),
         )
+        subprocess.run([
+            "gemini-cui",
+            "-y",
+        ], input=prompt.encode("utf-8"), check=False)
 
         print("[INFO] Gemini CUI 実行中... ログファイルの完了を監視します。")
 
-        # 完了検知: [Task Completed] が書かれるまで監視
+        # 完了検知: [Task Completed] または .flag ファイルを監視
         while True:
-            if os.path.exists(LOG_FILE):
-                with open(LOG_FILE, encoding="utf-8") as f:
-                    if "[Task Completed]" in f.read():
-                        print("[INFO] タスク完了を検知しました。")
+            completed = False
+            if LOG_FILE.exists():
+                try:
+                    with LOG_FILE.open(encoding="utf-8") as f:
+                        for line in reversed(f.readlines()):
+                            if "[Task Completed]" in line:
+                                completed = True
+                                break
+                except Exception:
+                    pass
 
-                        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+            if not completed and FLAG_FILE.exists():
+                completed = True
 
-                        # new_task.json をアーカイブ
-                        shutil.move(NEW_TASK_JSON, os.path.join(ARCHIVE_DIR, f"new_task_{ts}.json"))
-                        print(f"[INFO] new_task.json をアーカイブしました: new_task_{ts}.json")
+            if completed:
+                print("[INFO] タスク完了を検知しました。")
 
-                        # ログファイルをアーカイブ
-                        shutil.move(LOG_FILE, os.path.join(ARCHIVE_DIR, f"TaskValidation_{ts}.txt"))
-                        print(f"[INFO] ログファイルをアーカイブしました: TaskValidation_{ts}.txt")
+                ts = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-                        break
+                # new_task.json をアーカイブ
+                shutil.move(NEW_TASK_JSON, ARCHIVE_DIR / f"new_task_{ts}.json")
+                print(f"[INFO] new_task.json をアーカイブしました: new_task_{ts}.json")
+
+                # ログファイルをアーカイブ
+                if LOG_FILE.exists():
+                    shutil.move(LOG_FILE, ARCHIVE_DIR / f"TaskValidation_{ts}.txt")
+                    print(f"[INFO] ログファイルをアーカイブしました: TaskValidation_{ts}.txt")
+
+                if FLAG_FILE.exists():
+                    FLAG_FILE.unlink()
+
+                break
+
             time.sleep(5)
 
     else:
