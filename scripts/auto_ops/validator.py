@@ -1,6 +1,6 @@
 import os
 
-# This comment is added for Git commit verification. (2nd time)
+# This comment is added for Git commit verification. (3rd time)
 
 ALLOWED_BASE_PATH = os.path.abspath("D:/My Data/Develop/Project INFINITY/AI-TCP")
 
