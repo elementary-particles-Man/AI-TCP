@@ -1,0 +1,171 @@
+=== 📂 リポジトリ ファイル構造 ===
+100644 blob f18697f3686f9bf5824b326fde2f4e42cc5ec52f	check_repo.py
+100644 blob 71d3b260b59d415ea5672e9aedd5210e62f01cc9	dispatcher.py
+100644 blob f4e6e01d0e0f0a2b8ec83e9da5d25aa0bb75a9d0	output_watcher.py
+100644 blob 4d3b7c5d2ff6f5860eb792b0e56503bd01924c66	start_all_watchers.ps1
+100644 blob 23ea7201dc3ba74bf78865f385772551dd9b9d6e	task_bridge_runner.ps1
+100644 blob 0933a3e522be0aa11991145df4eef1481a0b4264	task_bridge_runner.py
+100644 blob 779e66940e82efaa28b3b49cbe475857759efe5a	utils.py
+100644 blob bcc80ccd7ce0cd75522dadc6f3aecad552eb1541	validator.py
+100644 blob de1825325827caf8830bd61ce976b8463ca97223	watch_and_execute.ps1
+
+=== ✅ 最新コミット ===
+【AI-TCP】Phase進行：自律基盤＋PoC構造フル検証
+2025-06-28 10:37:23 +0900
+素粒子
+91933eca36a26b41b54ed1aa0528af0ff6a55323
+
+=== 🔀 プルリクエスト一覧 ===
+- Merge pull request #134 from elementary-particles-Man/codex/create-gen_output_mermaid.py-script
+- Merge pull request #133 from elementary-particles-Man/codex/create-script-to-convert-mermaid-mmd.md-to-html
+- Merge pull request #132 from elementary-particles-Man/codex/create-script-to-validate-missing-files
+- Merge pull request #131 from elementary-particles-Man/codex/設計意図解析ツールを実装
+- Merge pull request #130 from elementary-particles-Man/codex/replace-mcp-with-kairo-and-update-docs
+- Merge pull request #129 from elementary-particles-Man/codex/convert-html-to-yaml-for-ai-tcp-protocol
+- Merge pull request #128 from elementary-particles-Man/codex/generate-mermaid-graph-from-html
+- Merge pull request #127 from elementary-particles-Man/codex/implement-ico-poc-structure-in-yaml
+- Merge pull request #126 from elementary-particles-Man/codex/generate-readme.md-for-critical-geopolitical-alert
+- Merge branch 'main' of https://github.com/elementary-particles-Man/AI-TCP
+- Merge pull request #125 from elementary-particles-Man/codex/create-meta_log_structure.yaml-and-convert-to-yaml
+- Merge pull request #124 from elementary-particles-Man/codex/ファイルの移動とリネーム
+- Merge pull request #122 from elementary-particles-Man/codex/readme.mdに役割別リンクを追加
+- Merge pull request #121 from elementary-particles-Man/codex/update-alert_log.md-with-ai-tcp-usage-points
+- Merge pull request #120 from elementary-particles-Man/codex/create-graph_payload-and-.mmd.md-files
+- Merge pull request #119 from elementary-particles-Man/codex/作成markdown→mermaid変換スクリプト
+- Merge pull request #118 from elementary-particles-Man/codex/ナラティブ出力用html/cssテンプレート作成
+- Merge pull request #117 from elementary-particles-Man/codex/llm対話ログをhtmlビューアで表示
+- Merge pull request #116 from elementary-particles-Man/codex/markdown章構造をyamlに変換するスクリプト作成
+- Merge pull request #115 from elementary-particles-Man/codex/自動生成-json-schema-for-yaml
+- Merge pull request #114 from elementary-particles-Man/codex/整理yaml構造をmermaid形式で出力
+- Merge pull request #113 from elementary-particles-Man/codex/create-yaml-schema-validation-script
+- Merge pull request #112 from elementary-particles-Man/codex/generate-markdown-documentation-for-yaml-fields
+- Merge pull request #111 from elementary-particles-Man/codex/yaml構造の自動説明文書生成
+- Merge pull request #110 from elementary-particles-Man/codex/ai-tcpプロトコルrfcドラフト構成案作成
+- Merge pull request #109 from elementary-particles-Man/codex/create-mermaid-graph-converter-tool
+- Merge pull request #108 from elementary-particles-Man/codex/create-yaml-syntax-checker-for-intent_xxx.yaml
+- Merge pull request #107 from elementary-particles-Man/codex/generate-html-log-from-intent_007.yaml
+- Merge pull request #106 from elementary-particles-Man/codex/自動リンク構造マップを生成
+- Merge pull request #105 from elementary-particles-Man/codex/generate-agent-yaml-files-and-scripts
+- Merge pull request #104 from elementary-particles-Man/codex/実装-semanticエンリッチ＆graph拡張タスク
+- Merge pull request #103 from elementary-particles-Man/codex/implement-graph_to_yaml-and-validate_graph_vs_yaml-tools
+- Merge pull request #102 from elementary-particles-Man/codex/ai-tcp_structureのツリー構造をmermaidで描画
+- Merge branch 'main' into codex/ai-tcp_structureのツリー構造をmermaidで描画
+- Merge pull request #101 from elementary-particles-Man/codex/yaml構造の整合性チェックgoプログラム作成
+- Merge pull request #100 from elementary-particles-Man/codex/link_map.json-と-.mmd.md-の整合性検証プログラム作成
+- Merge pull request #99 from elementary-particles-Man/codex/goツールでyamlをhtml/graph/jsonに変換
+- Merge pull request #98 from elementary-particles-Man/ahnseg-codex/generate-rfc-draft-for-lsc-integration
+- Merge pull request #97 from elementary-particles-Man/codex/generate-rfc-draft-for-lsc-integration
+- Merge pull request #96 from elementary-particles-Man/codex/開発-link最適化スクリプト
+- Merge branch 'main' of https://github.com/elementary-particles-Man/AI-TCP
+- Merge pull request #95 from elementary-particles-Man/yefeua-codex/generate-rfc-draft-for-lsc-integration
+- Merge pull request #94 from elementary-particles-Man/codex/修正scripts/gen_dmc_html.pyのmermaid出力
+- Merge pull request #93 from elementary-particles-Man/codex/修正mermaidコードのmarkdown描画
+- Merge pull request #92 from elementary-particles-Man/codex/修正mermaid構文のmarkdownファイル
+- Merge pull request #91 from elementary-particles-Man/codex/generate-mermaid-trace-graph-from-yaml
+- Merge pull request #90 from elementary-particles-Man/codex/build-cli-tool-to-batch-convert-yaml-traces
+- Merge pull request #89 from elementary-particles-Man/codex/define-mermaid-dsl-rules-and-template
+- Merge pull request #88 from elementary-particles-Man/codex/write-python-script-to-convert-yaml-to-html-and-mermaid
+- Merge branch 'main' of https://github.com/elementary-particles-Man/AI-TCP
+- Merge pull request #87 from elementary-particles-Man/codex/generate-rfc-015-edge-device-intent-format
+- Merge pull request #86 from elementary-particles-Man/codex/generate-rfc-014---metadata-header-format
+- Merge branch 'main' into codex/generate-rfc-014---metadata-header-format
+- Merge pull request #85 from elementary-particles-Man/codex/generate-rfc-014-metadata-format-specification
+- Merge branch 'main' of https://github.com/elementary-particles-Man/AI-TCP
+- Merge pull request #84 from elementary-particles-Man/codex/define-language-translation-standard
+- Merge pull request #83 from elementary-particles-Man/codex/create-rfc-014-for-metadata-format
+- Merge branch 'main' into codex/create-rfc-014-for-metadata-format
+- Merge pull request #82 from elementary-particles-Man/dgymtq-codex/define-obsidian-integration-schema-for-ai-tcp
+- Merge branch 'main' into dgymtq-codex/define-obsidian-integration-schema-for-ai-tcp
+- Merge pull request #81 from elementary-particles-Man/codex/define-obsidian-integration-schema-for-ai-tcp
+- Merge branch 'main' into codex/define-obsidian-integration-schema-for-ai-tcp
+- Merge pull request #80 from elementary-particles-Man/codex/create-rfc-012-for-ai-tcp-conflict-resolution
+- Merge branch 'main' into codex/create-rfc-012-for-ai-tcp-conflict-resolution
+- Merge pull request #79 from elementary-particles-Man/codex/design-llm-role-in-ai-tcp-protocol
+- Merge pull request #78 from elementary-particles-Man/codex/draft-rfc-010-for-ai-tcp-protocol-extension
+- Merge pull request #77 from elementary-particles-Man/codex/create-python-script-to-convert-latex-for-mathjax
+- Merge pull request #76 from elementary-particles-Man/codex/create-node.js-script-to-convert-.mmd-files
+- Merge pull request #75 from elementary-particles-Man/codex/create-script-to-verify-rfc-numbers-in-markdown-files
+- Merge pull request #74 from elementary-particles-Man/codex/create-python-script-to-extract-mermaid-blocks
+- Merge pull request #73 from elementary-particles-Man/codex/create-python-script-to-convert-mermaid-to-dot
+- Merge pull request #72 from elementary-particles-Man/codex/create-python-script-to-generate-toc
+- Merge pull request #71 from elementary-particles-Man/codex/create-python-script-for-processing-mermaid-code-blocks
+- Merge pull request #70 from elementary-particles-Man/codex/create-python-script-to-convert-.md-files-to-.html
+- Merge pull request #69 from elementary-particles-Man/codex/作成-python-スクリプトで-rfc-インデックス生成
+- Merge pull request #68 from elementary-particles-Man/codex/create-python-script-for-markdown-to-html-conversion
+- Merge branch 'main' into codex/create-python-script-for-markdown-to-html-conversion
+- Merge pull request #67 from elementary-particles-Man/codex/create-python-script-to-extract-and-convert-mermaid-code
+- Merge pull request #66 from elementary-particles-Man/codex/read-and-visualize-yaml-sessions-in-html
+- Merge pull request #65 from elementary-particles-Man/codex/各yamlファイルにコメント追加
+- Merge pull request #64 from elementary-particles-Man/codex/自動生成された相互参照リンクを追加
+- Merge pull request #63 from elementary-particles-Man/codex/markdownファイルの構文エラー検出と整形
+- Merge pull request #62 from elementary-particles-Man/codex/extract-mermaid-code-and-move-files
+- Merge pull request #61 from elementary-particles-Man/codex/markdown形式でファイルリストを作成
+- Merge pull request #60 from elementary-particles-Man/codex/yamlからmermaidへの変換スクリプト作成
+- Merge pull request #59 from elementary-particles-Man/codex/rfc-readme-自動生成スクリプト作成
+- Merge pull request #58 from elementary-particles-Man/codex/強化：c4-dmcセッション-html出力
+- Merge pull request #57 from elementary-particles-Man/codex/create-yaml-structure-validation-script
+- Merge pull request #56 from elementary-particles-Man/codex/yamlをmermaid構造図に変換
+- Merge pull request #55 from elementary-particles-Man/codex/作成-mermaidコードブロック整形スクリプト
+- Merge pull request #54 from elementary-particles-Man/codex/yaml整合性チェックスクリプト作成
+- Merge pull request #53 from elementary-particles-Man/codex/create-script-to-generate-rfc-index-in-readme.md
+- Merge pull request #52 from elementary-particles-Man/codex/自動生成スクリプト作成
+- Merge pull request #51 from elementary-particles-Man/codex/generate-yaml-packets-for-poc-scenarios
+- Merge pull request #50 from elementary-particles-Man/codex/create-tool-to-display-mermaid-templates-in-html
+- Merge pull request #49 from elementary-particles-Man/codex/ai-tcpのreasoning_traceをmarkdown形式で保存
+- Merge pull request #48 from elementary-particles-Man/codex/verify-reconstitution-of-mermaid-structure
+- Merge pull request #47 from elementary-particles-Man/codex/create-html-output-for-graph_payload-comparison
+- Merge pull request #46 from elementary-particles-Man/codex/自動生成テンプレート機能を実装
+- Merge pull request #45 from elementary-particles-Man/codex/構築-yamlパケット送受信処理ツール
+- Merge pull request #44 from elementary-particles-Man/codex/create-mermaid-syntax-validation-tool
+- Merge pull request #43 from elementary-particles-Man/codex/generate-structured_yaml_index.html
+- Merge branch 'main' into codex/generate-structured_yaml_index.html
+- Merge pull request #42 from elementary-particles-Man/codex/htmlファイルにyamlリンクを追加
+- Merge pull request #41 from elementary-particles-Man/codex/add-rfc-markdown-to-html-conversion-in-build_all.py
+- Merge pull request #40 from elementary-particles-Man/jvsjgh-codex/add-warning-outputs-to-yaml-validator
+- Merge pull request #39 from elementary-particles-Man/codex/implement-mermaid-diagram-rendering-in-gen_dmc_html.py
+- Merge pull request #38 from elementary-particles-Man/codex/add-mermaid-syntax-rendering-to-html
+- Merge pull request #27 from elementary-particles-Man/codex/gen_dmc_html.pyにhtmlメタ情報挿入機能を追加
+- Merge pull request #37 from elementary-particles-Man/codex/add-additional-warnings-for-structured_yaml-validation
+- Merge pull request #36 from elementary-particles-Man/codex/generate-html-from-dmc_sessions-yaml
+- Merge pull request #35 from elementary-particles-Man/codex/生成構造マッピング整合性検証スクリプト
+- Merge pull request #34 from elementary-particles-Man/codex/要約ファイル構造整合性確認スクリプト作成
+- Merge pull request #33 from elementary-particles-Man/codex/generate-svg-from-mermaid-and-embed-in-html
+- Merge pull request #32 from elementary-particles-Man/codex/作成-mermaid-svg自動生成補助スクリプト
+- Merge pull request #31 from elementary-particles-Man/codex/実装-mermaid→svg-変換スクリプト
+- Merge pull request #30 from elementary-particles-Man/codex/yaml構造をmarkdown形式で自動生成するpythonスクリプト作成
+- Merge pull request #29 from elementary-particles-Man/codex/htmlレポートからyaml生成スクリプト作成
+- Merge pull request #28 from elementary-particles-Man/codex/create-gen_dmc_yaml.py-script
+- Merge pull request #26 from elementary-particles-Man/codex/create-validate_dmc_yaml.py-to-validate-yaml
+- Merge pull request #25 from elementary-particles-Man/codex/refactor-gen_dmc_html.py-for-html-generation
+- Merge pull request #24 from elementary-particles-Man/codex/move-gen_dmc_html.py-and-enhance-script
+- Merge pull request #23 from elementary-particles-Man/codex/htmlにyamlを変換する処理作成
+- Merge branch 'main' into codex/htmlにyamlを変換する処理作成
+- Merge branch 'main' of https://github.com/elementary-particles-Man/AI-TCP
+- Merge pull request #22 from elementary-particles-Man/codex/define-ai-tcp-dmcトレース構成
+- Merge branch 'main' into codex/define-ai-tcp-dmcトレース構成
+- Merge pull request #21 from elementary-particles-Man/w05p3d-codex/edit-ai_tcp_specification-block-in-yaml
+- Merge pull request #20 from elementary-particles-Man/codex/wrap-timeline-list-with-version-1.0
+- Merge branch 'main' into codex/wrap-timeline-list-with-version-1.0
+- Merge pull request #19 from elementary-particles-Man/codex/rewrite-yaml-file-to-follow-master_schema_v1
+- Merge pull request #18 from elementary-particles-Man/codex/edit-structured_yaml/master_schema_v1.yaml
+- Merge pull request #16 from elementary-particles-Man/codex/edit-ai_tcp_specification-block-in-yaml
+- Merge pull request #17 from elementary-particles-Man/codex/fix-missing-closing-text-in-yaml
+- Merge pull request #14 from elementary-particles-Man/codex/fix-markdown-render-and-add-closing-backtick
+- Merge branch 'main' into codex/fix-markdown-render-and-add-closing-backtick
+- Merge pull request #11 from elementary-particles-Man/codex/consolidate-fields-and-generate-protocol-spec
+- Merge pull request #15 from elementary-particles-Man/ay8k88-codex/fix-markdown-render-and-add-closing-backtick
+- Merge branch 'main' into ay8k88-codex/fix-markdown-render-and-add-closing-backtick
+- Merge pull request #13 from elementary-particles-Man/0epd2k-codex/add-yaml-header-to-documents
+- Merge pull request #12 from elementary-particles-Man/codex/add-yaml-header-to-documents
+- Merge pull request #10 from elementary-particles-Man/1dpmz1-codex/create-mermaid-flowcharts-for-ai-tcp-and-direct-mental-care
+- Merge pull request #9 from elementary-particles-Man/codex/add-overview-and-skeleton-rfc-to-docs
+- Merge pull request #8 from elementary-particles-Man/codex/ai-tcp技術ドキュメント作成
+- Merge pull request #7 from elementary-particles-Man/codex/update-readme.md-directory-descriptions
+- Merge branch 'main' into codex/update-readme.md-directory-descriptions
+- Merge pull request #6 from elementary-particles-Man/codex/update-yaml-validation-instructions
+- Merge branch 'main' into codex/update-yaml-validation-instructions
+- Merge pull request #5 from elementary-particles-Man/kal646-codex/update-bullet-for-master_design/-in-readme
+- Merge pull request #4 from elementary-particles-Man/6kl019-codex/update-bullet-for-master_design/-in-readme
+- Merge pull request #3 from elementary-particles-Man/codex/update-bullet-for-master_design/-in-readme
+- Merge pull request #2 from elementary-particles-Man/codex/remove-final-line-containing-token_auto
+- Merge pull request #1 from elementary-particles-Man/codex/rewrite-yaml-to-match-master_schema_v1
