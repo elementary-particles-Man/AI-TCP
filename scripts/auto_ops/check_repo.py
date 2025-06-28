@@ -1,13 +1,18 @@
 import subprocess
 import datetime
 import os
+import sys
+
+# Set stdout encoding to UTF-8 for proper display of emojis and special characters
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8')
 
 def run_git_command(args):
     """Gitコマンドを安全に実行して結果を返す"""
-    result = subprocess.run(["git"] + args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    result = subprocess.run(["git"] + args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, encoding='utf-8', errors='ignore')
     if result.returncode != 0:
         print(f"[ERROR] {' '.join(args)}\n{result.stderr}")
-    return result.stdout.strip()
+    return result.stdout.strip() if result.stdout else ""
 
 def main():
     # タイムスタンプ付きログファイル名

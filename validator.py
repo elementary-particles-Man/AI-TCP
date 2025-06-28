@@ -31,3 +31,4 @@ def main_validator(task: dict) -> None:
         validate_git_commit_task(task)
     else:
         raise ValueError(f"Unsupported task_type: '{task_type}'")
+# AI-TCP Gemini CLI test comment 【20250628】

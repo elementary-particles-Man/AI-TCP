@@ -1,5 +1,11 @@
 import time
 from pathlib import Path
+import sys
+
+# Set stdout encoding to UTF-8 for proper display of emojis and special characters
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8')
+
 from validator import main_validator
 from dispatcher import dispatch_task
 from utils import load_json_safely, write_log, archive_task

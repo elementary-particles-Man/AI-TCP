@@ -6,6 +6,8 @@
 # 3. Task_archive にタイムスタンプ付きで保存
 # ----------------------------------------------------------------
 
+# This comment is added for Git commit verification.
+
 # === 設定 ===
 $instructionPath = "D:\My Data\Develop\Project INFINITY\AI-TCP\scripts\auto_ops\new_task.json"
 $outputPath = "D:\My Data\Develop\Project INFINITY\AI-TCP\scripts\auto_ops\output.json"
