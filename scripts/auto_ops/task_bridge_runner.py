@@ -3,6 +3,11 @@ import time
 import shutil
 from datetime import datetime
 import subprocess
+import sys
+
+# === Configuration for WinError32 Retries ===
+MAX_RETRIES = 5
+RETRY_DELAY_SECONDS = 1
 
 # === 環境変数からジャンクションパスを取得 ===
 REPO_ROOT = os.environ.get("REPO_ROOT")
@@ -10,21 +15,58 @@ if not REPO_ROOT:
     raise EnvironmentError("REPO_ROOT 環境変数が設定されていません。")
 print(f"[INFO] リポジトリルート: {REPO_ROOT}")
 
-# === Get-Command gemini ===
-try:
-    result = subprocess.run(
-        ["powershell", "-Command", "Get-Command gemini | Select-Object -ExpandProperty Source"],
-        capture_output=True,
-        text=True,
-        check=True
-    )
-    CLI_PATH = result.stdout.strip()
-    if not CLI_PATH:
-        raise FileNotFoundError("gemini コマンドが見つかりません。")
-except subprocess.CalledProcessError as e:
-    raise RuntimeError(f"Get-Command gemini 実行に失敗: {e}")
+# === CLI_PATH Resolution ===
+def resolve_cli_path():
+    # 1. Check GEMINI_CLI_PATH environment variable
+    gemini_cli_path_env = os.environ.get("GEMINI_CLI_PATH")
+    if gemini_cli_path_env and os.path.exists(gemini_cli_path_env):
+        print(f"[INFO] GEMINI_CLI_PATH 環境変数からCLIパスを解決しました: {gemini_cli_path_env}")
+        return gemini_cli_path_env
 
+    # 2. Search in common PATH directories
+    path_env = os.environ.get("PATH", "").split(os.pathsep)
+    for p in path_env:
+        gemini_cmd_path = os.path.join(p, "gemini.cmd")
+        gemini_exe_path = os.path.join(p, "gemini.exe")
+        if os.path.exists(gemini_cmd_path):
+            print(f"[INFO] PATHからCLIパスを解決しました: {gemini_cmd_path}")
+            return gemini_cmd_path
+        if os.path.exists(gemini_exe_path):
+            print(f"[INFO] PATHからCLIパスを解決しました: {gemini_exe_path}")
+            return gemini_exe_path
+
+    # 3. Fallback to PowerShell Get-Command (Windows specific)
+    if sys.platform == "win32":
+        try:
+            result = subprocess.run(
+                ["powershell", "-Command", "Get-Command gemini | Select-Object -ExpandProperty Source"],
+                capture_output=True,
+                text=True,
+                check=True
+            )
+            cli_path_ps = result.stdout.strip()
+            if cli_path_ps:
+                print(f"[INFO] PowerShell Get-CommandからCLIパスを解決しました: {cli_path_ps}")
+                return cli_path_ps
+        except subprocess.CalledProcessError as e:
+            print(f"[WARNING] PowerShell Get-Command gemini 実行に失敗: {e}")
+            pass # Continue to raise error if no path found
+
+    raise FileNotFoundError("gemini CLI コマンドが見つかりません。GEMINI_CLI_PATH 環境変数を設定するか、PATHに追加してください。")
+
+CLI_PATH = resolve_cli_path()
 print(f"[INFO] CLI_PATH: {CLI_PATH}")
+
+def robust_file_operation(func, *args, operation_name="操作", **kwargs):
+    for i in range(MAX_RETRIES):
+        try:
+            func(*args, **kwargs)
+            return True
+        except OSError as e:
+            print(f"[WARNING] {operation_name}失敗 (試行 {i+1}/{MAX_RETRIES}): {e}")
+            time.sleep(RETRY_DELAY_SECONDS)
+    print(f"[ERROR] {operation_name}が {MAX_RETRIES} 回試行しても失敗しました。")
+    return False
 
 # === カレントディレクトリをジャンクションで固定 ===
 os.chdir(REPO_ROOT)
@@ -62,7 +104,7 @@ try:
             print("[INFO] new_task.json を検知しました。Gemini CUI を起動します。")
 
             # tmp 複製
-            shutil.copy2(NEW_TASK_JSON, TMP_TASK_JSON)
+            robust_file_operation(shutil.copy2, NEW_TASK_JSON, TMP_TASK_JSON, "複製")
             print(f"[INFO] new_task.json を tmp に複製しました: {TMP_TASK_JSON}")
 
             # === tmp を物理的に immutable にする ===
@@ -71,7 +113,7 @@ try:
 
             # 既存フラグが残っていたら削除
             if os.path.exists(COMPLETE_FLAG):
-                os.remove(COMPLETE_FLAG)
+                robust_file_operation(os.remove, COMPLETE_FLAG, "削除")
                 print(f"[INFO] 古い complete.flag を削除しました: {COMPLETE_FLAG}")
 
             # Gemini CLI 起動
@@ -89,14 +131,14 @@ try:
 
                     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-                    shutil.move(NEW_TASK_JSON, os.path.join(ARCHIVE_DIR, f"new_task_{ts}.json"))
+                    robust_file_operation(shutil.move, NEW_TASK_JSON, os.path.join(ARCHIVE_DIR, f"new_task_{ts}.json"), "アーカイブ")
                     print(f"[INFO] new_task.json をアーカイブしました: new_task_{ts}.json")
 
-                    shutil.move(COMPLETE_FLAG, os.path.join(ARCHIVE_DIR, f"complete_{ts}.flag"))
+                    robust_file_operation(shutil.move, COMPLETE_FLAG, os.path.join(ARCHIVE_DIR, f"complete_{ts}.flag"), "アーカイブ")
                     print(f"[INFO] complete.flag をアーカイブしました: complete_{ts}.flag")
 
                     if os.path.exists(TMP_TASK_JSON):
-                        os.remove(TMP_TASK_JSON)
+                        robust_file_operation(os.remove, TMP_TASK_JSON, "削除")
                         print(f"[INFO] tmp タスクを削除しました: {TMP_TASK_JSON}")
 
                     break
