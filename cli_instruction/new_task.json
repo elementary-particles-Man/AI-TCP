@@ -1,120 +1,147 @@
 {
-  "task_group_id": "AITCP_Implement_Session_Module",
-  "description": "Task for the CLI to implement the secure session reuse logic.",
+  "task_group_id": "AITCP_Implement_Go_SDK",
+  "description": "Task for the CLI to implement the Go client SDK skeleton, now updated to integrate with the completed KAIRO core.",
   "tasks": [
     {
-      "comment": "Implement session management in session.rs",
-      "task_id": "AITCP-OPT-002-IMPL",
+      "comment": "Initialize Go module if it does not exist",
+      "task_id": "AITCP-SDK-001-INIT",
       "command": "powershell",
       "args": [
         "-Command",
-        "Set-Content -Path src/protocols/session.rs -Value @"
-use std::collections::HashMap;
-use std::time::{Duration, Instant};
+        "if (-not (Test-Path sdk/go/go.mod)) { pushd sdk/go; go mod init aitcp-sdk-go; popd }"
+      ]
+    },
+    {
+      "comment": "Implement the Go client SDK with KAIRO integration logic in sdk/go/client.go",
+      "task_id": "AITCP-SDK-001-IMPL",
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "Set-Content -Path sdk/go/client.go -Value @"
+package aitcp
 
-const SESSION_LIFETIME_SECONDS: u64 = 300; // 5 minutes
+import (
+    \"bytes\"
+    \"context\"
+    \"encoding/json\"
+    \"errors\"
+    \"net/http\"
+    \"time\"
+    // \"[path_to_kairo_rust_ffi]\" // CGO経由でKAIROのRustコアをインポートする想定
+)
 
-pub struct Session {
-    pub key: [u8; 32],
-    created_at: Instant,
+// Client represents a connection to the AI-TCP network.
+type Client struct {
+    host       string
+    apiKey     string
+    httpClient *http.Client
+    // kairoSession *kairo.Session // KAIROセッションを管理
 }
 
-impl Session {
-    fn new(key: [u8; 32]) -> Self {
-        Self {
-            key,
-            created_at: Instant::now(),
-        }
-    }
-
-    fn is_expired(&self) -> bool {
-        self.created_at.elapsed() > Duration::from_secs(SESSION_LIFETIME_SECONDS)
-    }
+// Config holds the configuration for a new client.
+type Config struct {
+    Host    string
+    APIKey  string
+    Timeout time.Duration
 }
 
-pub struct SessionManager {
-    sessions: HashMap<String, Session>, // Keyed by a session identifier
+type SendResponse struct {
+    TransactionID string `json:\"transaction_id\"`
+    Status        string `json:\"status\"`
+    Error         string `json:\"error,omitempty\"`
 }
 
-impl SessionManager {
-    pub fn new() -> Self {
-        Self {
-            sessions: HashMap::new(),
-        }
+// NewClient creates a new AI-TCP client.
+func NewClient(cfg Config) (*Client, error) {
+    if cfg.Host == \"\" || cfg.APIKey == \"\" {
+        return nil, errors.New(\"host and apiKey are required\")
     }
-
-    pub fn get_or_create_session(&mut self, session_id: &str) -> &[u8; 32] {
-        self.cleanup_expired();
-        
-        self.sessions
-            .entry(session_id.to_string())
-            .or_insert_with(|| {
-                // In a real scenario, this key would be derived from a DH exchange.
-                let mut key = [0u8; 32];
-                rand::RngCore::fill_bytes(&mut rand::thread_rng(), &mut key);
-                Session::new(key)
-            });
-        
-        &self.sessions.get(session_id).unwrap().key
-    }
-
-    fn cleanup_expired(&mut self) {
-        self.sessions.retain(|_, session| !session.is_expired());
-    }
+    // TODO: Initialize KAIRO session here
+    return &Client{
+        host:   cfg.Host,
+        apiKey: cfg.APIKey,
+        httpClient: &http.Client{
+            Timeout: cfg.Timeout,
+        },
+        // kairoSession: kairo.NewSession(),
+    }, nil
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use std::thread::sleep;
-
-    #[test]
-    fn test_session_creation_and_reuse() {
-        let mut manager = SessionManager::new();
-        let session_id = \"session-123\";
-
-        let key1 = manager.get_or_create_session(session_id);
-        let key2 = manager.get_or_create_session(session_id);
-
-        assert_eq!(key1, key2); // Key should be reused
-        assert_eq!(manager.sessions.len(), 1);
+// Send はペイロードをKAIROコア経由で安全に送信します。
+func (c *Client) Send(ctx context.Context, payload interface{}) (*SendResponse, error) {
+    // 1. (Go) アプリケーションのペイロードをInnerPacket用のバイト列にシリアライズする
+    //    例: JSON, Protobuf, or other formats
+    innerPayloadBytes, err := json.Marshal(payload)
+    if err != nil {
+        return nil, err
     }
+
+    // 2. (Go -> Rust) シリアライズされたペイロードをKAIROのRustコアに渡す
+    //    Rustコアが以下の処理を全て実行する:
+    //    a. InnerPacketをFlatBuffersで構築
+    //    b. ペイロードをLZ4で圧縮
+    //    c. InnerPacket全体をChaCha20-Poly1305で暗号化
+    //    d. 最終的なAiTcpPacketをEd25519で署名
+    //
+    // aiTcpPacketBinary, err := kairo.BuildAndProtectPacket(c.kairoSession, innerPayloadBytes)
+    // if err != nil {
+    //     return nil, err
+    // }
     
-    #[test]
-    fn test_session_expiration() {
-        let mut manager = SessionManager::new();
-        let session_id = \"session-exp-test\";
+    // --- 現段階でのスタブ実装 ---
+    // 上記のRust連携が実装されるまで、APIサーバーへのJSON送信を維持
+    stubPayload, _ := json.Marshal(map[string]interface{}{\"payload\": payload})
+    aiTcpPacketBinary := stubPayload
+    // --- スタブ実装ここまで ---
 
-        let _key1 = manager.get_or_create_session(session_id);
-        
-        // Faking expiration by manipulating internal state is tricky without mocks.
-        // For a simple test, we can't easily fast-forward time.
-        // A real implementation would need a more sophisticated test setup or time abstraction.
-        // Here, we just ensure the structure is sound.
-        let mut session = Session::new([0;32]);
-        session.created_at = Instant::now() - Duration::from_secs(SESSION_LIFETIME_SECONDS + 1);
-        assert!(session.is_expired());
+    apiEndpoint := c.host + \"/api/v1/aitcp\"
+    // 送信するのは最終的に生成された完全なバイナリパケット
+    req, err := http.NewRequestWithContext(ctx, \"POST\", apiEndpoint, bytes.NewBuffer(aiTcpPacketBinary))
+    if err != nil {
+        return nil, err
     }
+    // コンテンツタイプはバイナリに
+    req.Header.Set(\"Content-Type\", \"application/octet-stream\")
+    req.Header.Set(\"Authorization\", \"Bearer \"+c.apiKey)
+
+    resp, err := c.httpClient.Do(req)
+    if err != nil {
+        return nil, err
+    }
+    defer resp.Body.Close()
+
+    var apiResp SendResponse
+    if err := json.NewDecoder(resp.Body).Decode(&apiResp); err != nil {
+        return nil, err
+    }
+
+    return &apiResp, nil
+}
+
+// Stream sends a payload and receives a stream of responses.
+func (c *Client) Stream(ctx context.Context, payload interface{}) (<-chan []byte, error) {
+    // TODO: ストリーミングロジックを実装
+    return nil, errors.New(\"streaming not yet implemented\")
 }
 "@
       ]
     },
     {
-      "task_id": "AITCP-OPT-002-TEST",
-      "description": "Run tests for the session module.",
+      "task_id": "AITCP-SDK-001-BUILD",
+      "description": "Build the Go SDK to ensure it compiles.",
       "command": "powershell",
       "args": [
         "-Command",
-        "cd src/protocols; cargo test --package kairo_core -- --nocapture"
+        "pushd sdk/go; go build ./...; popd"
       ]
     },
     {
-      "task_id": "AITCP-OPT-002-FLAG",
+      "task_id": "AITCP-SDK-001-FLAG",
       "description": "Create a completion flag for this implementation task.",
       "command": "powershell",
       "args": [
         "-Command",
-        "New-Item -Path validate_files/AITCP-OPT-002.flag -ItemType File -Value 'Session reuse module implemented and tested successfully.'"
+        "New-Item -Path validate_files/AITCP-SDK-001.flag -ItemType File -Value 'Go client SDK skeleton updated to reflect KAIRO integration logic.'"
       ]
     }
   ]
