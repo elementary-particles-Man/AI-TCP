@@ -72,33 +72,4 @@ def validate_file(path):
     errors.extend(schema_errors)
     return errors
 
-def main():
-    base_dir = os.path.join('structured_yaml', 'validated_yaml')
-    ok_files = []
-    err_list = []
-
-    for fname in sorted(os.listdir(base_dir)):
-        if not fname.endswith('.yaml'):
-            continue
-        path = os.path.join(base_dir, fname)
-        errs = validate_file(path)
-        if errs:
-            err_list.append((fname, errs))
-        else:
-            ok_files.append(fname)
-
-    print('Validation Results:')
-    print('\nSuccessful files:')
-    for f in ok_files:
-        print(f' - {f}')
-
-    print('\nErrors:')
-    for f, errs in err_list:
-        for e in errs:
-            print(f' - {f}: {e}')
-
-    if err_list:
-        sys.exit(1)
-
-if __name__ == '__main__':
-    main()
+def main():    base_dir = os.path.join('structured_yaml', 'validated_yaml')    ok_files = []    err_list = []    for fname in sorted(os.listdir(base_dir)):        if not fname.endswith('.yaml'):            continue        path = os.path.join(base_dir, fname)        errs = validate_file(path)        if errs:            err_list.append((fname, errs))        else:            ok_files.append(fname)    print('Validation Results:')    print('\nSuccessful files:')    for f in ok_files:        print(f' - {f}')    print('\nErrors:')    for f, errs in err_list:        for e in errs:            print(f' - {f}: {e}')    if err_list:        sys.exit(1)if __name__ == '__main__':    main()

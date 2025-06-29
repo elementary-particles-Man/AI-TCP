@@ -29,7 +29,7 @@ def main():
 
     # Assuming new_task.json is located at a known path relative to the project root
     # For this example, we'll hardcode the path as it's provided in the context
-    new_task_json_path = Path("D:/My Data/Develop/Project INFINITY/AI-TCP/AI-TCP_Structure/task_bridge/cli_instructions/new_task.json")
+    new_task_json_path = Path("D:/Dev/AI-TCP/cli_instruction/new_task.json")
 
     if not new_task_json_path.exists():
         print(f"Error: new_task.json not found at {new_task_json_path}")

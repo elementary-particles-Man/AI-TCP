@@ -1,0 +1,17 @@
+[2025-06-29 03:51:02] === ファイル存在チェック ===
+[2025-06-29 03:51:02] [OK] D:\My Data\Develop\Project INFINITY\AI-TCP\scripts\auto_ops\validate_task.py (Size: 4143 bytes, SHA256: 2a564115620f87aae32d948235a90c5ccef10bda531051e146eb7046f3bf26e6)
+[2025-06-29 03:51:02] [OK] D:\My Data\Develop\Project INFINITY\AI-TCP\tests\test_validator_git_commit.py (Size: 1102 bytes, SHA256: 79e1bf84e883630ac50acbb84ab7ff59ae6bde6cd222e3a0f824be88011c5416)
+[2025-06-29 03:51:02] 
+=== pytest 実行 ===
+[2025-06-29 03:51:02] ============================= test session starts =============================
+platform win32 -- Python 3.10.6, pytest-8.4.1, pluggy-1.6.0
+rootdir: D:\My Data\Develop\Project INFINITY\AI-TCP
+plugins: anyio-4.9.0
+collected 1 item
+
+tests\test_validator_git_commit.py .                                     [100%]
+
+============================== 1 passed in 0.03s ==============================
+
+[2025-06-29 03:51:02] Pytest Exit Code: 0
+[2025-06-29 03:51:02] === Validation Completed ===

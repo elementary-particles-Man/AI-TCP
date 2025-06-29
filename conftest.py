@@ -17,9 +17,13 @@ def files_to_check(request):
         return []
 
     absolute_paths = []
+    project_root = os.getcwd() # Assuming pytest is run from the project root
     for p in raw_paths:
         try:
-            abs_path = os.path.abspath(p)
+            # Construct absolute path relative to project root
+            abs_path = os.path.join(project_root, p)
+            if not os.path.exists(abs_path):
+                pytest.fail(f"Error: File not found at '{abs_path}'")
             absolute_paths.append(abs_path)
         except Exception as e:
             pytest.fail(f"Error processing path '{p}': {e}")

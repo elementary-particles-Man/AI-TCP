@@ -1,0 +1,87 @@
+{
+  "tasks": [
+    {
+      "task_type": "validate_files",
+      "execution_target": {
+        "files_to_check": "scripts/auto_ops/validate_task.py;tests/test_validator_git_commit.py"
+      },
+      "description": "ジャンクションパス D:/Dev/AI-TCP/ 以下の相対パスで validate_files を検証。"
+    },
+    {
+      "task_type": "refactor_validate_task_script",
+      "execution_target": {
+        "requirements": [
+          "new_task.json 以外からの直接起動禁止",
+          "pytest 実行後の ExitCode を必ずログに追記",
+          "ログにタイムスタンプを含める",
+          "Python 3.7 準拠"
+        ]
+      }
+    },
+    {
+      "task_type": "update_conftest_fixture",
+      "execution_target": {
+        "fixture_name": "files_to_check",
+        "description": "引数正規化とセミコロン分割、エラーハンドリングを強化し、Python 3.7 で動作すること"
+      }
+    },
+    {
+      "task_type": "setup_task_bridge_runner",
+      "execution_target": {
+        "description": "new_task.json を 90 秒ループで監視し、Gemini CUI を起動する。REPO_ROOT はジャンクションで空白なしパスに統一。",
+        "requirements": [
+          "ログファイルを事前アーカイブ",
+          "subprocess は空白なしパスで呼ぶ",
+          "完了検知は [Task Completed] or complete.flag を許容",
+          "Python 3.7 準拠"
+        ]
+      }
+    },
+    {
+      "task_type": "implement_codex_fallback",
+      "execution_target": {
+        "description": "Gemini CUI が停止時に Codex CLI を PoC モードで起動できるようにする。",
+        "notes": [
+          "課金リスクを避けるため PoC に限定",
+          "Codexタスクは削除不可、必ずアーカイブする",
+          "API無料枠を超えないように通知構造を検討"
+        ]
+      }
+    },
+    {
+      "task_type": "implement_task_log_parser",
+      "execution_target": {
+        "log_path": "cli_logs/TaskValidation.txt",
+        "output_format": "markdown",
+        "description": "ログを Markdown に整形し、完了後に [Task Completed] を付与する"
+      }
+    },
+    {
+      "task_type": "implement_task_archiver",
+      "execution_target": {
+        "description": "cli_archives/ にログ、JSON、output をタイムスタンプ付きで保存し、30日以上前は old/ に移動",
+        "requirements": [
+          "ファイル名に日付を含める",
+          "Python 3.7 準拠"
+        ]
+      }
+    },
+    {
+      "task_type": "generate_documentation",
+      "execution_target": {
+        "description": "validate_files と task_bridge_runner の運用ドキュメントを Markdown で作成し、ジャンクション運用を明記。",
+        "output_path": "docs/validate_task_spec.md"
+      }
+    },
+    {
+      "task_type": "setup_ci_pipeline",
+      "execution_target": {
+        "description": "GitHub Actions で push 時に validate_files を強制実行する CI を作成し、結果を Artifacts に保存する",
+        "requirements": [
+          "pytest のパスを自動生成",
+          "Python 3.7 コンテナで動作"
+        ]
+      }
+    }
+  ]
+}

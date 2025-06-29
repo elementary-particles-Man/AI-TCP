@@ -1,0 +1,13 @@
+Tasks from new_task.json:
+
+- validate_files: Check specified files.
+- refactor_validate_task_script: Refactor a script with specific requirements (no direct launch, log pytest exit code, include timestamp in logs, Python 3.7 compliant).
+- update_conftest_fixture: Update a pytest fixture for argument normalization, semicolon splitting, error handling, and Python 3.7 compatibility.
+- setup_task_bridge_runner: Set up a runner to monitor new_task.json every 90 seconds and launch Gemini CUI, with requirements for log archiving, full path in prompts, [Task Completed] detection, and Python 3.7 compliance.
+- implement_codex_fallback: Implement a fallback to launch Codex CLI in PoC mode if Gemini CUI stops, with notes on billing risk, archiving, and API limits.
+- implement_task_log_parser: Implement a log parser to format logs into Markdown and append [Task Completed] upon completion.
+- implement_task_archiver: Implement a task archiver to save logs, JSON, and output with timestamps to cli_archives/, moving older files to old/, with Python 3.7 compliance.
+- generate_documentation: Generate Markdown documentation for validate_files and task_bridge_runner operations.
+- setup_ci_pipeline: Set up a GitHub Actions CI pipeline to force validate_files on push, save results as artifacts, and run in a Python 3.7 container.
+
+[Task Completed]
