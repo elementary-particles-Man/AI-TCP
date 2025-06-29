@@ -1,43 +1,107 @@
 {
-  "task_group_id": "AITCP_Implement_Compression_Module",
-  "description": "Task for the CLI to implement the payload compression logic within the previously created stub.",
+  "task_group_id": "AITCP_Implement_Session_Module",
+  "description": "Task for the CLI to implement the secure session reuse logic.",
   "tasks": [
     {
-      "comment": "Implement LZ4 compression in compression.rs",
-      "task_id": "AITCP-OPT-001-IMPL",
+      "comment": "Implement session management in session.rs",
+      "task_id": "AITCP-OPT-002-IMPL",
       "command": "powershell",
       "args": [
         "-Command",
-        "Set-Content -Path src/protocols/compression.rs -Value @"
-using lz4_flex::{compress_prepend_size, decompress_size_prepended};
+        "Set-Content -Path src/protocols/session.rs -Value @"
+use std::collections::HashMap;
+use std::time::{Duration, Instant};
 
-pub fn compress(data: &[u8]) -> Vec<u8> {
-    compress_prepend_size(data)
+const SESSION_LIFETIME_SECONDS: u64 = 300; // 5 minutes
+
+pub struct Session {
+    pub key: [u8; 32],
+    created_at: Instant,
 }
 
-pub fn decompress(compressed_data: &[u8]) -> Result<Vec<u8>, lz4_flex::block::DecompressError> {
-    decompress_size_prepended(compressed_data)
+impl Session {
+    fn new(key: [u8; 32]) -> Self {
+        Self {
+            key,
+            created_at: Instant::now(),
+        }
+    }
+
+    fn is_expired(&self) -> bool {
+        self.created_at.elapsed() > Duration::from_secs(SESSION_LIFETIME_SECONDS)
+    }
+}
+
+pub struct SessionManager {
+    sessions: HashMap<String, Session>, // Keyed by a session identifier
+}
+
+impl SessionManager {
+    pub fn new() -> Self {
+        Self {
+            sessions: HashMap::new(),
+        }
+    }
+
+    pub fn get_or_create_session(&mut self, session_id: &str) -> &[u8; 32] {
+        self.cleanup_expired();
+        
+        self.sessions
+            .entry(session_id.to_string())
+            .or_insert_with(|| {
+                // In a real scenario, this key would be derived from a DH exchange.
+                let mut key = [0u8; 32];
+                rand::RngCore::fill_bytes(&mut rand::thread_rng(), &mut key);
+                Session::new(key)
+            });
+        
+        &self.sessions.get(session_id).unwrap().key
+    }
+
+    fn cleanup_expired(&mut self) {
+        self.sessions.retain(|_, session| !session.is_expired());
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::thread::sleep;
 
     #[test]
-    fn test_compression_decompression() {
-        let original = b\"This is a test payload for AI-TCP compression. Repetition helps compression.\";
-        let compressed = compress(original);
-        assert!(compressed.len() < original.len());
-        let decompressed = decompress(&compressed).unwrap();
-        assert_eq!(original.to_vec(), decompressed);
+    fn test_session_creation_and_reuse() {
+        let mut manager = SessionManager::new();
+        let session_id = \"session-123\";
+
+        let key1 = manager.get_or_create_session(session_id);
+        let key2 = manager.get_or_create_session(session_id);
+
+        assert_eq!(key1, key2); // Key should be reused
+        assert_eq!(manager.sessions.len(), 1);
+    }
+    
+    #[test]
+    fn test_session_expiration() {
+        let mut manager = SessionManager::new();
+        let session_id = \"session-exp-test\";
+
+        let _key1 = manager.get_or_create_session(session_id);
+        
+        // Faking expiration by manipulating internal state is tricky without mocks.
+        // For a simple test, we can't easily fast-forward time.
+        // A real implementation would need a more sophisticated test setup or time abstraction.
+        // Here, we just ensure the structure is sound.
+        let mut session = Session::new([0;32]);
+        session.created_at = Instant::now() - Duration::from_secs(SESSION_LIFETIME_SECONDS + 1);
+        assert!(session.is_expired());
     }
 }
 "@
       ]
     },
     {
-      "task_id": "AITCP-OPT-001-TEST",
-      "description": "Run tests for the compression module.",
+      "task_id": "AITCP-OPT-002-TEST",
+      "description": "Run tests for the session module.",
       "command": "powershell",
       "args": [
         "-Command",
@@ -45,12 +109,12 @@ mod tests {
       ]
     },
     {
-      "task_id": "AITCP-OPT-001-FLAG",
+      "task_id": "AITCP-OPT-002-FLAG",
       "description": "Create a completion flag for this implementation task.",
       "command": "powershell",
       "args": [
         "-Command",
-        "New-Item -Path validate_files/AITCP-OPT-001.flag -ItemType File -Value 'Compression module implemented and tested successfully.'"
+        "New-Item -Path validate_files/AITCP-OPT-002.flag -ItemType File -Value 'Session reuse module implemented and tested successfully.'"
       ]
     }
   ]
