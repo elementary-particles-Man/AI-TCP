@@ -5,6 +5,7 @@ import json
 from datetime import datetime
 import hashlib
 import os
+import argparse
 
 def calculate_file_hash(filepath):
     hasher = hashlib.sha256()
@@ -15,6 +16,20 @@ def calculate_file_hash(filepath):
                 break
             hasher.update(chunk)
     return hasher.hexdigest()
+
+
+def run_self_test():
+    """Perform a basic self-diagnosis by checking this script's existence."""
+    log_path = Path("logs/TaskValidation.txt")
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    script_path = Path(__file__)
+    exists = script_path.exists()
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    status = "[OK]" if exists else "[NG]"
+    message = f"{status} {script_path} exists" if exists else f"{status} {script_path} NOT FOUND"
+    with log_path.open("a", encoding="utf-8") as f:
+        f.write(f"[{timestamp}] {message} [Task Completed]\n")
+    print("[Task Completed]")
 
 # This script is designed to be called by the AI-TCP agent
 # It reads its configuration from a JSON file (new_task.json) for log_path and pytest_target
@@ -92,6 +107,13 @@ def main():
         sys.exit(1) # Return non-zero exit code on error
 
 if __name__ == "__main__":
-    # This block is now primarily for agent-driven execution
-    # Manual execution will be prevented by the check at the beginning of main()
-    main()
+    parser = argparse.ArgumentParser(description="Validate task files or run self-test")
+    parser.add_argument("--self-test", action="store_true", help="Run self diagnosis")
+    args = parser.parse_args()
+
+    if args.self_test:
+        run_self_test()
+    else:
+        # This block is now primarily for agent-driven execution
+        # Manual execution will be prevented by the check at the beginning of main()
+        main()

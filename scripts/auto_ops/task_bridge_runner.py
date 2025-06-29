@@ -4,7 +4,7 @@ import shutil
 from datetime import datetime
 import subprocess
 
-# === 環境変数からリポジトリルートを取得（ジャンクション経由で空白なし） ===
+# === 環境変数からジャンクションパスを取得 ===
 REPO_ROOT = os.environ.get("REPO_ROOT")
 if not REPO_ROOT:
     raise EnvironmentError("REPO_ROOT 環境変数が設定されていません。")
@@ -26,20 +26,20 @@ except subprocess.CalledProcessError as e:
 
 print(f"[INFO] CLI_PATH: {CLI_PATH}")
 
-# === カレントディレクトリ固定 ===
+# === カレントディレクトリをジャンクションで固定 ===
 os.chdir(REPO_ROOT)
 
-# === パス設定（相対） ===
+# === パス設定 ===
 NEW_TASK_JSON = ".\\cli_instruction\\new_task.json"
-LOG_FILE = ".\\cli_logs\\TaskValidation.txt"
+COMPLETE_FLAG = ".\\cli_instruction\\complete.flag"
 ARCHIVE_DIR = ".\\cli_archives"
 
 # === プロンプト ===
 PROMPT = (
     f"new_task.json（パス: {NEW_TASK_JSON}）を確認し、"
     "内容に従ってタスクを完了して下さい。\n"
-    f"作業ログは \"{LOG_FILE}\" に記載して下さい。\n"
-    "全てのタスクが完了したら、必ずログファイルの末尾に [Task Completed] を追記して下さい。\n"
+    f"全てのタスクが完了したら、必ず `cli_instruction` フォルダ内に `complete.flag`（空ファイル）を生成して下さい。\n"
+    "作業ログは必要なら標準出力に要約して下さいが、完了判定は `complete.flag` の存在だけで行います。\n"
 )
 
 # === ディレクトリ準備 ===
@@ -52,58 +52,39 @@ try:
         if os.path.exists(NEW_TASK_JSON):
             print("[INFO] new_task.json を検知しました。Gemini CUI を起動します。")
 
-            # 既存ログアーカイブ
-            if os.path.exists(LOG_FILE):
-                ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-                archive_path = os.path.join(ARCHIVE_DIR, f"TaskValidation_{ts}.txt")
-                try_count = 0
-                while try_count < 5:
-                    try:
-                        shutil.copy(LOG_FILE, archive_path)
-                        os.remove(LOG_FILE)
-                        print(f"[INFO] 古いログをアーカイブしました: {archive_path}")
-                        break
-                    except PermissionError as e:
-                        try_count += 1
-                        print(f"[WARN] {e} リトライ: {try_count}/5")
-                        time.sleep(3)
+            # 既存フラグが残っていたら削除
+            if os.path.exists(COMPLETE_FLAG):
+                os.remove(COMPLETE_FLAG)
+                print(f"[INFO] 古い complete.flag を削除しました: {COMPLETE_FLAG}")
 
-            # Gemini CLI 実行
+            # Gemini CLI 起動
             subprocess.run(
                 ["powershell", "-ExecutionPolicy", "Bypass", "-File", CLI_PATH, "-y"],
                 input=PROMPT.encode("utf-8"),
                 check=False
             )
 
-            print("[INFO] Gemini CUI 実行中... ログの完了を監視します。")
+            print("[INFO] Gemini CUI 実行中... complete.flag の完了を監視します。")
 
             while True:
-                if os.path.exists(LOG_FILE):
-                    with open(LOG_FILE, encoding="utf-8") as f:
-                        if "[Task Completed]" in f.read():
-                            print("[INFO] タスク完了検知。")
+                if os.path.exists(COMPLETE_FLAG):
+                    print("[INFO] complete.flag を検知しました。")
 
-                            ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-                            shutil.move(NEW_TASK_JSON, os.path.join(ARCHIVE_DIR, f"new_task_{ts}.json"))
-                            print(f"[INFO] new_task.json をアーカイブしました。")
+                    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-                            archive_path = os.path.join(ARCHIVE_DIR, f"TaskValidation_{ts}.txt")
-                            try_count = 0
-                            while try_count < 5:
-                                try:
-                                    shutil.copy(LOG_FILE, archive_path)
-                                    os.remove(LOG_FILE)
-                                    print(f"[INFO] ログをアーカイブしました: {archive_path}")
-                                    break
-                                except PermissionError as e:
-                                    try_count += 1
-                                    print(f"[WARN] {e} リトライ: {try_count}/5")
-                                    time.sleep(3)
-                            break
+                    shutil.move(NEW_TASK_JSON, os.path.join(ARCHIVE_DIR, f"new_task_{ts}.json"))
+                    print(f"[INFO] new_task.json をアーカイブしました: new_task_{ts}.json")
+
+                    shutil.move(COMPLETE_FLAG, os.path.join(ARCHIVE_DIR, f"complete_{ts}.flag"))
+                    print(f"[INFO] complete.flag をアーカイブしました: complete_{ts}.flag")
+
+                    break
+
                 time.sleep(5)
+
         else:
             print(".")
             time.sleep(90)
-except KeyboardInterrupt:
-    print("\n[INFO] ユーザーが停止しました。")
 
+except KeyboardInterrupt:
+    print("\n[INFO] ユーザーによって停止されました。")
