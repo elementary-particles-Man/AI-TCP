@@ -1,22 +1,12 @@
-use axum::{
-    routing::post,
-    Router,
-    Json,
-    response::IntoResponse,
-};
+use axum::{response::IntoResponse, routing::post, Json, Router};
 use serde::{Deserialize, Serialize};
 use std::net::SocketAddr;
 use bytes::Bytes;
 
-// TODO: KAIROコアクレートをインポート
-// use kairo_core::packet_parser::PacketParser;
-// use kairo_core::error::KairoError;
-
-// APIが受け取るリクエストのペイロード
-#[derive(Deserialize)]
-struct ApiRequest {
-    payload: serde_json::Value,
-}
+// KAIROコアライブラリをインポート
+// このパスはKAIRO側のlib.rsの定義に依存する
+use kairo_core::packet_parser::PacketParser;
+use kairo_core::error::KairoError;
 
 // APIが返すレスポンス
 #[derive(Serialize)]
@@ -26,43 +16,36 @@ struct ApiResponse {
     error: Option<String>,
 }
 
-async fn aitcp_handler(body: bytes::Bytes) -> impl IntoResponse {
+// ボディとしてバイナリデータ(Bytes)を受け取るように変更
+async fn aitcp_handler(body: Bytes) -> impl IntoResponse {
     println!("Received binary packet of size: {} bytes", body.len());
 
     // --- KAIRO Integration Point ---
-    // let mut parser = PacketParser::new(/* session_key */ vec![0;32]);
-    // match parser.parse(&body) {
-    //     Ok(inner_packet) => {
-    //         // パケットの検証・復号に成功
-    //         // ここでペイロードに対する処理を行う
-    //         println!("Successfully parsed packet. UUID: {}", inner_packet.uuid());
-    //
-    //         let response = ApiResponse {
-    //             transaction_id: inner_packet.uuid().to_string(),
-    //             status: "Processed".to_string(),
-    //             error: None,
-    //         };
-    //         (StatusCode::OK, Json(response)).into_response()
-    //     },
-    //     Err(e) => {
-    //         // パケットの検証・復号に失敗
-    //         eprintln!("Packet parsing failed: {:?}", e);
-    //         let response = ApiResponse {
-    //             transaction_id: "".to_string(), // エラー時はトランザクションIDなし
-    //             status: "Error".to_string(),
-    //             error: Some(format!("Packet processing error: {:?}", e)),
-    //         };
-    //         (StatusCode::BAD_REQUEST, Json(response)).into_response()
-    //     }
-    // }
+    // ここでKAIROのパーサーを呼び出し、パケットを検証する
+    let mut parser = PacketParser::new(vec![0; 32]); // セッションキーはダミー
 
-    // KAIRO統合が完了するまでのスタブレスポンス
-    let stub_response = ApiResponse {
-        transaction_id: "stub-transaction-id-123".to_string(),
-        status: "Received (KAIRO integration pending)".to_string(),
-        error: None,
-    };
-    (axum::http::StatusCode::OK, Json(stub_response))
+    match parser.parse(&body) {
+        Ok(_packet) => {
+            // パケットの検証・復号に成功
+            // TODO: 復号されたペイロードに対する処理を実装
+            // let uuid = inner_packet.uuid();
+            let response = ApiResponse {
+                transaction_id: "parsed-transaction-id".to_string(), // 仮のID
+                status: "Processed by KAIRO".to_string(),
+                error: None,
+            };
+            (axum::http::StatusCode::OK, Json(response)).into_response()
+        }
+        Err(e) => {
+            eprintln!("Packet parsing failed: {:?}", e);
+            let response = ApiResponse {
+                transaction_id: "".to_string(),
+                status: "Error".to_string(),
+                error: Some(format!("Packet processing error: {:?}", e)),
+            };
+            (axum::http::StatusCode::BAD_REQUEST, Json(response)).into_response()
+        }
+    }
 }
 
 #[tokio::main]
@@ -70,7 +53,7 @@ async fn main() {
     let app = Router::new().route("/api/v1/aitcp", post(aitcp_handler));
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
-    println!("AI-TCP API server listening on {}", addr);
+    println!("AI-TCP API server with KAIRO integration listening on {}", addr);
 
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
