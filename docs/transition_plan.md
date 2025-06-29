@@ -1,62 +1,83 @@
-# OpenAI-API Compatibility Layer Deprecation Roadmap
+# AI-TCP API Transition Plan: From OpenAI Compatibility to Native AI-TCP
 
-This document outlines the plan for the gradual deprecation of the OpenAI-API compatibility layer in favor of the native AI-TCP protocol.
+This document outlines the strategic plan for transitioning from the OpenAI-API compatibility layer to the native AI-TCP protocol. The goal is to guide developers through a smooth migration process while highlighting the significant advantages of the native AI-TCP API.
 
-## 1. Rationale
+---
 
-The OpenAI-API compatibility layer was introduced to facilitate initial adoption and ease migration for existing users. However, to fully leverage the advanced features, security, and performance optimizations of the AI-TCP protocol (e.g., KAIRO integration for transparent compression, encryption, and signing, and advanced rate control), a transition to the native AI-TCP API is necessary.
+## 1. Executive Summary
 
-## 2. Phased Deprecation Plan
+The AI-TCP native API represents the future of secure, high-performance, and auditable AI communication. While an OpenAI-API compatibility layer was initially provided to ease adoption, it does not fully leverage the underlying KAIRO core's capabilities. This plan details a phased approach to encourage and facilitate migration to the native AI-TCP SDKs, ensuring developers can harness the full power of the platform.
 
-We will implement a phased deprecation strategy to minimize disruption for existing users.
+---
 
-### Phase 1: Announcement and Documentation (Current)
-- Announce the deprecation of the OpenAI-API compatibility layer.
-- Provide comprehensive documentation for migrating to the native AI-TCP SDKs (Go, Python, Rust).
-- Highlight the benefits of migrating to the native protocol.
+## 2. Rationale for Transition
 
-### Phase 2: Feature Freeze and Warnings (Q3 2025)
-- No new features will be added to the OpenAI-API compatibility layer.
-- API responses will include deprecation warnings for calls made to the compatibility layer.
-- Increased support and resources for migration assistance.
+Migrating to the native AI-TCP API offers several critical benefits:
 
-### Phase 3: Performance Degradation (Q1 2026)
-- Introduce intentional, minor performance degradation for requests made through the compatibility layer to encourage migration.
-- Continue with deprecation warnings and migration support.
+- **Enhanced Security:** Direct integration with the KAIRO core provides transparent, end-to-end encryption, signing, and secure session management, which are not fully exposed or optimized through the compatibility layer.
+- **Superior Performance:** The native API is designed to optimize data flow, leveraging KAIRO's efficient compression (LZ4) and optimized packet handling, leading to lower latency and higher throughput.
+- **Auditable Transactions (VoV):** Native AI-TCP packets are inherently auditable via the Voice of Verification (VoV) logging, ensuring integrity and non-repudiation for every transaction.
+- **Future-Proofing:** All new features, performance enhancements, and security updates will be developed for the native AI-TCP API first.
+- **Clear Incentive:** The native API will offer measurable improvements in latency, throughput, and security, providing a strong incentive for migration.
+- **Stability:** The timeline is designed to ensure platform stability and give developers ample time to adapt.
 
-### Phase 4: Removal (Q3 2026)
-- The OpenAI-API compatibility layer will be fully removed from the AI-TCP API server.
-- All requests to the deprecated endpoints will result in an error.
+---
 
-## 3. Migration Assistance Tools
+## 3. Transition Phases
 
-To aid in the transition, the following tools will be provided:
+### Phase 1: Native API Launch & Compatibility (Current Phase)
 
-### 3.1. SDK Migration Guides
-Detailed guides for each supported SDK (Go, Python, Rust) demonstrating how to replace OpenAI-API calls with native AI-TCP SDK calls.
+- **Duration:** 6 months from the official launch of the first stable native SDKs.
+- **Status:**
+    - The native AI-TCP API (`/api/v1/aitcp`) is the **recommended** endpoint.
+    - An OpenAI-API compatible endpoint is provided for backward compatibility.
+- **Actions:**
+    - All new documentation and tutorials will focus exclusively on the native API.
+    - Performance benchmarks comparing the native API and the compatibility layer will be published.
+    - The `aitcp-cli migrate` tool will be introduced to assist in automated code conversion.
 
-### 3.2. Automated Code Converters (CLI Tool)
-- A command-line interface (CLI) tool that can analyze existing codebases using the OpenAI-API and suggest or automatically apply changes to use the native AI-TCP SDK.
-- **Input:** Source code files (e.g., Python, Go, Rust).
-- **Output:** Modified source code files or a report of suggested changes.
-- **Key Features:**
-    - Identification of OpenAI-API calls.
-    - Mapping of OpenAI-API parameters to AI-TCP SDK parameters.
-    - Automatic replacement of function calls and data structures.
-    - Error handling migration.
+### Phase 2: Deprecation of Compatibility Layer
 
-### 3.3. Compatibility Layer Proxy (Temporary)
-- A temporary proxy service that can sit between existing applications and the AI-TCP API server.
-- This proxy will translate OpenAI-API requests into native AI-TCP requests, allowing applications to continue functioning without immediate code changes.
-- **Purpose:** Provide a grace period for complex systems to migrate.
-- **Note:** This proxy will also be deprecated and removed in Phase 4.
+- **Duration:** 6 months, starting after Phase 1 concludes.
+- **Status:**
+    - The OpenAI-API compatibility layer will be officially deprecated.
+    - New feature development will cease for the compatibility layer.
+    - Warning headers will be added to responses from the compatibility layer, advising migration.
+- **Actions:**
+    - Active outreach to developers still using the compatibility layer.
+    - Enhanced support for migration queries.
+    - Regular reminders about the upcoming removal.
 
-## 4. Communication Plan
+### Phase 3: Removal of Compatibility Layer
 
-- Regular updates via official AI-TCP communication channels (blog, newsletter, developer forums).
-- Direct communication with key partners and large-scale users.
-- Dedicated support channels for migration-related queries.
+- **Duration:** Immediate, after Phase 2 concludes.
+- **Status:**
+    - The OpenAI-API compatibility layer endpoints will be removed.
+    - Requests to these endpoints will result in an HTTP 410 Gone status code.
+- **Actions:**
+    - Final communication regarding the complete removal.
+    - Continued support for native AI-TCP API usage.
 
-## 5. Feedback and Support
+---
 
-We encourage users to provide feedback on this roadmap and reach out for support during the transition period. Your input is valuable in ensuring a smooth migration process.
+## 4. Migration Tools and Support
+
+To facilitate a smooth transition, the following tools and resources will be provided:
+
+### 4.1. AI-TCP SDKs
+
+Official SDKs for popular languages (Go, Python, Rust) will provide idiomatic access to the native AI-TCP API, abstracting the complexities of KAIRO integration.
+
+### 4.2. `aitcp-cli migrate` Tool
+
+A command-line interface (CLI) tool designed to automate the migration of existing codebases from OpenAI API calls to native AI-TCP SDK calls.
+
+- **Purpose:** Reduce manual effort and potential errors during the migration process.
+- **Functionality:**
+    - Scans a project directory for code using the OpenAI client libraries (e.g., Python `openai` library).
+    - Automatically refactors the code to use the equivalent native AI-TCP SDK methods.
+    - Provides a report of all changes made.
+- **Example Usage:**
+  ```bash
+  aitcp-cli migrate --path ./my_project --from openai --to aitcp-native
+  ```
