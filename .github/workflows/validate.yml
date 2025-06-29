@@ -35,7 +35,7 @@ jobs:
       run: python scripts/auto_ops/validate_task.py
 
     - name: Upload validation logs as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: validation-logs
         path: logs/TaskValidation.txt

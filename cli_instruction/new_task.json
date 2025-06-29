@@ -3,22 +3,23 @@
     {
       "task_type": "validate_files",
       "execution_target": {
-        "files_to_check": "scripts/auto_ops/validate_task.py;scripts/auto_ops/task_bridge_runner.py;conftest.py;scripts/auto_ops/dispatcher.py"
+        "files_to_check": "D:/My Data/Develop/Project INFINITY/AI-TCP/scripts/auto_ops/validate_task.py;D:/My Data/Develop/Project INFINITY/AI-TCP/scripts/auto_ops/task_bridge_runner.py"
       },
-      "description": "必須ファイル群の存在を確認する"
+      "description": "必須ファイル群の存在確認"
     },
     {
-      "task_type": "refactor_task_bridge_runner",
+      "task_type": "generate_documentation",
       "execution_target": {
-        "description": "task_bridge_runner.py のCLI_PATH解決を完全自動化する"
-      }
+        "path": "D:/My Data/Develop/Project INFINITY/AI-TCP/docs/CLI_AutoDocs.md"
+      },
+      "description": "CLIの動作確認用ドキュメント生成"
     },
     {
       "task_type": "generate_complete_flag",
       "execution_target": {
-        "path": "./cli_instruction/complete.flag"
+        "path": "D:/My Data/Develop/Project INFINITY/AI-TCP/AI-TCP_Structure/task_bridge/cli_instructions/complete.flag"
       },
-      "description": "全タスクが完了したら必ず空の complete.flag を生成する"
+      "description": "全タスク完了後のフラグ生成"
     }
   ]
 }

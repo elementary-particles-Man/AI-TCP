@@ -3,6 +3,7 @@ import time
 import shutil
 from datetime import datetime
 import subprocess
+import shutil
 
 # === 環境変数からジャンクションパスを取得 ===
 REPO_ROOT = os.environ.get("REPO_ROOT")
@@ -10,19 +11,9 @@ if not REPO_ROOT:
     raise EnvironmentError("REPO_ROOT 環境変数が設定されていません。")
 print(f"[INFO] リポジトリルート: {REPO_ROOT}")
 
-# === Get-Command gemini ===
-try:
-    result = subprocess.run(
-        ["powershell", "-Command", "Get-Command gemini | Select-Object -ExpandProperty Source"],
-        capture_output=True,
-        text=True,
-        check=True
-    )
-    CLI_PATH = result.stdout.strip()
-    if not CLI_PATH:
-        raise FileNotFoundError("gemini コマンドが見つかりません。")
-except subprocess.CalledProcessError as e:
-    raise RuntimeError(f"Get-Command gemini 実行に失敗: {e}")
+CLI_PATH = shutil.which("gemini")
+if not CLI_PATH:
+    raise FileNotFoundError("gemini コマンドが見つかりません。システムPATHにgeminiが設定されていることを確認してください。")
 
 print(f"[INFO] CLI_PATH: {CLI_PATH}")
 
