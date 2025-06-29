@@ -1,41 +1,36 @@
-name: Validate Files CI
+name: Validate Files
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   validate:
     runs-on: ubuntu-latest
-    container: python:3.7-slim-buster
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: pip install pytest
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
 
-    - name: Create dummy new_task.json for validation
-      run: |
-        mkdir -p cli_instruction
-        echo '{
-          "tasks": [
-            {
-              "task_type": "validate_files",
-              "execution_target": {
-                "files_to_check": "scripts/auto_ops/validate_task.py;scripts/auto_ops/task_bridge_runner.py;conftest.py;scripts/auto_ops/dispatcher.py"
-              }
-            }
-          ]
-        }' > cli_instruction/new_task.json
+      - name: Install pytest
+        run: pip install pytest
 
-    - name: Set AI_TCP_AGENT_CALL environment variable
-      run: echo "AI_TCP_AGENT_CALL=true" >> $GITHUB_ENV
+      - name: Run validation
+        run: pytest tests/test_task_bridge_runner.py
 
-    - name: Run validate_files task
-      run: python scripts/auto_ops/validate_task.py
+      - name: Upload test results as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: validate-results
+          path: ./tests/
 
-    - name: Upload validation logs as artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: validation-logs
-        path: logs/TaskValidation.txt
+      - name: Upload validation logs as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-logs
+          path: logs/TaskValidation.txt
