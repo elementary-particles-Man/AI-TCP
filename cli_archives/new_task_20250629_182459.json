@@ -1,0 +1,19 @@
+{
+  "tasks": [
+    {
+      "task_type": "validate_files",
+      "execution_target": {
+        "files_to_check": "D:/My Data/Develop/Project INFINITY/AI-TCP/scripts/utils/clean_archives.py"
+      },
+      "description": "PoC: clean_archives.py の存在確認"
+    },
+    {
+      "task_type": "generate_complete_flag",
+      "execution_target": {
+        "path": "D:/My Data/Develop/Project INFINITY/AI-TCP/cli_instruction/complete.flag",
+        "result_text": "PoC: clean_archives.py の存在確認完了。"
+      },
+      "description": "完了結果を complete.flag に書き込む"
+    }
+  ]
+}
