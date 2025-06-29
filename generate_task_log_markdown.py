@@ -26,6 +26,6 @@ def generate_task_log_markdown(source_path, destination_dir):
     print(f"Original log moved to {destination_dir}")
 
 if __name__ == "__main__":
-    source_log_path = "D:/Dev/AI-TCP/cli_logs/TaskValidation.txt"
+    source_log_path = "D:/Dev/AI-TCP/logs/TaskValidation.txt"
     archive_dir = "D:/Dev/AI-TCP/cli_archives"
     generate_task_log_markdown(source_log_path, archive_dir)
