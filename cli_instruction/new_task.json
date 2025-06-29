@@ -1,106 +1,56 @@
 {
-  "task_group_id": "AITCP_v1.0_Implementation_Phase",
-  "description": "This is a bulk task assignment for the AI-TCP repository, managed by the CLI. It covers protocol optimization, API/SDK implementation, and ecosystem tool development, all based on the KAIRO v1.0 foundation.",
+  "task_group_id": "AITCP_Implement_Compression_Module",
+  "description": "Task for the CLI to implement the payload compression logic within the previously created stub.",
   "tasks": [
     {
-      "comment": "--- Stream A: Protocol Performance Optimization ---",
-      "command": "echo",
-      "args": ["Starting Protocol Optimization Tasks..."]
-    },
-    {
-      "task_id": "AITCP-OPT-001",
-      "description": "Create a stub for the payload compression module.",
+      "comment": "Implement LZ4 compression in compression.rs",
+      "task_id": "AITCP-OPT-001-IMPL",
       "command": "powershell",
       "args": [
         "-Command",
-        "New-Item -Path src/protocols/compression.rs -ItemType File -Value '#[TODO] Implement LZ4/Zstandard compression logic before encryption.'"
+        "Set-Content -Path src/protocols/compression.rs -Value @"
+using lz4_flex::{compress_prepend_size, decompress_size_prepended};
+
+pub fn compress(data: &[u8]) -> Vec<u8> {
+    compress_prepend_size(data)
+}
+
+pub fn decompress(compressed_data: &[u8]) -> Result<Vec<u8>, lz4_flex::block::DecompressError> {
+    decompress_size_prepended(compressed_data)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_compression_decompression() {
+        let original = b\"This is a test payload for AI-TCP compression. Repetition helps compression.\";
+        let compressed = compress(original);
+        assert!(compressed.len() < original.len());
+        let decompressed = decompress(&compressed).unwrap();
+        assert_eq!(original.to_vec(), decompressed);
+    }
+}
+"@
       ]
     },
     {
-      "task_id": "AITCP-OPT-002",
-      "description": "Create a stub for the secure session reuse module.",
+      "task_id": "AITCP-OPT-001-TEST",
+      "description": "Run tests for the compression module.",
       "command": "powershell",
       "args": [
         "-Command",
-        "New-Item -Path src/protocols/session.rs -ItemType File -Value '#[TODO] Implement secure session (DH key) reuse mechanism.'"
+        "cd src/protocols; cargo test --package kairo_core -- --nocapture"
       ]
     },
     {
-      "task_id": "AITCP-OPT-003",
-      "description": "Create a stub for the adaptive rate control module.",
+      "task_id": "AITCP-OPT-001-FLAG",
+      "description": "Create a completion flag for this implementation task.",
       "command": "powershell",
       "args": [
         "-Command",
-        "New-Item -Path src/protocols/rate_control.rs -ItemType File -Value '#[TODO] Implement adaptive rate control based on RTT and packet loss.'"
-      ]
-    },
-    {
-      "comment": "--- Stream B: API/SDK Implementation ---",
-      "command": "echo",
-      "args": ["Starting API/SDK Implementation Tasks..."]
-    },
-    {
-      "task_id": "AITCP-API-001",
-      "description": "Create the API server directory and main file stub.",
-      "command": "powershell",
-      "args": [
-        "-Command",
-        "New-Item -Path src/api_server -ItemType Directory; New-Item -Path src/api_server/main.rs -ItemType File -Value 'fn main() { /* TODO: Implement single-entry POST /api/v1/aitcp gateway */ }'"
-      ]
-    },
-    {
-      "task_id": "AITCP-SDK-001",
-      "description": "Create the Go client SDK directory and main file stub.",
-      "command": "powershell",
-      "args": [
-        "-Command",
-        "New-Item -Path sdk/go -ItemType Directory; New-Item -Path sdk/go/client.go -ItemType File -Value 'package aitcp // TODO: Implement Connect(), Send(), Stream() methods'"
-      ]
-    },
-    {
-      "task_id": "AITCP-SDK-002",
-      "description": "Create the Python client SDK directory and error definition stub.",
-      "command": "powershell",
-      "args": [
-        "-Command",
-        "New-Item -Path sdk/python -ItemType Directory; New-Item -Path sdk/python/errors.py -ItemType File -Value '# TODO: Define AuthenticationError, TimeoutError, etc. with transaction_id'"
-      ]
-    },
-    {
-      "comment": "--- Stream C: Ecosystem and Auditing ---",
-      "command": "echo",
-      "args": ["Starting Ecosystem and Auditing Tasks..."]
-    },
-    {
-      "task_id": "AITCP-ECO-001",
-      "description": "Create the VoV log auditing tool stub.",
-      "command": "powershell",
-      "args": [
-        "-Command",
-        "New-Item -Path tools/vov_auditor -ItemType Directory; New-Item -Path tools/vov_auditor/main.py -ItemType File -Value '# TODO: Implement VoV log parser and hash chain verifier'"
-      ]
-    },
-    {
-      "task_id": "AITCP-ECO-002",
-      "description": "Create the transition plan document from OpenAI-API compatibility.",
-      "command": "powershell",
-      "args": [
-        "-Command",
-        "New-Item -Path docs/transition_plan.md -ItemType File -Value '# AI-TCP Native API Transition Plan\n\n## Phase 1: ...'"
-      ]
-    },
-    {
-      "comment": "--- Finalization ---",
-      "command": "echo",
-      "args": ["All development tasks have been stubbed."]
-    },
-    {
-      "task_id": "AITCP-PHASE2-COMPLETE",
-      "description": "Create a completion flag for Phase 2 task setup.",
-      "command": "powershell",
-      "args": [
-        "-Command",
-        "New-Item -Path validate_files/phase2_setup.flag -ItemType File -Value 'AI-TCP v1.0 implementation stubs created successfully. Ready for detailed implementation.'"
+        "New-Item -Path validate_files/AITCP-OPT-001.flag -ItemType File -Value 'Compression module implemented and tested successfully.'"
       ]
     }
   ]

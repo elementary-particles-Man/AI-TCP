@@ -1,0 +1,14 @@
+[package]
+name = "kairo_core"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+lz4_flex = "0.11"
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "kairo_core_bin"
+path = "src/main.rs"
