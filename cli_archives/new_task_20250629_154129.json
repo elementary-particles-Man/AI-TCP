@@ -1,0 +1,52 @@
+{
+  "tasks": [
+    {
+      "task_type": "validate_files",
+      "execution_target": {
+        "files_to_check": "scripts/auto_ops/validate_task.py;scripts/auto_ops/task_bridge_runner.py;conftest.py;scripts/auto_ops/dispatcher.py"
+      },
+      "description": "ジャンクション経由の空白なし相対パスで、必須ファイル群の存在を確認する。"
+    },
+    {
+      "task_type": "refactor_task_bridge_runner",
+      "execution_target": {
+        "description": "task_bridge_runner.py のCLI_PATH解決を完全自動化し、WinError32リトライをパラメータ化する。Python 3.7準拠。"
+      }
+    },
+    {
+      "task_type": "implement_codex_fallback",
+      "execution_target": {
+        "description": "Gemini CLI がレート制限エラーのとき Codex CLI に PoC fallback する仕組みを検証する。課金リスクに注意。"
+      }
+    },
+    {
+      "task_type": "generate_task_log_parser",
+      "execution_target": {
+        "description": "cli_logs/TaskValidation.txt を Markdown に整形し、完了後に cli_archives/ に移動する。"
+      }
+    },
+    {
+      "task_type": "setup_ci_pipeline",
+      "execution_target": {
+        "description": "GitHub Actions で push 時に validate_files を強制実行し、結果を Artifacts に保存する。Python 3.7 container 使用。"
+      }
+    },
+    {
+      "task_type": "generate_documentation",
+      "execution_target": {
+        "description": "validate_files と task_bridge_runner の運用仕様を README.md にまとめ、ゼロファイル方式とジャンクション前提を明記する。"
+      }
+    },
+    {
+      "task_type": "commit_and_push",
+      "execution_target": {
+        "steps": [
+          "git add .",
+          "git commit -m \"Task cycle auto-push\"",
+          "git push origin main"
+        ],
+        "note": "Pushエラー対応は自動でお願いします"
+      }
+    }
+  ]
+}

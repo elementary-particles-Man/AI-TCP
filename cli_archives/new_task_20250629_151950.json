@@ -1,0 +1,24 @@
+{
+  "tasks": [
+    {
+      "task_type": "validate_files",
+      "execution_target": {
+        "files_to_check": "scripts/auto_ops/task_bridge_runner.py;scripts/auto_ops/validate_task.py;conftest.py"
+      },
+      "description": "ジャンクション経由で空白なしパスで validate_files を再検証し、微修正箇所があれば編集する。"
+    },
+    {
+      "task_type": "commit_changes",
+      "execution_target": {
+        "description": "validate_files タスクで変更があれば git add/commit/push を行う。",
+        "steps": [
+          "git add .",
+          "git commit -m \"Runner test commit\"",
+          "git push origin main"
+        ],
+        "note": "実際の push はスマホでも CLI でも SSH 経由で行ってください。"
+      }
+    }
+  ],
+  "completion_signal": "必ず cli_instruction フォルダに complete.flag を生成する。"
+}

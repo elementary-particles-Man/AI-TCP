@@ -31,15 +31,24 @@ os.chdir(REPO_ROOT)
 
 # === パス設定 ===
 NEW_TASK_JSON = ".\\cli_instruction\\new_task.json"
+TMP_TASK_JSON = ".\\cli_instruction\\new_task.tmp.json"
 COMPLETE_FLAG = ".\\cli_instruction\\complete.flag"
 ARCHIVE_DIR = ".\\cli_archives"
 
-# === プロンプト ===
+# === PROMPT ===
 PROMPT = (
-    f"new_task.json（パス: {NEW_TASK_JSON}）を確認し、"
-    "内容に従ってタスクを完了して下さい。\n"
-    f"全てのタスクが完了したら、必ず `cli_instruction` フォルダ内に `complete.flag`（空ファイル）を生成して下さい。\n"
-    "作業ログは必要なら標準出力に要約して下さいが、完了判定は `complete.flag` の存在だけで行います。\n"
+    "新しいタスク指示書（./cli_instruction/new_task.tmp.json）を受け取りました。\n"
+    "・内容を理解しただけでは完了と見なしません。\n"
+    "・貴方を呼び出した意味は「タスクの完了」であり、終了フラグファイルを作る意味ではありません。。\n"
+    "・内容を理解したら、必ず順に全てのタスクを即座に処理を開始して下さい。\n"
+    "・各タスクが終わるごとに進行状況を必ず日本語で出力し、全タスクを処理して下さい。\n"
+    "・全タスクが完了してから、必ず ./cli_instruction/complete.flag を生成して下さい。\n"
+    "・`complete.flag` は `new_task.tmp.json` を rename して作ってはいけません。\n"
+    "・必ず `type nul > ./cli_instruction/complete.flag` のように空の新規ファイルとして生成して下さい。\n"
+    "・`mv` や `ren` コマンドは禁止です。\n"
+    "・`complete.flag` は最後の最後に物理的に生成しない限り、タスク完了と認めません。\n"
+    "・`new_task.json` は自動運用スクリプトが処理します。人間もGeminiも削除・変更してはいけません。\n"
+    "・質問や応答は全て日本語で出力して下さい。\n"
 )
 
 # === ディレクトリ準備 ===
@@ -51,6 +60,14 @@ try:
     while True:
         if os.path.exists(NEW_TASK_JSON):
             print("[INFO] new_task.json を検知しました。Gemini CUI を起動します。")
+
+            # tmp 複製
+            shutil.copy2(NEW_TASK_JSON, TMP_TASK_JSON)
+            print(f"[INFO] new_task.json を tmp に複製しました: {TMP_TASK_JSON}")
+
+            # === tmp を物理的に immutable にする ===
+            subprocess.run(["attrib", "+R", TMP_TASK_JSON], check=False)
+            print(f"[INFO] tmp ファイルを読み取り専用に設定しました: {TMP_TASK_JSON}")
 
             # 既存フラグが残っていたら削除
             if os.path.exists(COMPLETE_FLAG):
@@ -77,6 +94,10 @@ try:
 
                     shutil.move(COMPLETE_FLAG, os.path.join(ARCHIVE_DIR, f"complete_{ts}.flag"))
                     print(f"[INFO] complete.flag をアーカイブしました: complete_{ts}.flag")
+
+                    if os.path.exists(TMP_TASK_JSON):
+                        os.remove(TMP_TASK_JSON)
+                        print(f"[INFO] tmp タスクを削除しました: {TMP_TASK_JSON}")
 
                     break
 

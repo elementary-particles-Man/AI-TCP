@@ -59,3 +59,23 @@ The rise of autonomous reasoning agents (LLMs) demands not just AI safety, but A
 This work is released under **CC0 1.0** — Public Domain Dedication.  
 Reuse, derivative works, and standardization efforts are not only permitted but encouraged.
 
+## 🚀 Task Automation and Validation
+
+This project leverages an automated task execution and validation system, central to which are `task_bridge_runner.py` and the `validate_files` task.
+
+### `task_bridge_runner.py`
+
+`task_bridge_runner.py` acts as the orchestrator for various automated tasks within the AI-TCP project. It monitors for new task requests and dispatches them to appropriate handlers.
+
+### `validate_files` Task
+
+The `validate_files` task is a critical component for ensuring the integrity and correctness of specified files within the project. It performs checks such as file existence, size, and content hashing, and can integrate with `pytest` for more comprehensive validation.
+
+#### Operational Principles
+
+1.  **Zero-File Method for Task Initiation**:
+    Tasks, including `validate_files`, are initiated using a "zero-file method." This means that task requests are communicated via a `new_task.json` file. Once `task_bridge_runner.py` processes this file, it is moved to an archive, effectively "zeroing out" the task initiation directory and preventing redundant execution. This ensures a clean, idempotent task queue.
+
+2.  **Junction Premise for Path Handling**:
+    The system is designed with the "junction premise" in mind, particularly for Windows environments. This implies that file paths, especially those passed to `validate_files`, should ideally be handled via directory junctions (symlinks) to abstract away complex or lengthy physical paths. This approach enhances portability, simplifies configuration, and mitigates issues related to path length limitations or special characters, ensuring robust operation across different development environments.
+

@@ -1,0 +1,41 @@
+name: Validate Files CI
+
+on: [push]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    container: python:3.7-slim-buster
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: pip install pytest
+
+    - name: Create dummy new_task.json for validation
+      run: |
+        mkdir -p cli_instruction
+        echo '{
+          "tasks": [
+            {
+              "task_type": "validate_files",
+              "execution_target": {
+                "files_to_check": "scripts/auto_ops/validate_task.py;scripts/auto_ops/task_bridge_runner.py;conftest.py;scripts/auto_ops/dispatcher.py"
+              }
+            }
+          ]
+        }' > cli_instruction/new_task.json
+
+    - name: Set AI_TCP_AGENT_CALL environment variable
+      run: echo "AI_TCP_AGENT_CALL=true" >> $GITHUB_ENV
+
+    - name: Run validate_files task
+      run: python scripts/auto_ops/validate_task.py
+
+    - name: Upload validation logs as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: validation-logs
+        path: logs/TaskValidation.txt
