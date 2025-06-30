@@ -1,0 +1,3 @@
+[submodule "protocols/kairo-client"]
+	path = protocols/kairo-client
+	url = https://github.com/elementary-particles-Man/KAIRO
