@@ -1,2 +1,51 @@
+# ============================
+# AI-TCP リポジトリ用 .gitignore 完全版
+# ============================
+
+# Submodule: KAIRO 配下の Rust ビルド
+protocols/kairo-client/rust-core/target/
+
+# Submodule: KAIRO 配下の Go ビルド
+protocols/kairo-client/go-p2p/bin/
+
+# Submodule: KAIRO 配下の PCAP サンプル（例外除く）
+protocols/kairo-client/samples/*.pcap
+!protocols/kairo-client/samples/kairo_ipv6_sample.pcap
+
+# ルートに直接置く Rust ビルド
+/target/
+
+# Python キャッシュ
+__pycache__/
+/*.pyc
+
+# VSCode / IDEA
+.vscode/
+.idea/
+
+# OSゴミ
+.DS_Store
+Thumbs.db
+
+# ログ
+*.log
+
+# CI出力
+*.tmp
+
+# Node modules （もし将来入る場合）
+node_modules/
+
+# dotenv
 .env
- 
+*.env
+
+# Codex作業キャッシュ
+.codex/
+codex/
+
+# PyTest
+.pytest_cache/
+
+# バックアップ
+*~
