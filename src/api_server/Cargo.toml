@@ -11,4 +11,5 @@ path = "main.rs"
 axum = "0.7"
 tokio = { version = "1", features = ["full"] }
 serde = { version = "1.0", features = ["derive"] }
-kairo_core = { path = "../../../KAIRO/rust-core" }
+bytes = "1.0"
+kairo_rust_core = { path = "../../KAIRO/rust-core", package = "kairo_rust_core", version = "0.1.0" }

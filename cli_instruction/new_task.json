@@ -1,85 +1,40 @@
 {
-  "task_group_id": "AITCP_Implement_API_Server_Full_Integration",
-  "description": "Task for the CLI to implement the full logic of the API server, integrating all completed optimization modules and the KAIRO core library.",
+  "task_group_id": "AITCP_Integrate_KAIRO_into_API_Server",
+  "description": "Task for the CLI to implement the core logic of the API server, integrating the completed KAIRO library for secure packet handling.",
   "tasks": [
     {
-      "comment": "Update Cargo.toml to ensure all necessary local dependencies are linked.",
-      "task_id": "AITCP-API-001-DEPS-FINAL",
+      "comment": "Update AI-TCP's Cargo.toml to add KAIRO as a local dependency via the submodule path.",
+      "task_id": "AITCP-INT-001",
       "command": "powershell",
       "args": [
         "-Command",
-        "$cargoToml = 'Cargo.toml'; if (-not (Select-String -Path $cargoToml -Pattern 'kairo-core')) { Add-Content -Path $cargoToml -Value 'kairo-core = { path = \"../KAIRO/rust-core\" }' }"
+        "$cargoToml = 'Cargo.toml'; if (-not (Select-String -Path $cargoToml -Pattern 'kairo-rust-core')) { Add-Content -Path $cargoToml -Value '[dependencies]\nkairo-rust-core = { path = \"protocols/kairo-client/rust-core\" }' }"
       ]
     },
     {
-      "comment": "Implement full integration logic in src/api_server/main.rs",
-      "task_id": "AITCP-API-001-IMPL-FULL",
+      "comment": "Implement KAIRO integration logic in src/api_server/main.rs. The server will now handle binary data.",
+      "task_id": "AITCP-INT-002",
       "command": "powershell",
       "args": [
         "-Command",
         "Set-Content -Path src/api_server/main.rs -Value @"
-// Main entry point for the AI-TCP API Server
-// Integrates all protocol optimization modules and the KAIRO security core.
-
 use axum::{
     routing::post,
     Router,
     Json,
     http::StatusCode,
-    response::IntoResponse,
-    extract::State
+    response::IntoResponse
 };
 use std::net::SocketAddr;
-use std::sync::{Arc, Mutex};
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use bytes::Bytes;
 
-// --- Import all necessary modules ---
-// KAIRO (assumes it's a library crate)
-// use kairo_core::packet_parser::PacketParser;
-// use kairo_core::error::KairoError;
+// KAIROコアライブラリをインポート
+// このパスはKAIRO側のlib.rsの定義に依存する
+use kairo_rust_core::packet_parser::PacketParser;
+use kairo_rust_core::error::KairoError;
 
-// AI-TCP Protocol Optimization Modules
-// use rust_core::protocols::compression;
-// use rust_core::protocols::session::SessionManager;
-// use rust_core::protocols::rate_control::RateController;
-
-// --- Stub structures for compilation ---
-// These would be replaced by actual imports from the crates
-mod kairo_core {
-    pub mod packet_parser {
-        pub struct PacketParser;
-        impl PacketParser {
-            pub fn new(_key: Vec<u8>) -> Self { Self }
-            pub fn parse<'a>(&mut self, _body: &'a [u8]) -> Result<&'a str, &'static str> { Ok(\"parsed_payload\") }
-        }
-    }
-}
-mod rust_core {
-    pub mod protocols {
-        pub mod compression {
-            pub fn decompress(data: &[u8]) -> Result<Vec<u8>, ()> { Ok(data.to_vec()) }
-        }
-        pub mod session {
-            pub struct SessionManager;
-            impl SessionManager {
-                pub fn new() -> Self { Self }
-                pub fn get_or_create_session_key(&mut self, _id: &str) -> &[u8; 32] { &[0; 32] }
-            }
-        }
-        pub mod rate_control {
-            pub struct RateController;
-            impl RateController {
-                pub fn new() -> Self { Self }
-                pub fn on_success(&mut self) {}
-                pub fn on_failure(&mut self) {}
-            }
-        }
-    }
-}
-// --- End of Stub structures ---
-
-
+// APIが返すレスポンス
 #[derive(Serialize)]
 struct ApiResponse {
     transaction_id: String,
@@ -87,42 +42,28 @@ struct ApiResponse {
     error: Option<String>,
 }
 
-// Application state to hold shared resources like session managers
-struct AppState {
-    session_manager: Mutex<rust_core::protocols::session::SessionManager>,
-    rate_controller: Mutex<rust_core::protocols::rate_control::RateController>,
-}
-
-async fn aitcp_handler(
-    State(state): State<Arc<AppState>>,
-    body: Bytes
-) -> impl IntoResponse {
+// ボディとしてバイナリデータ(Bytes)を受け取るように変更
+async fn aitcp_handler(body: Bytes) -> impl IntoResponse {
     println!(\"Received binary packet of size: {} bytes\", body.len());
 
-    // --- Full Integration Logic ---
-    // 1. KAIRO validates the packet.
-    let mut parser = kairo_core::packet_parser::PacketParser::new(vec![0; 32]);
+    // --- KAIRO Integration Point ---
+    // ここでKAIROのパーサーを呼び出し、パケットを検証する
+    let mut parser = PacketParser::new(vec![0; 32]); // セッションキーはダミー
+
     match parser.parse(&body) {
-        Ok(decrypted_payload_stub) => {
-            // 2. Decompress the payload.
-            // let decompressed_payload = compression::decompress(decrypted_payload).unwrap();
-            
-            // 3. Signal success to the rate controller.
-            state.rate_controller.lock().unwrap().on_success();
-            
-            // 4. TODO: Process the actual payload...
-            
+        Ok(_packet) => {
+            // パケットの検証・復号に成功
+            // TODO: 復号されたペイロードに対する処理を実装
             let response = ApiResponse {
-                transaction_id: uuid::Uuid::new_v4().to_string(),
-                status: \"Success: Packet processed through KAIRO and all optimization layers.\".to_string(),
+                transaction_id: uuid::Uuid::new_v4().to_string(), // Temporarily use new UUID
+                status: \"Packet Verified and Processed (KAIRO OK)\".to_string(),
                 error: None,
             };
             (StatusCode::OK, Json(response))
         },
         Err(e) => {
-            // If KAIRO validation fails, signal failure to the rate controller.
-            state.rate_controller.lock().unwrap().on_failure();
-            
+            // KAIROがエラーを検知（署名不正、シーケンス不一致など）
+            // VoVログには詳細が記録される
             eprintln!(\"KAIRO validation failed: {:?}\", e);
             let response = ApiResponse {
                 transaction_id: uuid::Uuid::new_v4().to_string(),
@@ -136,18 +77,12 @@ async fn aitcp_handler(
 
 #[tokio::main]
 async fn main() {
-    // Create shared state
-    let shared_state = Arc::new(AppState {
-        session_manager: Mutex::new(rust_core::protocols::session::SessionManager::new()),
-        rate_controller: Mutex::new(rust_core::protocols::rate_control::RateController::new()),
-    });
-
-    let app = Router::new()
-        .route(\"/api/v1/aitcp\", post(aitcp_handler))
-        .with_state(shared_state);
+    // api_server.rsはAI-TCPリポジトリのバイナリターゲットであるべき
+    // そのため、main関数はここに配置する
+    let app = Router::new().route(\"/api/v1/aitcp\", post(aitcp_handler));
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
-    println!(\"AI-TCP API server with full integration logic listening on {}\", addr);
+    println!(\"AI-TCP API server with KAIRO integration listening on {}\", addr);
 
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
@@ -158,8 +93,8 @@ async fn main() {
       ]
     },
     {
-      "task_id": "AITCP-API-001-BUILD-FULL",
-      "description": "Build the API server to ensure the full integration logic compiles.",
+      "task_id": "AITCP-INT-003",
+      "description": "Build the AI-TCP server to ensure successful integration.",
       "command": "powershell",
       "args": [
         "-Command",
@@ -167,12 +102,12 @@ async fn main() {
       ]
     },
     {
-      "task_id": "AITCP-API-001-FLAG-FULL",
-      "description": "Create a completion flag for the full API server integration task.",
+      "task_id": "PROJECT-INTEGRATION-FLAG",
+      "description": "Create a final completion flag.",
       "command": "powershell",
       "args": [
         "-Command",
-        "New-Item -Path validate_files/AITCP-API-001-FULL.flag -ItemType File -Value 'API Server full integration skeleton implemented and compiles successfully.'"
+        "New-Item -Path validate_files/PROJECT_INTEGRATION.flag -ItemType File -Value 'KAIRO core library successfully integrated into AI-TCP API server.'"
       ]
     }
   ]
