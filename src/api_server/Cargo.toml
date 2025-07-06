@@ -3,8 +3,12 @@ name = "api_server"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "api_server"
+path = "main.rs"
+
 [dependencies]
 axum = "0.7"
 tokio = { version = "1", features = ["full"] }
 serde = { version = "1.0", features = ["derive"] }
-kairo_core = { path = "../protocols/kairo_core" }
+kairo_core = { path = "../../../KAIRO/rust-core" }
