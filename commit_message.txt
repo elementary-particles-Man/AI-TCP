@@ -1,1 +1,1 @@
-【AI-TCP】validate_task.py機能拡充テスト＆検証
+docs: Add AI-TCP Bootstrap completion note to Flag Workflow
