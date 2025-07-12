@@ -1,2 +1,14 @@
 *.md text eol=lf
 *.yaml text eol=lf
+# Ensure all text files use LF in repo
+* text=auto
+
+# Explicitly for Rust/TOML files
+*.rs text eol=lf
+*.toml text eol=lf
+
+# For Go files
+*.go text eol=lf
+
+# For Python files
+*.py text eol=lf

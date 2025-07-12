@@ -5,7 +5,7 @@ edition = "2021"
 
 [lib]
 name = "kairo_rust_core"
-crate-type = ["cdylib"]
+crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
