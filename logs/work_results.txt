@@ -1,3 +1,3 @@
 result: OK
-summary: "AI-TCP Bootstrap modules generated: RFC, FlatBuffers schema, Session Manager, Packet Validator, FFI test, CI step added."
+summary: "AI-TCP Spec expanded: Session Resumption, Replay Guard, RFC Security Draft, FFI Security Test, CI added."
 timestamp: "(投入時刻)"
