@@ -20,3 +20,5 @@ jobs:
         run: cargo test --test ffi_test
       - name: Run FFI Security Tests
         run: cargo test --test ffi_security_test
+      - name: Run Python Secure Bridge Tests
+        run: python -m unittest tests/test_secure_bridge.py
