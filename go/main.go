@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 )
@@ -37,6 +39,23 @@ type ErrorResponse struct {
 }
 
 func apiHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("--- Request received ---")
+	for name, headers := range r.Header {
+		for _, h := range headers {
+			fmt.Printf("%v: %v\n", name, h)
+		}
+	}
+	fmt.Printf("Method: %s, URL: %s, RemoteAddr: %s\n", r.Method, r.URL, r.RemoteAddr)
+
+	bodyBytes, err := io.ReadAll(r.Body)
+	if err != nil {
+		log.Printf("Error reading body: %v", err)
+		http.Error(w, "can't read body", http.StatusBadRequest)
+		return
+	}
+	r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
+	fmt.Printf("Request Body: %s\n", string(bodyBytes))
+
 	if r.Method != "POST" {
 		http.Error(w, `{"status":"error","message":"Invalid request method"}`, http.StatusMethodNotAllowed)
 		return
@@ -44,7 +63,7 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 
 	var req APIRequest
 	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(&req)
+	err = decoder.Decode(&req)
 	if err != nil {
 		http.Error(w, `{"status":"error","message":"Invalid JSON payload"}`, http.StatusBadRequest)
 		return
