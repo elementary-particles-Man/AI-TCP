@@ -49,3 +49,39 @@ codex/
 
 # バックアップ
 *~
+# Rust build artifacts
+/target/
+**/target/
+/Cargo.lock
+
+# Rust workspace artifacts
+*.rs.bk
+*.rs.swp
+
+# Go build artifacts
+*.exe
+*.out
+*.test
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Logs
+*.log
+*.log.*
+logs/
+work_results.txt
+
+# VSCode and OS files
+.vscode/
+.DS_Store
+
+# Node (もし将来含む場合)
+node_modules/
+
+# Any generated FlatBuffers files if needed
+*.fbs_generated.*

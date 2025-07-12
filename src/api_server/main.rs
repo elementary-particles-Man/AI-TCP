@@ -22,7 +22,7 @@ async fn aitcp_handler(body: Bytes) -> impl IntoResponse {
 
     // --- KAIRO Integration Point ---
     // ここでKAIROのパーサーを呼び出し、パケットを検証する
-    let mut parser = packet_parser::PacketParser::new(vec![0; 32]); // セッションキーはダミー
+        let mut parser = PacketParser::new(vec![0; 32]); // セッションキーはダミー
 
     match parser.parse(&body) {
         Ok(packet) => {
