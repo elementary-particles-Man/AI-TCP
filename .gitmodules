@@ -4,3 +4,6 @@
 [submodule "PI-Vault"]
 	path = PI-Vault
 	url = https://github.com/elementary-particles-Man/PI-Vault.git
+[submodule "KAIRO"]
+	path = KAIRO
+	url = https://github.com/elementary-particles-Man/KAIRO.git
