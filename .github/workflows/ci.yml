@@ -18,3 +18,5 @@ jobs:
           override: true
       - name: Run FFI Tests
         run: cargo test --test ffi_test
+      - name: Run FFI Security Tests
+        run: cargo test --test ffi_security_test
