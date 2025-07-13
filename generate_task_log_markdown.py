@@ -1,6 +1,7 @@
 import os
 import shutil
 from datetime import datetime
+from pathlib import Path
 
 def generate_task_log_markdown(source_path, destination_dir):
     if not os.path.exists(source_path):
@@ -26,6 +27,7 @@ def generate_task_log_markdown(source_path, destination_dir):
     print(f"Original log moved to {destination_dir}")
 
 if __name__ == "__main__":
-    source_log_path = "D:/Dev/AI-TCP/logs/TaskValidation.txt"
-    archive_dir = "D:/Dev/AI-TCP/cli_archives"
-    generate_task_log_markdown(source_log_path, archive_dir)
+    repo_root = Path(os.environ.get("REPO_ROOT", Path.cwd()))
+    source_log_path = repo_root / "logs" / "TaskValidation.txt"
+    archive_dir = repo_root / "cli_archives"
+    generate_task_log_markdown(str(source_log_path), str(archive_dir))

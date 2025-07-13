@@ -42,9 +42,8 @@ def main():
         print("Error: This script must be launched by the AI-TCP agent via new_task.json.")
         sys.exit(1)
 
-    # Assuming new_task.json is located at a known path relative to the project root
-    # For this example, we'll hardcode the path as it's provided in the context
-    new_task_json_path = Path("D:/Dev/AI-TCP/cli_instruction/new_task.json")
+    repo_root = Path(os.environ.get("REPO_ROOT", Path.cwd()))
+    new_task_json_path = repo_root / "cli_instruction" / "new_task.json"
 
     if not new_task_json_path.exists():
         print(f"Error: new_task.json not found at {new_task_json_path}")
@@ -67,7 +66,7 @@ def main():
     files_to_check_str = current_task_config["execution_target"]["files_to_check"]
     files_to_check = [f.strip() for f in files_to_check_str.split(';') if f.strip()]
 
-    log_path_str = current_task_config["execution_target"].get("log_path", "D:/My Data/Develop/Project INFINITY/AI-TCP/logs/TaskValidation.txt") # Default value
+    log_path_str = current_task_config["execution_target"].get("log_path", str(repo_root / "logs" / "TaskValidation.txt"))
     pytest_target = current_task_config["execution_target"].get("pytest_target", "tests/test_validator_git_commit.py") # Default value
 
     log_path = Path(log_path_str)

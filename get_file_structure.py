@@ -1,6 +1,7 @@
 
 
 import os
+from pathlib import Path
 
 def get_file_structure(startpath):
     structure = []
@@ -14,8 +15,8 @@ def get_file_structure(startpath):
     return "\n".join(structure)
 
 if __name__ == "__main__":
-    repo_path = "D:/Dev/AI-TCP/"
-    file_structure = get_file_structure(repo_path)
-    with open("D:/Dev/AI-TCP/temp_file_structure.txt", "w", encoding="utf-8") as f:
+    repo_root = Path(os.environ.get("REPO_ROOT", Path.cwd()))
+    file_structure = get_file_structure(str(repo_root))
+    with open(repo_root / "temp_file_structure.txt", "w", encoding="utf-8") as f:
         f.write(file_structure)
 

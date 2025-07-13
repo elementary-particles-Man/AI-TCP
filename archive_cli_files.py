@@ -1,6 +1,7 @@
 import os
 import shutil
 from datetime import datetime, timedelta
+from pathlib import Path
 
 def archive_cli_files(cli_archives_dir, old_dir, days_threshold=7):
     if not os.path.exists(cli_archives_dir):
@@ -29,6 +30,7 @@ def archive_cli_files(cli_archives_dir, old_dir, days_threshold=7):
                 print(f"Error processing file {filename}: {e}")
 
 if __name__ == "__main__":
-    cli_archives_path = "D:/Dev/AI-TCP/cli_archives"
-    old_archives_path = os.path.join(cli_archives_path, "old")
-    archive_cli_files(cli_archives_path, old_archives_path, days_threshold=0) # Archive all existing files for testing
+    repo_root = Path(os.environ.get("REPO_ROOT", Path.cwd()))
+    cli_archives_path = repo_root / "cli_archives"
+    old_archives_path = cli_archives_path / "old"
+    archive_cli_files(str(cli_archives_path), str(old_archives_path), days_threshold=0)
