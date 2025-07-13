@@ -2,7 +2,6 @@
 //! Implements Peer Review / Gossip based distributed trust score calculation.
 //! Handles WAU (Who Are You) authentication and Sybil attack resistance.
 
-pub enum Scope { /* Re-declare or import Scope from mesh_scope_manager.rs */ }
 
 // Temporarily define Scope here to avoid circular dependency in initial generation
 #[allow(dead_code)]
