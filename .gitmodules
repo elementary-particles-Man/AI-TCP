@@ -1,9 +1,7 @@
-[submodule "protocols/kairo-client"]
-	path = KAIRO
-	url = https://github.com/elementary-particles-Man/KAIRO
-[submodule "PI-Vault"]
-	path = PI-Vault
-	url = https://github.com/elementary-particles-Man/PI-Vault.git
 [submodule "KAIRO"]
-	path = KAIRO
-	url = https://github.com/elementary-particles-Man/KAIRO.git
+  path = KAIRO
+  url = https://github.com/elementary-particles-Man/KAIRO.git
+
+[submodule "PI-Vault"]
+  path = PI-Vault
+  url = https://github.com/elementary-particles-Man/PI-Vault.git
