@@ -52,69 +52,35 @@ IPv6アドレス（128ビット）の特定ビット範囲を各スコープレ�
 // Based on GPT's proposal for distributed trust score calculation
 
 struct TrustCalculationInputs {
-    self_trust: f64, // Local self-assessment score (0.0 - 1.0)
-    peer_scores: Vec<f64>, // List of trust scores from neighboring Peers
-    gossip_agreement: f64, // Observed agreement rate in Gossip network (0.0 - 1.0)
-    weight_self: f64, // Weight for self_trust
-    weight_peer: f64, // Weight for peer_avg
-    weight_gossip: f64, // Weight for gossip_agreement
-    min_peer_reviews: usize, // Minimum number of peer reviews for full trust
+    pub self_trust: f64,        // 自己評価
+    pub peer_scores: Vec<f64>,  // 近隣Peerのスコア
+    pub gossip_agreement: f64,  // Gossip一致率
+    pub scope: Scope,
 }
 
 impl TrustCalculationInputs {
-    fn calculate_trust_score(&self) -> f64 {
+    pub fn calculate_trust_score(&self) -> f64 {
+        let weight_self = 0.4;
+        let weight_peer = 0.4;
+        let weight_gossip = 0.2;
+
         let peer_avg: f64 = if self.peer_scores.is_empty() { 0.0 } else { self.peer_scores.iter().sum::<f64>() / self.peer_scores.len() as f64 };
 
         let mut trust_score = (self.weight_self * self.self_trust) +
                               (self.weight_peer * peer_avg) +
                               (self.weight_gossip * self.gossip_agreement);
 
-        // Sybil attack resistance: Halve trust if insufficient peer reviews
-        if self.peer_scores.len() < self.min_peer_reviews {
-            trust_score *= 0.5; // Reduce trust for insufficient data
+        // シビル攻撃耐性
+        let min_peer_reviews = match self.scope {
+            Scope::Personal => 1,
+            Scope::Family => 3,
+            _ => 5,
+        };
+
+        if self.peer_scores.len() < min_peer_reviews {
+            trust_score *= 0.5;
         }
 
-        trust_score.clamp(0.0, 1.0) // Ensure score is within 0.0 and 1.0
+        trust_score.clamp(0.0, 1.0)
     }
 }
-```
-
-### 4. 抽象概念の扱い（国家・宗教など）
-
-プロトコルレベルでは「国家」や「宗教」といった概念を直接定義・強制せず、上位の「コミュニティ」レイヤーにおける**高信頼性グループ**として抽象化します。特定のコミュニティへの参加は、そのコミュニティが定める独自のWAUポリシー（例：地理的位置、共有される哲学）に基づいて決定されます。AI-TCPプロトコルはこれらのポリシーの伝達と検証をサポートしますが、ポリシーの内容には介入しません。
-
-### 5. Seed Node 復旧パターン
-
-Seed Node障害発生時の簡易復旧フローチャート案です。これはメッシュの自律性と復旧性を保証します。
-
-```mermaid
-graph TD
-  A[Seed Node Failure] --> B{孤立ノードがローカル履歴
-    (trusted_peers cache)
-    を参照し候補を選定};
-  B --> C{Peer Reviewで残存ノード
-    を相互確認};
-  C --> D{信頼度の高いノードを
-    新Seedとして昇格};
-  D --> E[新Seed NodeからDHT/Gossip
-    を再構築];
-```
-
-### 6. スコープ昇格/降格の自動監視条件
-
-ノードは自身の信頼スコアやメッシュ内の活動に基づいて、スコープレベルの昇格・降格を自律的に判断します。ヒステリシスを設け、頻繁なレベル変更を防ぎます。
-
-```rust
-// src/mesh_scope_manager.rs の実装ガイドライン
-// Example: trust_score over 0.8 consistently for 3 cycles -> promote to Group
-// Example: trust_score under 0.4 for 2 cycles -> demote to Personal
-// Hysteresis: Thresholds may have a small buffer to prevent flapping.
-```
-
-### 7. コミュニティ層のリスク対応
-
-コミュニティ内での内部崩壊やシビル攻撃（多数の偽ノードによる信頼度の操作）のリスクを考慮し、以下の方針で対応します。
-
-* **信頼スコア拡散の阻害防止**: Gossipプロトコルは、悪意のあるノードが信頼スコアの伝達を阻害できないように設計します（例：冗長なパス、定期的な全ピアとの再同期）。
-* **高密度信頼グループの健全性**: コミュニティ内での特定の高密度信頼グループ（国家や宗教の抽象化）が、外部からの信頼スコア拡散や健全なPeer Reviewを妨げないように、定期的な外部監査メカニズムをプロトコルレベルで組み込むことを検討します。
-
