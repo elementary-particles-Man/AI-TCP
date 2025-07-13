@@ -1,3 +1,5 @@
+# mesh_rust_ci.yml (updated)
+
 name: Mesh Rust CI
 
 on:
@@ -9,14 +11,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Rust
+      - uses: actions/checkout@v2
+      - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
-      - name: Build workspace
-        run: cargo build --workspace --all-targets
-      - name: Run tests
-        run: cargo test --workspace
+      - name: Build
+        run: cargo build --verbose
+      - name: Run All Tests (including Seed Node & Gossip Trust)
+        run: cargo test --verbose
