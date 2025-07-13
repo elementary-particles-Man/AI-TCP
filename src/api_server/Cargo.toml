@@ -12,4 +12,4 @@ axum = "0.7"
 tokio = { version = "1", features = ["full"] }
 serde = { version = "1.0", features = ["derive"] }
 bytes = "1.0"
-kairo_rust_core = { path = "../../archive/kairo_rust_core_legacy/rust-core", version = "0.1.0" }
+kairo_rust_core = { path = "../../KAIRO/rust-core", version = "0.1.0" }

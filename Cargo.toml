@@ -1,5 +1,4 @@
 [workspace]
 members = [
     "src/api_server",
-    "archive/kairo_rust_core_legacy/rust-core",
 ]
