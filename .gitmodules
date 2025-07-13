@@ -4,6 +4,4 @@
 [submodule "KAIRO"]
 	path = KAIRO
 	url = https://github.com/elementary-particles-Man/KAIRO.git
-[submodule "bin"]
-	path = bin
-	url = file:///D:/Dev/bin
+
