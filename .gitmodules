@@ -1,6 +1,3 @@
-[submodule "KAIRO"]
-  path = KAIRO
-  url = https://github.com/elementary-particles-Man/KAIRO.git
 
 [submodule "PI-Vault"]
   path = PI-Vault
