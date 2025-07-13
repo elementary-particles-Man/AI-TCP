@@ -2,14 +2,16 @@ import os
 import shutil
 import subprocess
 import datetime
+from pathlib import Path
 
 def run_task_workflow():
-    cli_instruction_dir = "D:/Dev/AI-TCP/cli_instruction"
-    cli_archives_dir = "D:/Dev/AI-TCP/cli_archives"
-    new_task_json_source = os.path.join(cli_instruction_dir, "new_task.json")
+    repo_root = Path(os.environ.get("REPO_ROOT", Path.cwd()))
+    cli_instruction_dir = repo_root / "cli_instruction"
+    cli_archives_dir = repo_root / "cli_archives"
+    new_task_json_source = cli_instruction_dir / "new_task.json"
 
     # 1. Check for and delete complete.flag
-    complete_flag_path = os.path.join(cli_archives_dir, "complete.flag")
+    complete_flag_path = cli_archives_dir / "complete.flag"
     if os.path.exists(complete_flag_path):
         print(f"Deleting existing complete.flag: {complete_flag_path}")
         os.remove(complete_flag_path)
@@ -20,7 +22,7 @@ def run_task_workflow():
     if os.path.exists(new_task_json_source):
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         new_task_json_dest_name = f"new_task_{timestamp}.json"
-        new_task_json_dest = os.path.join(cli_archives_dir, new_task_json_dest_name)
+        new_task_json_dest = cli_archives_dir / new_task_json_dest_name
         print(f"Moving {new_task_json_source} to {new_task_json_dest}")
         shutil.move(new_task_json_source, new_task_json_dest)
     else:
@@ -28,7 +30,7 @@ def run_task_workflow():
         return # Exit if the source file doesn't exist
 
     # 3. Execute task_bridge_runner.py
-    task_bridge_runner_path = "D:/Dev/AI-TCP/task_bridge_runner.py"
+    task_bridge_runner_path = repo_root / "task_bridge_runner.py"
     if os.path.exists(task_bridge_runner_path):
         print(f"Executing {task_bridge_runner_path}...")
         try:

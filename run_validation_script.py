@@ -1,14 +1,16 @@
 import subprocess
 import sys
 import os
+from pathlib import Path
 
-validate_script = os.path.abspath("D:/My Data/Develop/Project INFINITY/AI-TCP/validate_yaml.py")
-input_file = os.path.abspath("D:/My Data/Develop/Project INFINITY/AI-TCP/cli_instruction/new_task.json")
-output_file = os.path.abspath("D:/My Data/Develop/Project INFINITY/AI-TCP/cli_logs/TaskValidation.txt")
+repo_root = Path(os.environ.get("REPO_ROOT", Path.cwd()))
+validate_script = repo_root / "validate_yaml.py"
+input_file = repo_root / "cli_instruction" / "new_task.json"
+output_file = repo_root / "cli_logs" / "TaskValidation.txt"
 
 # Construct the command as a list of arguments
 # The validate_yaml.py script expects the input file path and output file path as command-line arguments
-command = [sys.executable, validate_script, input_file, output_file]
+command = [sys.executable, str(validate_script), str(input_file), str(output_file)]
 
 try:
     # Run the validation script and capture its stdout and stderr

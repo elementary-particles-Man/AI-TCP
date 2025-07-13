@@ -1,5 +1,7 @@
 import subprocess
 import json
+from pathlib import Path
+import os
 
 def invoke_go_module(module_path, input_data=None):
     """Goモジュールを呼び出し、JSONデータを連携する。"""
@@ -22,8 +24,8 @@ def invoke_go_module(module_path, input_data=None):
         return None
 
 if __name__ == "__main__":
-    # サンプルGoモジュール (仮定: D:/Dev/AI-TCP/AI-TCP_Structure/tools/gen_link_map.go)
-    go_module_path = "D:/Dev/AI-TCP/AI-TCP_Structure/tools/gen_link_map.go"
+    repo_root = Path(os.environ.get("REPO_ROOT", Path(__file__).resolve().parent))
+    go_module_path = repo_root / "AI-TCP_Structure" / "tools" / "gen_link_map.go"
 
     # Goモジュールに渡す入力データ
     sample_input = {"key": "value", "number": 123}

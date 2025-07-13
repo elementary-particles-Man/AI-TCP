@@ -1,6 +1,8 @@
 from pathlib import Path
+import os
 
-DOCS_OUTPUT_PATH = Path("D:/My Data/Develop/Project INFINITY/AI-TCP/docs/validate_files_spec.md")
+repo_root = Path(os.environ.get("REPO_ROOT", Path.cwd()))
+DOCS_OUTPUT_PATH = repo_root / "docs" / "validate_files_spec.md"
 
 def generate_cli_spec_docs():
     content = """

@@ -151,10 +151,8 @@ def test_main_function_validate_files(mock_subprocess_run, mock_save_output, moc
     mock_execute_task.assert_called_once()
     mock_save_output.assert_called_once()
     mock_archive_logs.assert_called_once()
-    mock_subprocess_run.assert_called_once_with([
-        "python",
-        "D:/My Data/Develop/Project INFINITY/AI-TCP/pytools/task_log_parser.py"
-    ], capture_output=True, text=True)
+    expected = ["python", str(task_bridge_runner.TASK_LOG_PARSER)]
+    mock_subprocess_run.assert_called_once_with(expected, capture_output=True, text=True)
 
 @patch('time.sleep', return_value=None)
 @patch('task_bridge_runner.execute_validate_files_task')
@@ -207,7 +205,5 @@ def test_main_function_generate_documentation(mock_subprocess_run, mock_save_out
     mock_execute_task.assert_not_called() # Should not call execute_validate_files_task
     mock_save_output.assert_called_once()
     mock_archive_logs.assert_called_once()
-    mock_subprocess_run.assert_called_once_with([
-        "python",
-        "D:/My Data/Develop/Project INFINITY/AI-TCP/pytools/generate_cli_docs.py"
-    ], capture_output=True, text=True)
+    expected = ["python", str(task_bridge_runner.GENERATE_CLI_DOCS)]
+    mock_subprocess_run.assert_called_once_with(expected, capture_output=True, text=True)

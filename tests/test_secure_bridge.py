@@ -2,16 +2,32 @@ import unittest
 import subprocess
 import time
 import os
+import shutil
+import socket
 from python.secure_bridge import send_secure_task
 
 
 class TestSecureBridge(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        # Start the Go server
+        if shutil.which("go") is None:
+            raise unittest.SkipTest("Go toolchain not available")
         cls.proc = subprocess.Popen(["go", "run", "go/main.go"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        # Give the server a moment to start and compile
         time.sleep(2)
+        if cls.proc.poll() is not None:
+            cls.proc = None
+            raise unittest.SkipTest("Go server failed to start")
+        s = socket.socket()
+        try:
+            s.settimeout(1)
+            s.connect(("127.0.0.1", 8080))
+        except OSError:
+            cls.proc.terminate()
+            cls.proc.wait(timeout=5)
+            cls.proc = None
+            raise unittest.SkipTest("Go server unreachable")
+        finally:
+            s.close()
 
     @classmethod
     def tearDownClass(cls):

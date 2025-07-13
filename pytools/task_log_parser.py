@@ -1,9 +1,11 @@
 import re
 from pathlib import Path
 from datetime import datetime
+import os
 
-LOG_FILE = Path("D:/My Data/Develop/Project INFINITY/AI-TCP/logs/TaskValidation.txt")
-OUTPUT_DIR = Path("D:/My Data/Develop/Project INFINITY/AI-TCP/vault_output")
+repo_root = Path(os.environ.get("REPO_ROOT", Path.cwd()))
+LOG_FILE = repo_root / "logs" / "TaskValidation.txt"
+OUTPUT_DIR = repo_root / "vault_output"
 
 def parse_task_validation_log(log_path):
     file_check_results = []

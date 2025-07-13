@@ -1,9 +1,11 @@
 import time
 from pathlib import Path
+import os
 
 # This comment is added for Git commit verification. (3rd time)
 
-OUTPUT_LOG = Path("D:/My Data/Develop/Project INFINITY/AI-TCP/cli_logs/output.json")
+repo_root = Path(os.environ.get("REPO_ROOT", Path.cwd()))
+OUTPUT_LOG = repo_root / "cli_logs" / "output.json"
 
 print(f"✅ Watching output.json: {OUTPUT_LOG}")
 

@@ -1,8 +1,9 @@
 import os
+from pathlib import Path
 
 # This comment is added for Git commit verification. (3rd time)
 
-ALLOWED_BASE_PATH = os.path.abspath("D:/My Data/Develop/Project INFINITY/AI-TCP")
+ALLOWED_BASE_PATH = str(Path(os.environ.get("REPO_ROOT", Path.cwd())).resolve())
 
 def validate_git_commit_task(task: dict) -> None:
     if "execution_target" not in task:
