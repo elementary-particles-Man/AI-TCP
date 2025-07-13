@@ -76,7 +76,7 @@ impl TrustScoreCalculator {
         // Ensure external trust score diffusion is not inhibited by internal group dynamics.
         // Consider periodic external audits or trust score comparison with global mesh data.
         // This function will return an adjusted trust score for the community/node.
-        
+
         let external_avg = if external_gossip_scores.is_empty() {
             0.0
         } else {

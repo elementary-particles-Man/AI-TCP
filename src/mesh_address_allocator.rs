@@ -21,7 +21,7 @@ impl MeshAddressAllocator {
         // Community (/48): Example: 2001:db8:1234::/48
         // World (/32 or /16): Example: 2001:db8::/32
         // Uniqueness check will be done via lightweight gossip protocol to neighboring nodes.
-        
+
         // Placeholder for scope based prefix and random host ID generation
         let prefix = match scope {
             Scope::Personal => "f5f9:abcd:0001::",
@@ -45,10 +45,13 @@ impl MeshAddressAllocator {
         // and if a quorum of trusted peers can be re-established, promoting one as a temporary Seed Node.
         // This new Seed Node would then initiate DHT/Gossip re-establishment for its scope.
         // The process leverages cached Peer Review scores and self-generated AI-IPs.
-        
+
         // Example: If a trusted peer is found and verifiable, promote it as a temporary seed.
         if !local_trusted_peers_cache.is_empty() {
-            println!("Attempting to restore from local cache. Found {} cached peers.", local_trusted_peers_cache.len());
+            println!(
+                "Attempting to restore from local cache. Found {} cached peers.",
+                local_trusted_peers_cache.len()
+            );
             // For demonstration, assume the first cached peer can become a temporary seed.
             return Some(local_trusted_peers_cache[0].clone());
         }
