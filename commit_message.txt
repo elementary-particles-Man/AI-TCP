@@ -1,1 +1,1 @@
-docs: Add AI-TCP Bootstrap completion note to Flag Workflow
+\"Add legacy KAIRO Rust Core to archive for reference\" 
