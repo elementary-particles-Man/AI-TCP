@@ -11,6 +11,4 @@ rand = "0.8"
 [lib]
 path = "src/lib.rs"
 
-[[bin]]
-name = "kairo_core_bin"
-path = "src/main.rs"
+

@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use chrono::{Utc, Duration};
-use rand::Rng;
+use rand::RngCore;
 
 const SESSION_EXPIRATION_MINUTES: i64 = 30;
 
@@ -64,8 +64,8 @@ mod tests {
         let mut manager = SessionManager::new();
         let session_id = "session-123";
 
-        let key1 = manager.get_or_create_session(session_id);
-        let key2 = manager.get_or_create_session(session_id);
+        let key1 = manager.get_or_create_session(session_id).to_vec();
+        let key2 = manager.get_or_create_session(session_id).to_vec();
         assert_eq!(key1, key2);
     }
 
