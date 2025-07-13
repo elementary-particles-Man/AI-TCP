@@ -20,9 +20,11 @@ impl MeshScopeManager {
         Scope::Personal // Dummy
     }
 
-    pub fn update_scope_level(new_scope: Scope) -> bool {
-        // TODO: Implement protocol for scope transitions (e.g., based on WAU)
-        true // Dummy
+    pub fn update_scope_level(trust_score: f64, current_scope: Scope) -> Option<Scope> {
+        // TODO: Implement protocol for scope transitions based on trust score and current scope.
+        // Apply hysteresis to prevent rapid flapping between scope levels.
+        // Example: if trust_score > 0.8 and current_scope is Personal, suggest upgrade to Family.
+        None // Dummy
     }
 
     pub fn get_gossip_range(scope: Scope) -> usize {
