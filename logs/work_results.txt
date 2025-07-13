@@ -1,3 +1,3 @@
 result: OK
-summary: "KAIRO Mesh layered architecture RFC and core modules generated: AI-TCP_RFC_mesh_layered_architecture.md, mesh_address_allocator.rs, mesh_scope_manager.rs, mesh_trust_calculator.rs. Includes AI-IP metadata, trust calculation, and Seed Node recovery patterns."
+summary: "KAIRO Mesh layered architecture RFC and core modules generated: AI-TCP_RFC_mesh_layered_architecture.md, mesh_address_allocator.rs, mesh_scope_manager.rs, mesh_trust_calculator.rs."
 timestamp: "(投入時刻)"
