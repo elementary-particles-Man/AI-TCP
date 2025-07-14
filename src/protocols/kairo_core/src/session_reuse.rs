@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use chrono::{Utc, Duration};
 use rand::RngCore;
 
-const SESSION_EXPIRATION_MINUTES: i64 = 30;
+const SESSION_EXPIRATION_MINUTES: i64 = 1;
 
 pub struct Session {
     key: [u8; 32],
