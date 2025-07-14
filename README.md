@@ -9,6 +9,8 @@ This repository contains the complete draft structure, technical specification, 
 
 ## 📂 Repository Structure
 
+- `bin/`: This directory is designated for compiled binary executables. All project-specific binaries should be placed here to maintain a clear separation from source code and other project assets. **Warning: Binaries found outside this directory will trigger administrative alerts.**
+
 - `original_docs/`: Human-readable documentation from GPT/Gemini/GD.
 
 - `structured_yaml/`: Structured YAML data following `master_schema_v1.yaml`.

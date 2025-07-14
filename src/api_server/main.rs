@@ -6,6 +6,7 @@ use bytes::Bytes;
 // KAIROコアライブラリをインポート
 // このパスはKAIRO側のlib.rsの定義に依存する
 use kairo_rust_core::packet_parser::PacketParser;
+#[allow(unused_imports)]
 use kairo_rust_core::error::KairoError;
 
 // APIが返すレスポンス
