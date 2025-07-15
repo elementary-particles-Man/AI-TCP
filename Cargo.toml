@@ -2,3 +2,9 @@
 members = [
     "src/api_server",
 ]
+
+[dependencies]
+chrono = "0.4"
+ed25519-dalek = "1.0"
+rand = "0.8"
+hex = "0.4"
