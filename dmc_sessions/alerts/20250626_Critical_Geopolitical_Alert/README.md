@@ -6,11 +6,11 @@ This directory is a test case for the AI-TCP Proof of Concept (PoC), validating 
 
 This alert was triggered by geopolitical signals detected by the DR Unit and processed through the following sequential phases:
 
-1. **Initial detection and descriptive logging by the DR Unit**
-2. **Structural correction and integration judgment by GPT**
-3. **Narrative construction by Gemini**
-4. **PoC formatting and archival (Markdown + Mermaid)**
-5. **Preparation for RFC/public sharing via GitHub**
+1.  **Initial detection and descriptive logging by the DR Unit**
+2.  **Structural correction and integration judgment by GPT**
+3.  **Narrative construction by Gemini**
+4.  **PoC formatting and archival (Markdown + Mermaid)**
+5.  **Preparation for RFC/public sharing via GitHub**
 
 ---
 
@@ -50,11 +50,11 @@ These alert artifacts are designed to test AI-to-AI communication, decision supp
 
 このアラートは、DRユニットが検出した地政学的兆候（Critical Risk）を起点とし、以下の段階的処理を通じて構成されています：
 
-1. **DRユニットによる兆候検知と初期記述**
-2. **GPT統合判断と構造補正**
-3. **Geminiによるナラティブ構築**
-4. **PoCへの格納・形式整理（Markdown + Mermaid）**
-5. **GitHubを通じたRFC・外部共有への準備**
+1.  **DRユニットによる兆候検知と初期記述**
+2.  **GPT統合判断と構造補正**
+3.  **Geminiによるナラティブ構築**
+4.  **PoCへの格納・形式整理（Markdown + Mermaid）**
+5.  **GitHubを通じたRFC・外部共有への準備**
 
 ---
 
