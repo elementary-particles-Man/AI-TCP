@@ -1,1 +1,1 @@
-\"Add legacy KAIRO Rust Core to archive for reference\" 
+Docs: Refactor documentation for Rust-centric AI-TCP implementation and move legacy code

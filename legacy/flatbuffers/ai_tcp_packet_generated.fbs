@@ -1,0 +1,9 @@
+namespace aitcp;
+
+table AITcpPacket {
+  encrypted_sequence_id:[ubyte];
+  encrypted_payload:[ubyte];
+  signature:[ubyte];
+}
+
+root_type AITcpPacket;

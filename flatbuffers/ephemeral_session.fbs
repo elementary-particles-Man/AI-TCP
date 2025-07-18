@@ -1,9 +1,0 @@
-namespace aitcp;
-
-table EphemeralSession {
-  session_id: string;
-  public_key: [ubyte];
-  expiration_unix: ulong;
-}
-
-root_type EphemeralSession;
