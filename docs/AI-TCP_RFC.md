@@ -11,6 +11,10 @@ language: en
 
 AI-TCP provides a neutral and traceable transport for inter‑LLM communication. This draft outlines the initial design goals and message structure in preparation for a formal IETF submission.
 
+### Implementation Focus: Rust
+
+As of this revision, the primary and canonical implementation of the AI-TCP protocol will be developed in Rust. This decision is driven by Rust's strong guarantees for memory safety, performance, and concurrency, which are critical for a robust and secure network protocol. All future design and implementation efforts will prioritize Rust as the reference language, ensuring consistency and maintainability across the project.
+
 ## 2. Introduction
 
 Large language models increasingly interact as autonomous agents. AI‑TCP defines a standard session format so that these models can exchange signed semantic payloads over existing TCP/IP networks.
