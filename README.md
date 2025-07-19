@@ -41,9 +41,39 @@ The rise of autonomous reasoning agents (LLMs) demands not just AI safety, but A
 
 ## 🛠 CLI Tools
 
-- `graph_sender.py` – copy an AI-TCP YAML packet to `output/` and print its graph and trace.
-- `graph_receiver.py` – watch `input/` for YAML packets and display their contents.
-- `scripts/convert_mmd_to_images.js` – render `.mmd` files from `mermaid_blocks/` into `generated_images/` using [mmdc](https://github.com/mermaid-js/mermaid-cli).
+This repository is developing a suite of human-operated command-line interface (CLI) tools in Rust, designed for FlatBuffers-compliant, signed packet operations within the AI-TCP protocol. Each tool is clearly identifiable as belonging to AI-TCP, avoiding confusion with KAIRO components.
+
+### AI-TCP CLI Tool Suite (Rust)
+
+*   **`aictp-agent-setup`**: Agent Registration and Key Generation (no KAIRO connection required)
+    ```bash
+    aictp-agent-setup --id <agent_id> --output-dir <path/to/config>
+    ```
+*   **`aictp-send`**: Signed Packet Generation and Transmission
+    ```bash
+    aictp-send --agent-id <agent_id> --destination <address> --data <payload> [--json]
+    ```
+*   **`aictp-receive`**: Packet Reception, Verification, and Display
+    ```bash
+    aictp-receive --port <port> [--json]
+    ```
+*   **`aictp-log`**: Log Review and Inspection
+    ```bash
+    aictp-log --log-file <path/to/log> [--verbose]
+    ```
+*   **`aictp-revoke`**: Revocation Operations
+    ```bash
+    aictp-revoke --id <agent_id> --reason "<reason_for_revocation>"
+    ```
+
+**Transmission Specification:**
+
+*   Default: FlatBuffers binary transmission/reception.
+*   `--json` option: JSON serialization/deserialization only.
+*   Server communication: `http://localhost:8080/send` / `/receive`.
+*   All packets must include a sender's signature.
+
+---
 
 ## 🌐 Future Goals
 

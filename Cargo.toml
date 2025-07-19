@@ -1,10 +1,38 @@
 [workspace]
 members = [
     "src/api_server",
+    "src/cli",
 ]
 
 [dependencies]
 chrono = "0.4"
-ed25519-dalek = "1.0"
+ed25519-dalek = { version = "1.0", features = ["rand_core"] }
 rand = "0.8"
 hex = "0.4"
+
+[profile.dev]
+opt-level = 0
+
+[profile.release]
+opt-level = 3
+
+[package]
+name = "ai-tcp-root"
+version = "0.1.0"
+edition = "2021"
+
+# This is a virtual manifest, so no `src/main.rs` or `src/lib.rs` here.
+# The actual crates are defined in their respective subdirectories.
+
+[dependencies]
+# Common dependencies for the workspace
+# These are here to ensure they are available for all members
+# and to manage versions centrally.
+
+# For CLI tools
+clap = { version = "4.0", features = ["derive"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+reqwest = { version = "0.11", features = ["json", "blocking"] }
+tokio = { version = "1", features = ["full"] }
+flatbuffers = "2.5.0"
