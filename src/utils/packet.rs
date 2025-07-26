@@ -1,6 +1,6 @@
 use flatbuffers::{FlatBufferBuilder, WIPOffset};
-use crate::aitcp::AITcpPacket;
-use crate::aitcp::AITcpPacketArgs;
+use super::aitcp::AITcpPacket;
+use super::aitcp::AITcpPacketArgs;
 
 #[derive(Debug)]
 pub enum PacketError {
@@ -8,12 +8,11 @@ pub enum PacketError {
     Other(String),
 }
 
-// This assumes `aitcp` module is generated from your FlatBuffers schema
-// You might need to adjust the path based on your actual FlatBuffers setup
 #[allow(dead_code)]
 #[allow(unused_imports)]
 mod aitcp {
-    include!(concat!(env!("OUT_DIR"), "/aitcp_packet_generated.rs"));
+    include!(concat!(env!("OUT_DIR"), "/AITCP/ai_tcp_packet_generated.rs"));
+    include!(concat!(env!("OUT_DIR"), "/aitcp/ephemeral_session_generated.rs"));
 }
 
 pub fn build_packet<'a>(builder: &'a mut FlatBufferBuilder, version: u8, ephemeral_key: Vec<u8>, nonce: Vec<u8>, encrypted_sequence_id: Vec<u8>, encrypted_payload: Vec<u8>, signature: Vec<u8>, header: Option<Vec<u8>>, payload: Option<Vec<u8>>, footer: Option<Vec<u8>>) -> WIPOffset<AITcpPacket<'a>> {
@@ -48,6 +47,6 @@ pub fn serialize_packet(packet: WIPOffset<AITcpPacket>) -> Vec<u8> {
 }
 
 pub fn deserialize_packet(bytes: &[u8]) -> Result<AITcpPacket, PacketError> {
-    let packet = flatbuffers::get_root::<AITcpPacket>(bytes);
+    let packet = flatbuffers::root::<AITcpPacket>(bytes);
     Ok(packet)
 }

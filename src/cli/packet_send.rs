@@ -26,5 +26,5 @@ pub fn run_packet_send(args: PacketSendArgs) {
     } else {
         println!("Format: FlatBuffers Binary");
     }
-    // TODO: Implement packet building, signing, and sending logic
+    use ai_tcp_utils::packet::{build_packet, serialize_packet, deserialize_packet, PacketError};
 }

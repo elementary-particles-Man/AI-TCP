@@ -1,9 +1,12 @@
-use ed25519_dalek::{Keypair, PublicKey, SecretKey, Signature, Signer, Verifier};
+use ed25519_dalek::{Keypair, SigningKey, VerifyingKey, Signature};
 use rand::rngs::OsRng;
 use hex::{encode, decode};
 use std::fs;
 use std::path::Path;
 use serde::{Serialize, Deserialize};
+use chrono::{DateTime, Utc};
+use ed25519_dalek::Signer;
+use ed25519_dalek::Verifier;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct AgentConfig {
@@ -47,9 +50,9 @@ impl From<serde_json::Error> for CryptoError {
 
 pub fn generate_keypair() -> Result<(String, String), CryptoError> {
     let mut csprng = OsRng{};
-    let keypair = Keypair::generate(&mut csprng);
-    let public_key_hex = encode(keypair.public.as_bytes());
-    let secret_key_hex = encode(keypair.secret.as_bytes());
+    let signing_key = SigningKey::generate(&mut csprng);
+    let public_key_hex = encode(signing_key.verifying_key().as_bytes());
+    let secret_key_hex = encode(signing_key.to_bytes());
     Ok((public_key_hex, secret_key_hex))
 }
 
@@ -60,7 +63,8 @@ pub fn save_agent_config(config: &AgentConfig, path: &Path) -> Result<(), Crypto
 }
 
 pub fn load_agent_config(id: &str) -> Result<AgentConfig, CryptoError> {
-    let path = Path::new(&format!("agent_configs/{}.json", id));
+    let file_name = format!("agent_configs/{}.json", id);
+    let path = Path::new(&file_name);
     if !path.exists() {
         return Err(CryptoError::Other(format!("Agent config for {} not found", id)));
     }
@@ -71,20 +75,18 @@ pub fn load_agent_config(id: &str) -> Result<AgentConfig, CryptoError> {
 
 pub fn sign_payload(payload: &[u8], secret_hex: &str) -> Result<String, CryptoError> {
     let secret_bytes = decode(secret_hex)?;
-    let secret_key = SecretKey::from_bytes(&secret_bytes)
+    let signing_key = SigningKey::from_bytes(&secret_bytes)
         .map_err(|e| CryptoError::Signature(e))?;
-    let public_key = PublicKey::from(&secret_key);
-    let keypair = Keypair { secret: secret_key, public: public_key };
-    let signature = keypair.sign(payload);
+    let signature = signing_key.sign(payload);
     Ok(encode(signature.to_bytes()))
 }
 
 pub fn verify_signature(payload: &[u8], signature_hex: &str, public_hex: &str) -> Result<bool, CryptoError> {
     let public_bytes = decode(public_hex)?;
-    let public_key = PublicKey::from_bytes(&public_bytes)
+    let verifying_key = VerifyingKey::from_bytes(&public_bytes)
         .map_err(|e| CryptoError::Signature(e))?;
     let signature_bytes = decode(signature_hex)?;
     let signature = Signature::from_bytes(&signature_bytes)
         .map_err(|e| CryptoError::Signature(e))?;
-    Ok(public_key.verify(payload, &signature).is_ok())
+    Ok(verifying_key.verify(payload, &signature).is_ok())
 }

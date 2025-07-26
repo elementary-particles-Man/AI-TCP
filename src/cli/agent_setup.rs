@@ -1,5 +1,5 @@
 use clap::Parser;
-use crate::utils::crypto::{generate_keypair, save_agent_config, AgentConfig, CryptoError};
+use ai_tcp_utils::crypto::{generate_keypair, save_agent_config, AgentConfig, CryptoError};
 use std::path::Path;
 
 #[derive(Parser, Debug)]

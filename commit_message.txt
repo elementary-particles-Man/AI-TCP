@@ -1,1 +1,1 @@
-Docs: Refactor documentation for Rust-centric AI-TCP implementation and move legacy code
+Feat: Implement Rust-based CLI tools for AI-TCP packet operations
