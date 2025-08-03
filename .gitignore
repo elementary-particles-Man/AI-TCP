@@ -2,6 +2,12 @@
 # AI-TCP リポジトリ用 .gitignore 完全版
 # ============================
 
+# Windows system files
+desktop.ini
+Thumbs.db
+ehthumbs.db
+
+
 # Submodule: KAIRO 配下の Rust ビルド
 protocols/kairo-client/rust-core/target/
 
